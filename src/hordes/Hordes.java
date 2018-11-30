@@ -163,8 +163,28 @@ public class Hordes {
 		/* --------------------------  ACTION EN VILLE  -------------------------- */
 		/* ----------------------------------------------------------------------- */
 
-		public static void take_water(int n){ // n est le numéro du joueur enregistré dans le tableau
+		public static void take_water(int n) { // n est le numéro du joueur enregistré dans le tableau
 			p[n].addInventory("Gourde d'eau");
+		}
+
+		/* ----------------------------------------------------------------------- */
+		/* --------------------------------  MAP  -------------------------------- */
+		/* ----------------------------------------------------------------------- */
+
+		public static void goNorth (int n) { // n est le numéro du joueur enregistré dans le tableau
+			p[n].setPos_y(p[n].getPos_y() - 1);
+		}
+
+		public static void goSouth (int n) {
+			p[n].setPos_y(p[n].getPos_y() + 1);
+		}
+
+		public static void goEast (int n) { // n est le numéro du joueur enregistré dans le tableau
+			p[n].setPos_x(p[n].getPos_x() - 1);
+		}
+
+		public static void goWest (int n) {
+			p[n].setPos_x(p[n].getPos_x() + 1);
 		}
 
 		/* ----------------------------------------------------------------------- */
