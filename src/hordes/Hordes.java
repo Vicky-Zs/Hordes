@@ -16,6 +16,8 @@ public class Hordes {
 		for (byte i = 0; i < 25; i++) {
 			for (byte j = 0; j < 25; j++) {
 				m[i][j] = new Map(i-12, j-12);
+				// On ne peut pas mettre de nombre négatif dans un tableau et on souhaite que la ville soit en [0;0]
+				// Nous décallons donc de -12
 			}
 		}
 	}
@@ -219,7 +221,7 @@ public class Hordes {
 				System.out.println("Vous êtes en ville, vous ne pouvez pas fouiller");
 			}
 			else {
-				//TODO
+
 			}
 		}
 
