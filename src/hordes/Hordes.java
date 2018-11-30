@@ -12,7 +12,7 @@ public class Hordes {
 	/* ----------------------------------------------------------------------- */
 
 	// Initialisation de la Map
-	public void iniMap() {
+	public static void iniMap() {
 		for (byte i = 0; i < 25; i++) {
 			for (byte j = 0; j < 25; j++) {
 				m[i][j] = new Map(i-12, j-12);
@@ -21,7 +21,7 @@ public class Hordes {
 	}
 
 	// Répartition des objets de manière aléatoire
-	public void iniItems () {
+	public static void iniItems () {
 		int rand1 = 0; // Une variable aléatoire
 		int rand2 = 0; //Une autre variable aléatoire
 		for (int i = 0; i < 1000; i++) {
@@ -51,7 +51,7 @@ public class Hordes {
 	}
 
 	// Ajoute un joueur
-	public void add_player (String pseudo) {
+	public static void add_player (String pseudo) {
 		if (nb_p < 20) {
 				p[nb_p] = new Player(pseudo);
 				nb_p ++;
@@ -62,7 +62,7 @@ public class Hordes {
 	}
 
 	// Calcul zombies sur une case
-		public void Z_map () {
+		public static void Z_map () {
 			int k = 0;
 			int rand = 0;
 			for (byte i = 0; i < 25; i++) { //Parcours case par case
@@ -94,7 +94,7 @@ public class Hordes {
 		/* ----------------------------------------------------------------------- */
 
 		//Consultation de la bank
-		public void consult_bank() {
+		public static void consult_bank() {
 				for (byte i = 0; i<bank.length; i++) {
 				// 0 = Planche, 1 = Plaque de métal, 2 = Boisson énergisante, 3 = Ration, 4 = Gourde d'eau
 					switch (i){
@@ -157,13 +157,13 @@ public class Hordes {
 				}
 		}
 
-		public void add_bank() {}
+		public static void add_bank() {}
 
 		/* ----------------------------------------------------------------------- */
 		/* --------------------------  ACTION EN VILLE  -------------------------- */
 		/* ----------------------------------------------------------------------- */
 
-		public void take_water(int n){ // n est le numéro du joueur enregistré dans le tableau
+		public static void take_water(int n){ // n est le numéro du joueur enregistré dans le tableau
 			p[n].addInventory("Gourde d'eau");
 		}
 
@@ -171,29 +171,47 @@ public class Hordes {
 		/* ---------------------------  REGAIN DE PA  ---------------------------- */
 		/* ----------------------------------------------------------------------- */
 
-		public void drink_water (int n) { // n est le numéro du joueur enregistré dans le tableau
+		public static void drink_water (int n) { // n est le numéro du joueur enregistré dans le tableau
 			if ((p[n].containsInventory("Gourde d'eau")) && (p[n].getDrink() == false)) {
-				System.out.println("Vous vous désaltérez, vous regagnez tous vos PA");
-				p[n].setNb_pa(6);
+				System.out.println("Vous vous désaltérez, vous regagnez 6 PA");
+				if (p[n].getNb_pa() < 5) {
+					p[n].setNb_pa(p[n].getNb_pa() + 6);
+				}
+				else {
+					p[n].setNb_pa(10);
+				}
 				p[n].drink();
 			}
 			else {
-				System.out.println("Vous ne pouvez pas boire, vous n'avez pas d'eau sur vous");
+				System.out.println("Vous ne pouvez pas boire, vous n'avez pas d'eau sur vous ou vous avez déjà bu");
 			}
 		}
 
-		public void eat_ration (int n) { // n est le numéro du joueur enregistré dans le tableau
+		public static void eat_ration (int n) { // n est le numéro du joueur enregistré dans le tableau
 			if ((p[n].containsInventory("Ration")) && (p[n].getEat() == false)) {
-				System.out.println("Vous mangez de la nourriture pas très bonne, mais ça rempli votre ventre, vous regagnez tous vos PA");
-				p[n].setNb_pa(6);
+				System.out.println("Vous mangez de la nourriture pas très bonne, mais ça rempli votre ventre, vous regagnez 6 PA");
+				if (p[n].getNb_pa() < 5) {
+					p[n].setNb_pa(p[n].getNb_pa() + 6);
+				}
+				else {
+					p[n].setNb_pa(10);
+				}
 				p[n].eat();
 			}
+			else {
+				System.out.println("Vous ne pouvez pas manger, vous n'avez pas de rations sur vous ou vous avez déjà mangé");
+			}
 		}
 
-		public void drink_addict (int n) { //n est le numéro du joueur enregistré dans le tableau
+		public static void drink_addict (int n) { //n est le numéro du joueur enregistré dans le tableau
 			if (p[n].containsInventory("Boisson énergisante")) {
-				System.out.println("Vous buvez une boisson énergisante, vous en devenez dépendant et vous regagnez tous vos PA");
-				p[n].setNb_pa(6);
+				System.out.println("Vous buvez une boisson énergisante, vous en devenez dépendant et vous regagnez 4 PA");
+				if (p[n].getNb_pa() < 7) {
+					p[n].setNb_pa(p[n].getNb_pa() + 4);
+				}
+				else {
+					p[n].setNb_pa(10);
+				}
 				p[n].addict();
 			}
 		}

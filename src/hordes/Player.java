@@ -106,6 +106,11 @@ public class Player {
 		this.addict = 0;
 	}
 
+  // Ajoute 1 à addict
+  public void addAddict() {
+    this.addict = +1;
+  }
+
 	// Changement de joueur
 	public void resetDay () {
 		this.nb_pa = 6;
