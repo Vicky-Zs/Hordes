@@ -66,8 +66,24 @@ public class Map {
 		this.item.add(item);
 	}
 
+	// Enlève un élément de la liste et retourne cette élément
+	public String removeItem() {
+		String i;
+		int rand = (int) Math.random()*item.size();
+		i = item.get(rand);
+		return i;
+	}
+
 	// Modifie la liste des objets cachés sur la case
 	public void addHide_item(String hide_item) {
 		this.hide_item.add(hide_item);
+	}
+
+	// Enlève un élément de la liste et retourne cette élément
+	public String removeHide_item() {
+		String i;
+		int rand = (int) Math.random()*hide_item.size();
+		i = item.get(rand);
+		return i;
 	}
 }
