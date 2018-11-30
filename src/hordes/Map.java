@@ -71,6 +71,7 @@ public class Map {
 		String i;
 		int rand = (int) Math.random()*item.size();
 		i = item.get(rand);
+		item.remove(i);
 		return i;
 	}
 
@@ -84,6 +85,7 @@ public class Map {
 		String i;
 		int rand = (int) Math.random()*hide_item.size();
 		i = item.get(rand);
+		item.remove(i);
 		return i;
 	}
 }
