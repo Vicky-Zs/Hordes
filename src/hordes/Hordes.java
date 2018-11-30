@@ -182,8 +182,11 @@ public class Hordes {
 				}
 				p[n].drink();
 			}
+			else if (p[n].getDrink()) {
+				System.out.println("Vous ne pouvez pas boire, vous avez déjà bu");
+			}
 			else {
-				System.out.println("Vous ne pouvez pas boire, vous n'avez pas d'eau sur vous ou vous avez déjà bu");
+				System.out.println("Vous ne pouvez pas boire, vous n'avez pas d'eau sur vous");
 			}
 		}
 
