@@ -157,6 +157,7 @@ public class Hordes {
 				}
 		}
 
+		//Ajoute un item à la bank
 		public static void add_bank() {}
 
 		/* ----------------------------------------------------------------------- */
@@ -171,20 +172,55 @@ public class Hordes {
 		/* --------------------------------  MAP  -------------------------------- */
 		/* ----------------------------------------------------------------------- */
 
+		//Permet au joueur de se déplacer vers le nord
 		public static void goNorth (int n) { // n est le numéro du joueur enregistré dans le tableau
-			p[n].setPos_y(p[n].getPos_y() - 1);
+			if (p[n].getNb_pa() == 0) {
+				System.out.println("Vous êtes fatigué, vous ne pouvez plus vous déplacer");
+			}
+			else {
+				p[n].setPos_y(p[n].getPos_y() - 1);
+			}
 		}
 
-		public static void goSouth (int n) {
-			p[n].setPos_y(p[n].getPos_y() + 1);
+		//Permet au joueur de se déplacer vers le sud
+		public static void goSouth (int n) { // n est le numéro du joueur enregistré dans le tableau
+			if (p[n].getNb_pa() == 0) {
+				System.out.println("Vous êtes fatigué, vous ne pouvez plus vous déplacer");
+			}
+			else {
+				p[n].setPos_y(p[n].getPos_y() + 1);
+			}
 		}
 
+		//Permet au joueur de se déplacer vers l'est
 		public static void goEast (int n) { // n est le numéro du joueur enregistré dans le tableau
-			p[n].setPos_x(p[n].getPos_x() - 1);
+			if (p[n].getNb_pa() == 0) {
+				System.out.println("Vous êtes fatigué, vous ne pouvez plus vous déplacer");
+			}
+			else {
+				p[n].setPos_x(p[n].getPos_x() - 1);
+			}
 		}
 
-		public static void goWest (int n) {
+		//Permet au joueur de se déplacer vers l'ouest
+		public static void goWest (int n) { // n est le numéro du joueur enregistré dans le tableau
+			if (p[n].getNb_pa() == 0) {
+				System.out.println("Vous êtes fatigué, vous ne pouvez plus vous déplacer");
+			}
 			p[n].setPos_x(p[n].getPos_x() + 1);
+		}
+
+		//Permet de fouiller la zone
+		public static void fouiller(int n) { // n est le numéro du joueur enregistré dans le tableau
+			if (p[n].getNb_pa() == 0) {
+				System.out.println("Vous êtes fatigué, vous ne pouvez plus fouiller");
+			}
+			else if ((p[n].getPos_x() == 0) && (p[n].getPos_y() == 0)) {
+				System.out.println("Vous êtes en ville, vous ne pouvez pas fouiller");
+			}
+			else {
+				//TODO
+			}
 		}
 
 		/* ----------------------------------------------------------------------- */
