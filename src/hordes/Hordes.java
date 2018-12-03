@@ -157,6 +157,8 @@ public class Hordes {
 								System.out.println("Il y a " + bank[i] + " gourdes d'eau");
 							}
 						break;
+						default:
+							System.out.println("Erreur");
 					}
 				}
 		}
@@ -189,6 +191,66 @@ public class Hordes {
 			}
 			else {
 				System.out.println("Vous ne pouvez pas ajouter un item à la banque, vous n'êtes aps en ville");
+			}
+		}
+
+		// Retrait d'un objet de la banque
+		public static void remove_bank (int n) { // n est le numéro du joueur enregistré dans le tableau
+			System.out.println("Quel objet voulez-vous prendre ? \n0 = Planche \n1 = Plaque de métal \n2 = Boisson énergisante \n3 = Ration \n4 = Gourde d'eau");
+			int temp = scan.nextInt();
+			switch(temp){ //On vérifie si l'objet est en bank, puis on l'ajoute à l'inventaire et on réduit de 1 le nombre contenu dans la banque
+				case 0:
+					if (bank[temp] == 0) {
+						System.out.println("Il n'y a plus de planche dans la banque, vous ne pouvez pas en prendre");
+					}
+					else {
+						System.out.println("Une planche a été ajouté à votre inventaire");
+						p[n].addInventory("Planche");
+						bank[temp] = -1;
+					}
+				break;
+				case 1:
+					if (bank[temp] == 0) {
+						System.out.println("Il n'y a plus de plaque de métal dans la banque, vous ne pouvez pas en prendre");
+					}
+					else {
+						System.out.println("Une plaque de métal a été ajouté à votre inventaire");
+						p[n].addInventory("Plaque de métal");
+						bank[temp] = -1;
+					}
+				break;
+				case 2:
+					if (bank[temp] == 0) {
+						System.out.println("Il n'y a plus de boisson énergisante dans la banque, vous ne pouvez pas en prendre");
+					}
+					else {
+						System.out.println("Une boisson énergisante a été ajouté à votre inventaire");
+						p[n].addInventory("Boisson énergisante");
+						bank[temp] = -1;
+					}
+				break;
+				case 3:
+					if (bank[temp] == 0) {
+						System.out.println("Il n'y a plus de ration dans la banque, vous ne pouvez pas en prendre");
+					}
+					else {
+						System.out.println("Une ration a été ajouté à votre inventaire");
+						p[n].addInventory("Ration");
+						bank[temp] = -1;
+					}
+				break;
+				case 4:
+					if (bank[temp] == 0) {
+						System.out.println("Il n'y a plus de gourde d'eau dans la banque, vous ne pouvez pas en prendre");
+					}
+					else {
+						System.out.println("Une gourde d'eau a été ajouté à votre inventaire");
+						p[n].addInventory("Gourde d'eau");
+						bank[temp] = -1;
+					}
+				break;
+				default:
+					System.out.println("Erreur");
 			}
 		}
 
