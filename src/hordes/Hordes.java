@@ -1,10 +1,12 @@
 package hordes;
+import java.util.Scanner;
 
 public class Hordes {
 	private static Player[] p = new Player [20]; // Création du tableau de joueur
 	private static int nb_p = 0; // Numero du joueur (pour la création de joueur)
 	private static Map[][] m = new Map [25][25]; // Création du tableau des cases
 	private static int[] bank = new int [5]; // Création du tableau d'objets en banque
+	private static Scanner scan = new Scanner (System.in);
 	// 0 = Planche, 1 = Plaque de métal, 2 = Boisson énergisante, 3 = Ration, 4 = Gourde d'eau
 
 	/* ----------------------------------------------------------------------- */
@@ -159,8 +161,36 @@ public class Hordes {
 				}
 		}
 
-		//Ajoute un item à la bank
-		public static void add_bank() {}
+		// Ajoute un item à la banque
+		// Rappel : 0 = Planche, 1 = Plaque de métal, 2 = Boisson énergisante, 3 = Ration, 4 = Gourde d'eau
+		public static void add_bank (int n) { // n est le numéro du joueur enregistré dans le tableau
+			if ((p[n].getPos_x() == 0) && (p[n].getPos_y() == 0)) {
+				p[n].bankInventory(); // On affiche l'inventaire
+				int temp = scan.nextInt(); // On demande à l'utilisateur l'objet qu'il veut mettre à la bank, puis nous l'ajoutons à la banque
+				if (p[n].getInventory(temp) == "Planche") {
+					bank[0] = +1;
+				}
+				else if (p[n].getInventory(temp) == "Plaque de métal") {
+					bank[1] = +1;
+				}
+				else if (p[n].getInventory(temp) == "Boisson énergisante") {
+					bank[2] = +1;
+				}
+				else if (p[n].getInventory(temp) == "Ration") {
+					bank[3] = +1;
+				}
+				else if (p[n].getInventory(temp) == "Gourde d'eau") {
+					bank[4] = +1;
+				}
+				else {
+					System.out.println ("Erreur dans l'ajout dans la banque");
+				}
+				p[n].removeInventory(p[n].getInventory(temp)); // Suppression des items de l'inventaire
+			}
+			else {
+				System.out.println("Vous ne pouvez pas ajouter un item à la banque, vous n'êtes aps en ville");
+			}
+		}
 
 		/* ----------------------------------------------------------------------- */
 		/* --------------------------  ACTION EN VILLE  -------------------------- */

@@ -132,6 +132,24 @@ public class Player {
 		}
 	}
 
+	// Permet de retourner le n_ième objet de votre inventaire
+	public String getInventory(int n) {
+		return inventory.get(n);
+	}
+
+  // Permet d'afficher l'inventaire pour l'ajout d'un item à la banque
+	public void bankInventory() {
+		if (inventory.isEmpty()) {
+			System.out.println("Votre inventaire ne contient aucun objet, vous ne pouvez pas ajouter un item à la banque");
+		}
+		else {
+			System.out.println("Quel objet voulez vous ajoutez à la banque ?");
+			for (byte i = 0; i < inventory.size(); i++) {
+        System.out.println((i+1) + " : " + inventory.get(i) + " ");
+			}
+		}
+	}
+
 	// Ajouter un item à votre inventaire
 	public void addInventory(String item) {
 		if (inventory.size() < 10) {
@@ -146,4 +164,13 @@ public class Player {
 	public boolean containsInventory (String item) {
 		return inventory.contains(item);
 	}
+
+  public void removeInventory (String item) {
+		if (inventory.contains(item)) {
+				inventory.remove(item);
+		}
+		else {
+			System.out.println("Erreur, l'objet n'est pas dans votre inventaire");
+		}
+  }
 }
