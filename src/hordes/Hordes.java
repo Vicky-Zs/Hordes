@@ -1,11 +1,14 @@
 package hordes;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Hordes {
 	private static Player[] p = new Player [20]; // Création du tableau de joueur
 	private static int nb_p = 0; // Numero du joueur (pour la création de joueur)
 	private static Map[][] m = new Map [25][25]; // Création du tableau des cases
 	private static int[] bank = new int [5]; // Création du tableau d'objets en banque
+	private static ArrayList<String> mort = new ArrayList<>(); // Liste des morts qui ont eu lieu les 24 dernières heures
+	private static ArrayList<String> old_mort = new ArrayList<>(); // Liste des morts qui ont eu lieu les 24 dernières heures
 	private static Scanner scan = new Scanner (System.in);
 	// 0 = Planche, 1 = Plaque de métal, 2 = Boisson énergisante, 3 = Ration, 4 = Gourde d'eau
 
@@ -366,6 +369,31 @@ public class Hordes {
 					p[n].setNb_pa(10);
 				}
 				p[n].addict();
+			}
+		}
+
+		/* ----------------------------------------------------------------------- */
+		/* --------------------------  ETAT PHYSIQUE  ---------------------------- */
+		/* ----------------------------------------------------------------------- */
+		public static void changing_turn (){ //Algo de changement de tour (toutes les 2 heures)
+			for (int i =0; i<nb_p; i++) { //On regarde chaque joueur
+				if ((mort.contains(p[i].getPseudo()) == false) || (old_mort.contains(p[i].getPseudo()) == false)) {
+					if (p[i].getNb_pa() < 7) { //Gain des pas
+						p[i].setNb_pa(p[i].getNb_pa() + 4);
+					}
+					else {
+						p[i].setNb_pa(10);
+					}
+					if (p[i].getAddict() != -1) { // On vérifie sa dépendance aux boissons énergisante
+						p[i].addAddict();
+						if (p[i].getAddict() > 2) {
+							p[i].setPV(p[i].getPV() - 5);
+						}
+					}
+					if (p[i].getPV() < 1) { // On vérifie s'il ne meurt pas à ce tour
+						mort.add(p[i].getPseudo());
+					}
+				}
 			}
 		}
 }
