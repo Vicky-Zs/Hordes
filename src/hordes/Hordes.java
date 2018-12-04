@@ -1,6 +1,7 @@
 package hordes;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Hordes {
 	private static Player[] p = new Player [20]; // Création du tableau de joueur
@@ -14,6 +15,7 @@ public class Hordes {
 	private static City city = new City(); // Variable ville (unique)
 	private static int nb_j = 1; // Nombre de jour depuis le début (commence à 1)
 	private static int nb_z = 0; // Nombre de zombies qui attaquent la nuit
+	private static HashSet<Integer> fiftyfifty = new HashSet<>();
 	// 0 = Planche, 1 = Plaque de métal, 2 = Boisson énergisante, 3 = Ration, 4 = Gourde d'eau
 
 	/* ----------------------------------------------------------------------- */
@@ -22,8 +24,8 @@ public class Hordes {
 
 	// Initialisation de la Map
 	public static void iniMap() {
-		for (byte i = 0; i < 25; i++) {
-			for (byte j = 0; j < 25; j++) {
+		for (int i = 0; i < 25; i++) {
+			for (int j = 0; j < 25; j++) {
 				m[i][j] = new Map(i-12, j-12);
 				// On ne peut pas mettre de nombre négatif dans un tableau et on souhaite que la ville soit en [0;0]
 				// Nous décallons donc de -12
@@ -34,7 +36,7 @@ public class Hordes {
 
 	// Initialisation de la Banque
 	public static void iniBank(){
-		for (byte i = 0; i < bank.length; i++) {
+		for (int i = 0; i < bank.length; i++) {
 			bank[i] = 0; // On initialise bien à 0 toutes les cases de la bank
 		}
 		bank[3] = 50; // La ville commence avec 50 rations
@@ -87,8 +89,8 @@ public class Hordes {
 		public static void Z_map () {
 			int k = 0;
 			int rand = 0;
-			for (byte i = 0; i < 25; i++) { //Parcours case par case
-				for (byte j = 0; j < 25; j++) {
+			for (int i = 0; i < 25; i++) { //Parcours case par case
+				for (int j = 0; j < 25; j++) {
 					rand = (int) Math.random()*10; //Calcul d'un nombre random entre 0 et 9
 						// Si rand = 0, 1 ou 2 OU si case de la ville alors il n'y a pas de zombies.
 						if ((rand < 3) || (i == 12 && j == 12)) {
@@ -117,7 +119,7 @@ public class Hordes {
 
 		//Consultation de la bank
 		public static void consult_bank() {
-				for (byte i = 0; i<bank.length; i++) {
+				for (int i = 0; i<bank.length; i++) {
 				// 0 = Planche, 1 = Plaque de métal, 2 = Boisson énergisante, 3 = Ration, 4 = Gourde d'eau
 					switch (i){
 						case 0: //Pour les planches
@@ -387,12 +389,13 @@ public class Hordes {
 			}
 		}
 
+
 		/* ----------------------------------------------------------------------- */
-		/* --------------------------  ETAT PHYSIQUE  ---------------------------- */
+		/* ------------------------  CHANGEMENT JOUR TOUR  ----------------------- */
 		/* ----------------------------------------------------------------------- */
 		public static void changing_turn (){ //Algo de changement de tour (toutes les 2 heures)
 			for (int i =0; i<nb_p; i++) { //On regarde chaque joueur
-				if ((temp_mort.contains(p[i].getPseudo()) == false) && (mort.contains(p[i].getPseudo()) == false) && (old_mort.contains(p[i].getPseudo()) == false)) {
+				if (p[i].getPV() != 0) {
 					if (p[i].getNb_pa() < 7) { //Gain des pas
 						p[i].setNb_pa(p[i].getNb_pa() + 4);
 					}
@@ -407,6 +410,7 @@ public class Hordes {
 					}
 					if (p[i].getPV() < 1) { // On vérifie s'il ne meurt pas à ce tour
 						temp_mort.add(p[i].getPseudo());
+						p[i].setPV(0); // Le joueur est mort, il a donc 0 PV
 					}
 				}
 			}
@@ -425,17 +429,31 @@ public class Hordes {
 					temp_mort.remove(i); // Et on les retire de la liste des morts de la journée
 				}
 			}
-			for (int i = 0; i< nb_p; i++){ //On vérifie si chaque joueur est en ville
+			for (int i = 0; i < nb_p; i++){ //On vérifie si chaque joueur est en ville
 				if ((p[i].getPos_x() != 0) && (p[i].getPos_y() != 0)) {
 					mort.add(p[i].getPseudo()); //Si ce n'est pas le cas, on l'ajoute à la liste des morts
+					p[i].setPV(0); // Le joueur est mort, il a donc 0 PV
 				}
 			}
 			// Attaque des zombies sur la ville
 			nb_z = (int) (Math.random()*10 + 1) + 10*nb_j;
 			if (city.getDefense() <= nb_z) {
+				System.out.println("Les zombies ont réussi à passer");
+				for (int i = 0; i < nb_p; i++) {
+					if (p[i].getPV() != 0){
+						fiftyfifty.add(i); // On ajoute le numéro de chaque joueur qui est encore en vie
+					}
+				}
+				for (int i = 0; i < (fiftyfifty.size()/2 + fiftyfifty.size() % 2); i++) { // Nombre de joueur divisé par 2 + le reste de la division euclidienne
 
+				}
 			}
 		}
+
+
+		/* ----------------------------------------------------------------------- */
+		/* ------------------------  CHANGEMENT JOUR TOUR  ----------------------- */
+		/* ----------------------------------------------------------------------- */
 
 		// Affichage du journal reprenant les morts de la veille
 		// Hameau obscur est le nom de la ville -> J'ai pris le nom d'une de mes villes quand j'y jouais ;)
@@ -445,7 +463,7 @@ public class Hordes {
 				System.out.println("Bienvenue au Hameau Obscur !!\nNous avons espéré que les zombies nous oublie, mais ce n'est pas le cas.\nNous allons donc devoir nous organiser et tenir, le Hameau Obscur ne doit pas tomber !");
 			}
 			else if (mort.isEmpty()) {
-				System.out.println("Il n'y a pas eu de mort");
+				System.out.println("Il n'y a pas eu de mort, malgré l'attaque des " + nb_z + " zombies sur le Hameau Obscur");
 			}
 			else {
 				System.out.print("Voici les morts de la veille : ");
