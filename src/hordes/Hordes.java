@@ -10,6 +10,7 @@ public class Hordes {
 	private static ArrayList<String> mort = new ArrayList<>(); // Liste des morts qui ont eu lieu les 24 dernières heures
 	private static ArrayList<String> old_mort = new ArrayList<>(); // Liste des morts qui ont eu lieu les 24 dernières heures
 	private static Scanner scan = new Scanner (System.in);
+	private static City city = new City();
 	// 0 = Planche, 1 = Plaque de métal, 2 = Boisson énergisante, 3 = Ration, 4 = Gourde d'eau
 
 	/* ----------------------------------------------------------------------- */
@@ -25,6 +26,16 @@ public class Hordes {
 				// Nous décallons donc de -12
 			}
 		}
+		System.out.println ("La map a été initialisé");
+	}
+
+	// Initialisation de la Banque
+	public static void iniBank(){
+		for (byte i = 0; i < bank.length; i++) {
+			bank[i] = 0; // On initialise bien à 0 toutes les cases de la bank
+		}
+		bank[3] = 50; // La ville commence avec 50 rations
+		System.out.println ("La banque a été initialisé");
 	}
 
 	// Répartition des objets de manière aléatoire
@@ -55,6 +66,7 @@ public class Hordes {
 			// On vérifie que l'objet n'arrive pas dans la ville, si c'est le cas, on recommence la boucle do while
 			m[rand1][rand2].addHide_item("Planche");
 		}
+		System.out.println ("Les objets ont été dispersés dans la carte");
 	}
 
 	// Ajoute un joueur
@@ -393,6 +405,26 @@ public class Hordes {
 					if (p[i].getPV() < 1) { // On vérifie s'il ne meurt pas à ce tour
 						mort.add(p[i].getPseudo());
 					}
+				}
+			}
+		}
+
+		public static void changing_day(){ //Algo de changement de jour (uniquement à 00h)
+			for (int i = 0; i< nb_p; i++){ //On vérifie si chaque joueur est en ville
+				if ((p[i].getPos_x() != 0) && (p[i].getPos_y() != 0)) {
+					mort.add(p[i].getPseudo()); //Si ce n'est pas le cas, on l'ajoute à la liste des morts
+				}
+			}
+
+			if (mort.isEmpty()) {
+				System.out.println("Il n'y a pas eu de mort");
+			}
+			else {
+				System.out.print("Voici les morts de la veille : ");
+				for (int i = 0; i < mort.size(); i++) {
+					System.out.println(mort.get(i) + " ");
+					old_mort.add(mort.get(i));
+					mort.remove(i);
 				}
 			}
 		}

@@ -4,7 +4,10 @@ public class City {
 	private int defense;
 	private Boolean door; //True = Open, False = Fermer
 
-
+	public City() { // On considère que la ville commence les portes ouvertes et avec 10 de défense de base
+		this.defense = 10;
+		this.door = true;
+	}
 
 	// Obtenir le nombre de défense de la ville
 	public int getDefense() {
