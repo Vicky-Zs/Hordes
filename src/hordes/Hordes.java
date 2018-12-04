@@ -7,10 +7,13 @@ public class Hordes {
 	private static int nb_p = 0; // Numero du joueur (pour la création de joueur)
 	private static Map[][] m = new Map [25][25]; // Création du tableau des cases
 	private static int[] bank = new int [5]; // Création du tableau d'objets en banque
+	private static ArrayList<String> temp_mort = new ArrayList<>(); // Liste des morts qui ont lieu durant la journée en cours
 	private static ArrayList<String> mort = new ArrayList<>(); // Liste des morts qui ont eu lieu les 24 dernières heures
 	private static ArrayList<String> old_mort = new ArrayList<>(); // Liste des morts qui ont eu lieu les 24 dernières heures
-	private static Scanner scan = new Scanner (System.in);
-	private static City city = new City();
+	private static Scanner scan = new Scanner (System.in); // Permet d'avoir des entrées
+	private static City city = new City(); // Variable ville (unique)
+	private static int nb_j = 1; // Nombre de jour depuis le début (commence à 1)
+	private static int nb_z = 0; // Nombre de zombies qui attaquent la nuit
 	// 0 = Planche, 1 = Plaque de métal, 2 = Boisson énergisante, 3 = Ration, 4 = Gourde d'eau
 
 	/* ----------------------------------------------------------------------- */
@@ -389,7 +392,7 @@ public class Hordes {
 		/* ----------------------------------------------------------------------- */
 		public static void changing_turn (){ //Algo de changement de tour (toutes les 2 heures)
 			for (int i =0; i<nb_p; i++) { //On regarde chaque joueur
-				if ((mort.contains(p[i].getPseudo()) == false) || (old_mort.contains(p[i].getPseudo()) == false)) {
+				if ((temp_mort.contains(p[i].getPseudo()) == false) && (mort.contains(p[i].getPseudo()) == false) && (old_mort.contains(p[i].getPseudo()) == false)) {
 					if (p[i].getNb_pa() < 7) { //Gain des pas
 						p[i].setNb_pa(p[i].getNb_pa() + 4);
 					}
@@ -403,28 +406,51 @@ public class Hordes {
 						}
 					}
 					if (p[i].getPV() < 1) { // On vérifie s'il ne meurt pas à ce tour
-						mort.add(p[i].getPseudo());
+						temp_mort.add(p[i].getPseudo());
 					}
 				}
 			}
 		}
 
 		public static void changing_day(){ //Algo de changement de jour (uniquement à 00h)
+			if (mort.isEmpty() == false) { // On vérifie que la liste n'est pas vide (pour éviter un plantage)
+				for (int i = 0; i < mort.size(); i++) {
+					old_mort.add(mort.get(i)); // On archive les noms des morts
+					mort.remove(i); // Et on les retire de la liste des morts les dernières 24h
+				}
+			}
+			if (temp_mort.isEmpty() == false) { // On vérifie que la liste n'est pas vide (pour éviter un plantage)
+				for (int i = 0; i < temp_mort.size(); i++) {
+					mort.add(temp_mort.get(i)); // On met les morts de la journée dans la liste des morts les 24 dernières heures
+					temp_mort.remove(i); // Et on les retire de la liste des morts de la journée
+				}
+			}
 			for (int i = 0; i< nb_p; i++){ //On vérifie si chaque joueur est en ville
 				if ((p[i].getPos_x() != 0) && (p[i].getPos_y() != 0)) {
 					mort.add(p[i].getPseudo()); //Si ce n'est pas le cas, on l'ajoute à la liste des morts
 				}
 			}
+			// Attaque des zombies sur la ville
+			nb_z = (int) (Math.random()*10 + 1) + 10*nb_j;
+			if (city.getDefense() <= nb_z) {
 
-			if (mort.isEmpty()) {
+			}
+		}
+
+		// Affichage du journal reprenant les morts de la veille
+		// Hameau obscur est le nom de la ville -> J'ai pris le nom d'une de mes villes quand j'y jouais ;)
+		public static void consult_newspaper() {
+			System.out.println ("Hameau Obscur - Jour " + nb_j);
+			if (nb_j == 1) {
+				System.out.println("Bienvenue au Hameau Obscur !!\nNous avons espéré que les zombies nous oublie, mais ce n'est pas le cas.\nNous allons donc devoir nous organiser et tenir, le Hameau Obscur ne doit pas tomber !");
+			}
+			else if (mort.isEmpty()) {
 				System.out.println("Il n'y a pas eu de mort");
 			}
 			else {
 				System.out.print("Voici les morts de la veille : ");
 				for (int i = 0; i < mort.size(); i++) {
 					System.out.println(mort.get(i) + " ");
-					old_mort.add(mort.get(i));
-					mort.remove(i);
 				}
 			}
 		}
