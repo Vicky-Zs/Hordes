@@ -6,6 +6,7 @@ public class Map {
 	private int Coor_x; //Coordonée x de la case
 	private int Coor_y; //Coordonée y de la case
 	private int z; //Nombre de zombies sur la case
+	private boolean search; // Permet de savoir si la zone a été entièrement fouillé
 	private ArrayList<String> item; // Liste des objets étant sur cette case
 	private ArrayList<String> hide_item; // Liste des objets cachés sur cette case
 
@@ -14,6 +15,7 @@ public class Map {
 		this.Coor_x = Coor_x;
 		this.Coor_y = Coor_y;
 		this.z = 0;
+		this.search = false;
 		this.item = new ArrayList<>();
 		this.hide_item = new ArrayList<>();
 	}
@@ -87,5 +89,20 @@ public class Map {
 		i = item.get(rand);
 		item.remove(i);
 		return i;
+	}
+
+	// Permet de savoir si une case a été intégralement fouillé
+	public boolean getSearch() {
+		return search;
+	}
+
+	// Permet de savoir si une case contient encore ou non des objets cachés
+	public boolean isEmpty(){
+		if (hide_item.isEmpty()) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }

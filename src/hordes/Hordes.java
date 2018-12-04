@@ -325,15 +325,33 @@ public class Hordes {
 		}
 
 		//Permet de fouiller la zone
-		public static void fouiller(int n) { // n est le numéro du joueur enregistré dans le tableau
+		public static void search(int n) { // n est le numéro du joueur enregistré dans le tableau
+			String temp;
 			if (p[n].getNb_pa() == 0) {
 				System.out.println("Vous êtes fatigué, vous ne pouvez plus fouiller");
 			}
 			else if ((p[n].getPos_x() == 0) && (p[n].getPos_y() == 0)) {
 				System.out.println("Vous êtes en ville, vous ne pouvez pas fouiller");
 			}
+			else if (m[p[n].getPos_x() + 12][p[n].getPos_x() + 12].getSearch()) { // Conversion de la coordonée réel en coordonée du tableau m
+				System.out.println("Cette zone a déjà été intégralement fouillé, il serait inutil de la fouiller de nouveau");
+			}
 			else {
-
+				if (m[p[n].getPos_x() + 12][p[n].getPos_x() + 12].isEmpty()) { // Permet de savoir si une case contient encore ou non des objets cachés
+					System.out.println("Cette zone ne contient plus d'objet, elle a été intégralement fouillé");
+				}
+				else {
+					temp = m[p[n].getPos_x() + 12][p[n].getPos_x() + 12].removeHide_item();
+					System.out.print("Vous avez trouvé " + temp);
+					if (p[n].sizeInventory()<10) {
+						p[n].addInventory(temp);
+						System.out.println(", il a été ajouté à votre inventaire");
+					}
+					else {
+						m[p[n].getPos_x() + 12][p[n].getPos_x() + 12].addItem(temp);
+						System.out.println(", votre inventaire est plein, vous avez posé " + temp + " au sol");
+					}
+				}
 			}
 		}
 

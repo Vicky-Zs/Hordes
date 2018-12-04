@@ -160,6 +160,11 @@ public class Player {
 		}
 	}
 
+  // Permet de connaître le nombre d'item dans votre inventaire
+  public int sizeInventory() {
+    return inventory.size();
+  }
+
 	// Vérfie si vous avez un objet dans votre inventaire
 	public boolean containsInventory (String item) {
 		return inventory.contains(item);
