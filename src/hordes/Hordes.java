@@ -15,7 +15,7 @@ public class Hordes {
 	private static City city = new City(); // Variable ville (unique)
 	private static int nb_j = 1; // Nombre de jour depuis le début (commence à 1)
 	private static int nb_z = 0; // Nombre de zombies qui attaquent la nuit
-	private static HashSet<Integer> fiftyfifty = new HashSet<>();
+	private static ArrayList<Integer> fiftyfifty = new ArrayList<>();
 	// 0 = Planche, 1 = Plaque de métal, 2 = Boisson énergisante, 3 = Ration, 4 = Gourde d'eau
 
 	/* ----------------------------------------------------------------------- */
@@ -340,7 +340,6 @@ public class Hordes {
 		/* ----------------------------------------------------------------------- */
 		/* ---------------------------  REGAIN DE PA  ---------------------------- */
 		/* ----------------------------------------------------------------------- */
-
 		public static void drink_water (int n) { // n est le numéro du joueur enregistré dans le tableau
 			if ((p[n].containsInventory("Gourde d'eau")) && (p[n].getDrink() == false)) {
 				System.out.println("Vous vous désaltérez, vous regagnez 6 PA");
@@ -417,6 +416,8 @@ public class Hordes {
 		}
 
 		public static void changing_day(){ //Algo de changement de jour (uniquement à 00h)
+			int temp = 0;
+			fiftyfifty.clear();
 			if (mort.isEmpty() == false) { // On vérifie que la liste n'est pas vide (pour éviter un plantage)
 				for (int i = 0; i < mort.size(); i++) {
 					old_mort.add(mort.get(i)); // On archive les noms des morts
@@ -445,16 +446,20 @@ public class Hordes {
 					}
 				}
 				for (int i = 0; i < (fiftyfifty.size()/2 + fiftyfifty.size() % 2); i++) { // Nombre de joueur divisé par 2 + le reste de la division euclidienne
-
+					temp = fiftyfifty.get((int) Math.random()*fiftyfifty.size()); // On prend un nombre aléatoire dans la liste fiftyfifty
+					System.out.print(p[temp].getPseudo() + " "); // On annonce que le joueur est mort
+					mort.add(p[temp].getPseudo()); // On l'ajoute à la liste
+					p[temp].setPV(0); // Le joueur est mort, il a donc 0 PV
 				}
+				System.out.println("sont morts durant l'attaque de cette nuit");
 			}
 		}
 
 
-		/* ----------------------------------------------------------------------- */
-		/* ------------------------  CHANGEMENT JOUR TOUR  ----------------------- */
-		/* ----------------------------------------------------------------------- */
 
+		/* ----------------------------------------------------------------------- */
+		/* ------------------------------  JOURNAL  ------------------------------ */
+		/* ----------------------------------------------------------------------- */
 		// Affichage du journal reprenant les morts de la veille
 		// Hameau obscur est le nom de la ville -> J'ai pris le nom d'une de mes villes quand j'y jouais ;)
 		public static void consult_newspaper() {
