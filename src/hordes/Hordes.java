@@ -357,6 +357,7 @@ public class Hordes {
 
 		//TODO: Ramasser un item
 		//TODO: Déposer un item
+		//TODO: Chantier
 
 		/* ----------------------------------------------------------------------- */
 		/* ---------------------------  REGAIN DE PA  ---------------------------- */
