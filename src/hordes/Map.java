@@ -33,6 +33,19 @@ public class Map {
 		}
 	}
 
+	// Permet d'afficher les items non-cachés pour l'ajout d'un item à votre inventaire
+	public void bankItem() {
+		if (item.isEmpty()) {
+			System.out.println("Il n'y a aucun objet dans cette zone");
+		}
+		else {
+			System.out.println("Quel objet voulez vous rammasser ?");
+			for (byte i = 0; i < item.size(); i++) {
+        System.out.println((i+1) + " : " + item.get(i) + " ");
+			}
+		}
+	}
+
 	// Obtient la coordonée x de la case
 	public int getCoor_x() {
 		return Coor_x;

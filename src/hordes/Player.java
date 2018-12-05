@@ -137,7 +137,7 @@ public class Player {
 		return inventory.get(n);
 	}
 
-  // Permet d'afficher l'inventaire pour l'ajout d'un item à la banque
+  // Permet d'afficher l'inventaire pour l'ajout d'un item à la banque ou sur le sol
 	public void bankInventory() {
 		if (inventory.isEmpty()) {
 			System.out.println("Votre inventaire ne contient aucun objet, vous ne pouvez pas ajouter un item à la banque");

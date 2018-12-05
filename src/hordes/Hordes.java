@@ -188,7 +188,8 @@ public class Hordes {
 		public static void add_bank (int n) { // n est le numéro du joueur enregistré dans le tableau
 			if ((p[n].getPos_x() == 0) && (p[n].getPos_y() == 0)) {
 				p[n].bankInventory(); // On affiche l'inventaire
-				int temp = scan.nextInt(); // On demande à l'utilisateur l'objet qu'il veut mettre à la bank, puis nous l'ajoutons à la banque
+				int temp = scan.nextInt() - 1; // On demande à l'utilisateur l'objet qu'il veut mettre à la bank, puis nous l'ajoutons à la banque.
+				//On oublie pas qu'on commence à afficher à 1 et que la liste commence à 0 d'où le -1
 				if (p[n].getInventory(temp) == "Planche") {
 					bank[0] = +1;
 				}
@@ -210,7 +211,7 @@ public class Hordes {
 				p[n].removeInventory(p[n].getInventory(temp)); // Suppression des items de l'inventaire
 			}
 			else {
-				System.out.println("Vous ne pouvez pas ajouter un item à la banque, vous n'êtes aps en ville");
+				System.out.println("Vous ne pouvez pas ajouter un item à la banque, vous n'êtes pas en ville");
 			}
 		}
 
@@ -281,6 +282,8 @@ public class Hordes {
 		public static void take_water(int n) { // n est le numéro du joueur enregistré dans le tableau
 			p[n].addInventory("Gourde d'eau");
 		}
+		// TODO: Entrez et sortir de la ville en fonction des portes qui sont ouvertes ou non
+		// TODO: Chantier
 
 		/* ----------------------------------------------------------------------- */
 		/* --------------------------------  MAP  -------------------------------- */
@@ -356,8 +359,25 @@ public class Hordes {
 		}
 
 		//TODO: Ramasser un item
-		//TODO: Déposer un item
-		//TODO: Chantier
+
+		// Ramasser un item au sol
+		public static void take_item (int n) { // n est le numéro du joueur enregistré dans le tableau
+
+		}
+
+		// Déposer un item sur le sol
+		public static void drop_item (int n) { // n est le numéro du joueur enregistré dans le tableau
+			if ((p[n].getPos_x() != 0) && (p[n].getPos_y() != 0)) {
+				p[n].bankInventory(); // On affiche l'inventaire
+				int temp = scan.nextInt() - 1; // On demande à l'utilisateur l'objet qu'il veut mettre à la bank, puis nous l'ajoutons à la banque
+				//On oublie pas qu'on commence à afficher à 1 et que la liste commence à 0 d'où le -1
+				 m[p[n].getPos_x() + 12][p[n].getPos_x() + 12].addItem((p[n].getInventory(temp))); // On ajout à la case
+				p[n].removeInventory(p[n].getInventory(temp)); // Suppression des items de l'inventaire
+			}
+			else {
+				System.out.println("Vous ne pouvez pas déposer un item ici, vous êtes en ville");
+			}
+		}
 
 		/* ----------------------------------------------------------------------- */
 		/* ---------------------------  REGAIN DE PA  ---------------------------- */
