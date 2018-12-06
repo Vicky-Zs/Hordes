@@ -11,6 +11,7 @@ public class Player {
 	private boolean drink; //Si vrai, il a déjà bu et ne peut plus boire
 	private boolean eat; //Si vrai, le joueur a déjà mangé et ne peut plus mangé
 	private int addict; // -1 le joueur n'est pas dépendant, si 0 ou plus, permet de savoir le nombre de tour sans la prise de boisson énergisante
+  private boolean inCity; // Si c'est vrai, il est en ville, sinon il est en dehors
 	private ArrayList<String> inventory = new ArrayList<>(); // Inventaire du joueur
 
 	//Constructeur
@@ -23,6 +24,7 @@ public class Player {
 		this.drink = false;
 		this.eat = false;
 		this.addict = -1;
+		this.inCity = true;
 		// Un nouveau joueur arrive dans la ville, avec les PV max, le nombre de pa Max, ect...
 	}
 
