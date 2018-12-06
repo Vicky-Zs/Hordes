@@ -113,6 +113,16 @@ public class Player {
     this.addict = +1;
   }
 
+	// Permet de savoir si un joueur a bu ou non
+	public boolean getInCity () {
+		return drink;
+	}
+
+	// Modifie pour dire qu'il a bu
+	public void setInCity (boolean inCity) {
+		this.inCity = inCity;
+	}
+
 	// Changement de joueur
 	public void resetDay () {
 		this.nb_pa = 6;
