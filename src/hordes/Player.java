@@ -125,7 +125,6 @@ public class Player {
 
 	// Changement de joueur
 	public void resetDay () {
-		this.nb_pa = 6;
 		this.drink = false;
 		this.eat = false;
 	}

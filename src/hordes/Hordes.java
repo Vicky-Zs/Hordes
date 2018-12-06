@@ -15,7 +15,7 @@ public class Hordes {
 	private static City city = new City(); // Variable ville (unique)
 	private static int nb_j = 1; // Nombre de jour depuis le début (commence à 1)
 	private static int nb_z = 0; // Nombre de zombies qui attaquent la nuit
-	private static ArrayList<Integer> fiftyfifty = new ArrayList<>();
+	private static ArrayList<Integer> fiftyfifty = new ArrayList<>(); // Permet de choisir la moité lors de l'attaque en ville
 	// 0 = Planche, 1 = Plaque de métal, 2 = Boisson énergisante, 3 = Ration, 4 = Gourde d'eau
 
 	/* ----------------------------------------------------------------------- */
@@ -473,13 +473,17 @@ public class Hordes {
 				}
 			}
 			for (int i = 0; i < nb_p; i++){ //On vérifie si chaque joueur est en ville
-				if ((p[i].getPos_x() != 0) && (p[i].getPos_y() != 0)) {
+				if (p[i].getInCity()) {
+					p[i].resetDay(); // Enlève le statut "a bu" et "a mangé"
+				}
+				else {
 					mort.add(p[i].getPseudo()); //Si ce n'est pas le cas, on l'ajoute à la liste des morts
 					p[i].setPV(0); // Le joueur est mort, il a donc 0 PV
 				}
 			}
 			// Attaque des zombies sur la ville
-			nb_z = (int) (Math.random()*10 + 1) + 10*nb_j;
+			nb_z = (int) (Math.random()*11 + 10*nb_j); // On choisit un nombre aléatoire entre 0 et 10 que l'on ajoute à 10* le nombre du jour
+			nb_j ++; // On ajout un au nombre de jour
 			if (city.getDefense() <= nb_z) {
 				System.out.println("Les zombies ont réussi à passer");
 				for (int i = 0; i < nb_p; i++) {
