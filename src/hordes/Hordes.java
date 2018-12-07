@@ -7,7 +7,6 @@ public class Hordes {
 	private static Player[] p = new Player [20]; // Création du tableau de joueur
 	private static int nb_p = 0; // Numero du joueur (pour la création de joueur)
 	private static Map[][] m = new Map [25][25]; // Création du tableau des cases
-	private static int[] bank = new int [5]; // Création du tableau d'objets en banque
 	private static ArrayList<String> temp_mort = new ArrayList<>(); // Liste des morts qui ont lieu durant la journée en cours
 	private static ArrayList<String> mort = new ArrayList<>(); // Liste des morts qui ont eu lieu les 24 dernières heures
 	private static ArrayList<String> old_mort = new ArrayList<>(); // Liste des morts qui ont eu lieu les 24 dernières heures
@@ -32,15 +31,6 @@ public class Hordes {
 			}
 		}
 		System.out.println ("La map a été initialisé");
-	}
-
-	// Initialisation de la Banque
-	public static void iniBank(){
-		for (int i = 0; i < bank.length; i++) {
-			bank[i] = 0; // On initialise bien à 0 toutes les cases de la bank
-		}
-		bank[3] = 50; // La ville commence avec 50 rations
-		System.out.println ("La banque a été initialisé");
 	}
 
 	// Répartition des objets de manière aléatoire
@@ -119,62 +109,62 @@ public class Hordes {
 
 		//Consultation de la bank
 		public static void consult_bank() {
-				for (int i = 0; i<bank.length; i++) {
+				for (int i = 0; i<5; i++) {
 				// 0 = Planche, 1 = Plaque de métal, 2 = Boisson énergisante, 3 = Ration, 4 = Gourde d'eau
 					switch (i){
 						case 0: //Pour les planches
-							if (bank[i] == 0) {
+							if (city.getBank(i) == 0) {
 								System.out.println("Il n'y a aucune planche");
 							}
-							else if (bank[i] == 1) {
+							else if (city.getBank(i) == 1) {
 								System.out.println("Il y a une planche");
 							}
 							else {
-								System.out.println("Il y a " + bank[i] + " planches");
+								System.out.println("Il y a " + city.getBank(i) + " planches");
 							}
 						break;
 						case 1: //Pour les plaques de métal
-							if (bank[i] == 0) {
+							if (city.getBank(i) == 0) {
 								System.out.println("Il n'y a aucune plaque de métal");
 							}
-							else if (bank[i] == 1) {
+							else if (city.getBank(i) == 1) {
 								System.out.println("Il y a une plaque de métal");
 							}
 							else {
-								System.out.println("Il y a " + bank[i] + " plaques de métal");
+								System.out.println("Il y a " + city.getBank(i) + " plaques de métal");
 							}
 						break;
 						case 2: //Pour les boissons énergisantes
-							if (bank[i] == 0) {
+							if (city.getBank(i) == 0) {
 								System.out.println("Il n'y a aucune boisson énergisante");
 							}
-							else if (bank[i] == 1) {
+							else if (city.getBank(i) == 1) {
 								System.out.println("Il y a une boisson énergisante");
 							}
 							else {
-								System.out.println("Il y a " + bank[i] + " boissons énergisantes");
+								System.out.println("Il y a " + city.getBank(i) + " boissons énergisantes");
 							}
 						break;
 						case 3: //Pour les rations
-							if (bank[i] == 0) {
+							if (city.getBank(i) == 0) {
 								System.out.println("Il n'y a aucune ration");
 							}
-							else if (bank[i] == 1) {
+							else if (city.getBank(i) == 1) {
 								System.out.println("Il y a une ration");
 							}
 							else {
-								System.out.println("Il y a " + bank[i] + " rations");
+								System.out.println("Il y a " + city.getBank(i) + " rations");
 							}
 						break;
 						case 4: //Pour les gourdes d'eau
-							if (bank[i] == 0) {
+							if (city.getBank(i) == 0) {
 								System.out.println("Il n'y a aucune gourde d'eau");
 							}
-							else if (bank[i] == 1) {
+							else if (city.getBank(i) == 1) {
 								System.out.println("Il y a une gourde d'eau");
 							}
 							else {
-								System.out.println("Il y a " + bank[i] + " gourdes d'eau");
+								System.out.println("Il y a " + city.getBank(i) + " gourdes d'eau");
 							}
 						break;
 						default:
@@ -191,19 +181,19 @@ public class Hordes {
 				int temp = scan.nextInt() - 1; // On demande à l'utilisateur l'objet qu'il veut mettre à la bank, puis nous l'ajoutons à la banque.
 				//On oublie pas qu'on commence à afficher à 1 et que la liste commence à 0 d'où le -1
 				if (p[n].getInventory(temp) == "Planche") {
-					bank[0] = +1;
+					city.setBank(0, city.getBank(0) + 1);
 				}
 				else if (p[n].getInventory(temp) == "Plaque de métal") {
-					bank[1] = +1;
+					city.setBank(1, city.getBank(1) + 1);
 				}
 				else if (p[n].getInventory(temp) == "Boisson énergisante") {
-					bank[2] = +1;
+					city.setBank(2, city.getBank(2) + 1);
 				}
 				else if (p[n].getInventory(temp) == "Ration") {
-					bank[3] = +1;
+					city.setBank(3, city.getBank(3) + 1);
 				}
 				else if (p[n].getInventory(temp) == "Gourde d'eau") {
-					bank[4] = +1;
+					city.setBank(4, city.getBank(4) + 1);
 				}
 				else {
 					System.out.println ("Erreur dans l'ajout dans la banque");
@@ -217,57 +207,57 @@ public class Hordes {
 
 		// Retrait d'un objet de la banque
 		public static void remove_bank (int n) { // n est le numéro du joueur enregistré dans le tableau
-			System.out.println("Quel objet voulez-vous prendre ? \n0 = Planche \n1 = Plaque de métal \n2 = Boisson énergisante \n3 = Ration \n4 = Gourde d'eau");
-			int temp = scan.nextInt();
+			System.out.println("Quel objet voulez-vous prendre ? \n1 = Planche \n2 = Plaque de métal \n3 = Boisson énergisante \n4 = Ration \n5 = Gourde d'eau");
+			int temp = scan.nextInt() - 1;
 			switch(temp){ //On vérifie si l'objet est en bank, puis on l'ajoute à l'inventaire et on réduit de 1 le nombre contenu dans la banque
 				case 0:
-					if (bank[temp] == 0) {
+					if (city.getBank(temp) == 0) {
 						System.out.println("Il n'y a plus de planche dans la banque, vous ne pouvez pas en prendre");
 					}
 					else {
 						System.out.println("Une planche a été ajouté à votre inventaire");
 						p[n].addInventory("Planche");
-						bank[temp] = -1;
+						city.setBank(temp, city.getBank(temp) - 1);
 					}
 				break;
 				case 1:
-					if (bank[temp] == 0) {
+					if (city.getBank(temp) == 0) {
 						System.out.println("Il n'y a plus de plaque de métal dans la banque, vous ne pouvez pas en prendre");
 					}
 					else {
 						System.out.println("Une plaque de métal a été ajouté à votre inventaire");
 						p[n].addInventory("Plaque de métal");
-						bank[temp] = -1;
+						city.setBank(temp, city.getBank(temp) - 1);
 					}
 				break;
 				case 2:
-					if (bank[temp] == 0) {
+					if (city.getBank(temp) == 0) {
 						System.out.println("Il n'y a plus de boisson énergisante dans la banque, vous ne pouvez pas en prendre");
 					}
 					else {
 						System.out.println("Une boisson énergisante a été ajouté à votre inventaire");
 						p[n].addInventory("Boisson énergisante");
-						bank[temp] = -1;
+						city.setBank(temp, city.getBank(temp) - 1);
 					}
 				break;
 				case 3:
-					if (bank[temp] == 0) {
+					if (city.getBank(temp) == 0) {
 						System.out.println("Il n'y a plus de ration dans la banque, vous ne pouvez pas en prendre");
 					}
 					else {
 						System.out.println("Une ration a été ajouté à votre inventaire");
 						p[n].addInventory("Ration");
-						bank[temp] = -1;
+						city.setBank(temp, city.getBank(temp) - 1);
 					}
 				break;
 				case 4:
-					if (bank[temp] == 0) {
+					if (city.getBank(temp) == 0) {
 						System.out.println("Il n'y a plus de gourde d'eau dans la banque, vous ne pouvez pas en prendre");
 					}
 					else {
 						System.out.println("Une gourde d'eau a été ajouté à votre inventaire");
 						p[n].addInventory("Gourde d'eau");
-						bank[temp] = -1;
+						city.setBank(temp, city.getBank(temp) - 1);
 					}
 				break;
 				default:
@@ -303,6 +293,7 @@ public class Hordes {
 			}
 		}
 		// TODO: Chantier
+
 
 		/* ----------------------------------------------------------------------- */
 		/* --------------------------------  MAP  -------------------------------- */

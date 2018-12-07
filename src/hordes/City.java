@@ -3,10 +3,50 @@ package hordes;
 public class City {
 	private int defense;
 	private Boolean door; //True = Open, False = Fermer
+	private int[] bank = new int [5]; // Création du tableau d'objets en banque
+	private int[] build = new int [7]; // Création du tableau de pa pour le chantier
+	// Tableau de chantier:
+	// 0 = Mur d'enceinte
+	// 1 = Fils barbelés
+	// 2 = Fosses à zombies
+	// 3 = Mines autour de la ville
+	// 4 = Portes blindées
+	// 5 = Miradors avec mitrailleuses automatisés
+	// 6 = Abris anti-atomique
 
 	public City() { // On considère que la ville commence les portes ouvertes et avec 10 de défense de base
 		this.defense = 10;
 		this.door = true;
+		for (int i = 0; i < build.length; i++) {
+			switch (i) { //On enregiste le nombre de pa nécessaire pour terminier le chantier
+				case 0:
+					this.build[i] = 10;
+				break;
+				case 1:
+					this.build[i] = 20;
+				break;
+				case 2:
+					this.build[i] = 30;
+				break;
+				case 3:
+					this.build[i] = 30;
+				break;
+				case 4:
+					this.build[i] = 40;
+				break;
+				case 5:
+					this.build[i] = 50;
+				break;
+				case 6:
+					this.build[i] = 60;
+				break;
+			}
+			for (int j = 0; j < bank.length; j++) {
+				this.bank[i] = 0; // On initialise bien à 0 toutes les cases de la bank
+			}
+			bank[3] = 50; // La ville commence avec 50 rations
+			System.out.println ("La banque a été initialisé");
+		}
 	}
 
 	// Obtenir le nombre de défense de la ville
@@ -27,5 +67,44 @@ public class City {
 	// Modifie l'état de la porte
 	public void setDoor(Boolean door) {
 		this.door = door;
+	}
+
+	// Obtenir le nombre d'un objet spécifique
+	public int getBank(int i) {
+		return bank[i];
+	}
+
+	// Modifie le nombre d'un objet spécifique
+	public void setBank(int i, int nb) {
+		this.bank[i] = nb;
+	}
+
+	public static void printBuild () {// n est le numéro du joueur enregistré dans le tableau
+		for (int i = 0; i < 7; i ++) {
+			// Tableau de chantier:
+			// 0 = Mur d'enceinte
+			// 1 = Fils barbelés
+			// 2 = Fosses à zombies
+			// 3 = Mines autour de la ville
+			// 4 = Portes blindées
+			// 5 = Miradors avec mitrailleuses automatisés
+			// 6 = Abris anti-atomique
+			switch (i) {
+				case 0:
+				break;
+				case 1:
+				break;
+				case 2:
+				break;
+				case 3:
+				break;
+				case 4:
+				break;
+				case 5:
+				break;
+				case 6:
+				break;
+				}
+		}
 	}
 }
