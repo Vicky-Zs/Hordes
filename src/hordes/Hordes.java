@@ -292,7 +292,153 @@ public class Hordes {
 			}
 		}
 		// TODO: Chantier
-
+		// Affiche la liste des chantiers
+		public void displayBuild () {
+			for (int i = 0; i < 7; i ++) {
+				switch (i) {
+					case 0: // Mur d'enceinte
+					if (city.getBuild(i) == 0) {
+						System.out.println ("Le mur d'enceinte est déjà terminé");
+					}
+					else {
+						System.out.print ("Le mur d'enceinte nécessite 20 planches et 5 plaques de métal ");
+						if ((city.getBank(0) < 20) && (city.getBank(1) < 5)) {
+							System.out.println (", il manque " + (20 - city.getBank(0)) + " planche(s) et il manque " + (5 - city.getBank(1)) + " plaque(s) de métal");
+						}
+						else if (city.getBank(0) < 20) {
+							System.out.println (", il manque " + (20 -city.getBank(0)) + " planche(s)");
+						}
+						else if (city.getBank(1) < 5) {
+							System.out.println (", il manque " + (5 - city.getBank(1)) + " plaque(s) de métal");
+						}
+						else {
+							System.out.println ("et vous devez investir " + city.getBuild(i) + " pa(s) pour finir ce chantier");
+						}
+					}
+					break;
+					case 1: // Fils barbelés
+					if (city.getBuild(i) == 0) {
+						System.out.println ("Les fils barbelés sont déjà terminés");
+					}
+					else {
+						System.out.print ("Les fils barbelés nécessitent 20 planches et 30 plaques de métal ");
+						if ((city.getBank(0) < 20) && (city.getBank(1) < 30)) {
+							System.out.println (", il manque " + (20 - city.getBank(0)) + " planche(s) et il manque " + (30 - city.getBank(1)) + " plaque(s) de métal");
+						}
+						else if (city.getBank(0) < 20) {
+							System.out.println (", il manque " + (20 - city.getBank(0)) + " planche(s)");
+						}
+						else if (city.getBank(1) < 30) {
+							System.out.println (", il manque " + (30 - city.getBank(1)) + " plaque(s) de métal");
+						}
+						else {
+							System.out.println ("et vous devez investir " + city.getBuild(i) + " pa(s) pour finir ce chantier");
+						}
+					}
+					break;
+					case 2: // Fosses à zombies
+					if (city.getBuild(i) == 0) {
+						System.out.println ("La fosse à zombies est déjà terminée");
+					}
+					else {
+						System.out.print ("La fosse à zombies nécessite 50 planches et 25 plaques de métal ");
+						if ((city.getBank(0) < 50) && (city.getBank(1) < 25)) {
+							System.out.println (", il manque " + (50 -city.getBank(0)) + " planche(s) et il manque " + (25 - city.getBank(1)) + " plaque(s) de métal");
+						}
+						else if (city.getBank(0) < 50) {
+							System.out.println (", il manque " + (50 - city.getBank(0)) + " planche(s)");
+						}
+						else if (city.getBank(1) < 25) {
+							System.out.println (", il manque " + (25 - city.getBank(1)) + " plaque(s) de métal");
+						}
+						else {
+							System.out.println ("et vous devez investir " + city.getBuild(i) + " pa(s) pour finir ce chantier");
+						}
+					}
+					break;
+					case 3: // Mines autour de la ville
+					if (city.getBuild(i) == 0) {
+						System.out.println ("Les mines autour de la ville sont déjà placées");
+					}
+					else {
+						System.out.print ("Les mines nécessitent 10 planches et 50 plaques de métal ");
+						if ((city.getBank(0) < 10) && (city.getBank(1) < 50)) {
+							System.out.println (", il manque " + (10 - city.getBank(0)) + " planche(s) et il manque " + (50 - city.getBank(1)) + " plaque(s) de métal");
+						}
+						else if (city.getBank(0) < 10) {
+							System.out.println (", il manque " + (10 - city.getBank(0)) + " planche(s)");
+						}
+						else if (city.getBank(1) < 50) {
+							System.out.println (", il manque " + (50 - city.getBank(1)) + " plaque(s) de métal");
+						}
+						else {
+							System.out.println ("et vous devez investir " + city.getBuild(i) + " pa(s) pour finir ce chantier");
+						}
+					}
+					break;
+					case 4: // Portes blindées
+					if (city.getBuild(i) == 0) {
+						System.out.println ("Les portes blindées sont déjà terminées");
+					}
+					else {
+						System.out.print ("Les portes blindées nécessitent 50 planches et 50 plaques de métal ");
+						if ((city.getBank(0) < 50) && (city.getBank(1) < 50)) {
+							System.out.println (", il manque " + (50 - city.getBank(0)) + " planche(s) et il manque " + (50 - city.getBank(1)) + " plaque(s) de métal");
+						}
+						else if (city.getBank(0) < 50) {
+							System.out.println (", il manque " + (50 - city.getBank(0)) + " planche(s)");
+						}
+						else if (city.getBank(1) < 50) {
+							System.out.println (", il manque " + (50 - city.getBank(1)) + " plaque(s) de métal");
+						}
+						else {
+							System.out.println ("et vous devez investir " + city.getBuild(i) + " pa(s) pour finir ce chantier");
+						}
+					}
+					break;
+					case 5: // Miradors avec mitrailleuses automatisés
+					if (city.getBuild(i) == 0) {
+						System.out.println ("Les miradors avec mitrailleuses automatisés sont déjà terminées");
+					}
+					else {
+						System.out.print ("Les miradors avec mitrailleuses automatisés nécessitent 50 planches et 50 plaques de métal ");
+						if ((city.getBank(0) < 75) && (city.getBank(1) < 75)) {
+							System.out.println (", il manque " + (75 - city.getBank(0)) + " planche(s) et il manque " + (75 - city.getBank(1)) + " plaque(s) de métal");
+						}
+						else if (city.getBank(0) < 75) {
+							System.out.println (", il manque " + (75 - city.getBank(0)) + " planche(s)");
+						}
+						else if (city.getBank(1) < 75) {
+							System.out.println (", il manque " + (75 - city.getBank(1)) + " plaque(s) de métal");
+						}
+						else {
+							System.out.println ("et vous devez investir " + city.getBuild(i) + " pa(s) pour finir ce chantier");
+						}
+					}
+					break;
+					case 6: // Abris anti-atomique
+					if (city.getBuild(i) == 0) {
+						System.out.println ("Les miradors avec mitrailleuses automatisés sont déjà terminées");
+					}
+					else {
+						System.out.print ("Les miradors avec mitrailleuses automatisés nécessitent 50 planches et 50 plaques de métal ");
+						if ((city.getBank(0) < 100) && (city.getBank(1) < 200)) {
+							System.out.println (", il manque " + (100 - city.getBank(0)) + " planche(s) et il manque " + (200 - city.getBank(1)) + " plaque(s) de métal");
+						}
+						else if (city.getBank(0) < 100) {
+							System.out.println (", il manque " + (100 - city.getBank(0)) + " planche(s)");
+						}
+						else if (city.getBank(1) < 100) {
+							System.out.println (", il manque " + (75 - city.getBank(1)) + " plaque(s) de métal");
+						}
+						else {
+							System.out.println ("et vous devez investir " + city.getBuild(i) + " pa(s) pour finir ce chantier");
+						}
+					}
+					break;
+					}
+			}
+		}
 
 		/* ----------------------------------------------------------------------- */
 		/* --------------------------------  MAP  -------------------------------- */
