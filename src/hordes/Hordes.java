@@ -282,7 +282,26 @@ public class Hordes {
 		public static void take_water(int n) { // n est le numéro du joueur enregistré dans le tableau
 			p[n].addInventory("Gourde d'eau");
 		}
-		// TODO: Entrez et sortir de la ville en fonction des portes qui sont ouvertes ou non
+
+		// Algo pour sortir de la ville
+		public static void exit_town (int n) {// n est le numéro du joueur enregistré dans le tableau
+			if (city.getDoor()) { // On vérifie que la prote est bien ouverte
+					p[n].setInCity(false);
+			}
+			else {
+				System.out.println("La porte est fermée, vous ne pouvez pas sortir de la ville");
+			}
+		}
+
+		// Algo pour entrer dans la ville
+		public static void enter_town (int n) {// n est le numéro du joueur enregistré dans le tableau
+			if (city.getDoor()) { // On vérifie que la prote est bien ouverte
+					p[n].setInCity(true);
+			}
+			else {
+				System.out.println("La porte est fermée, vous ne pouvez pas entrer de la ville");
+			}
+		}
 		// TODO: Chantier
 
 		/* ----------------------------------------------------------------------- */
