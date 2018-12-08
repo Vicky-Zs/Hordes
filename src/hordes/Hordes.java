@@ -1,4 +1,5 @@
 package hordes;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -11,6 +12,7 @@ public class Hordes {
 	private static ArrayList<String> mort = new ArrayList<>(); // Liste des morts qui ont eu lieu les 24 dernières heures
 	private static ArrayList<String> old_mort = new ArrayList<>(); // Liste des morts qui ont eu lieu les 24 dernières heures
 	private static Scanner scan = new Scanner (System.in); // Permet d'avoir des entrées
+	private static Random r= new Random(); // Permet d'avoir des nombres aléatoires
 	private static City city = new City(); // Variable ville (unique)
 	private static int nb_j = 1; // Nombre de jour depuis le début (commence à 1)
 	private static int nb_z = 0; // Nombre de zombies qui attaquent la nuit
@@ -32,61 +34,92 @@ public class Hordes {
 		System.out.println ("La map a été initialisé");
 	}
 
-	// Répartition des objets de manière aléatoire
+
+	public static void showMap() {
+		for (byte i = 0; i < 25; i++) {
+			for (byte j = 0; j < 25; j++) {
+				System.out.print(i + " " + j + " -- ");
+        m[i][j].showItem();
+			}
+		}
+	}
+
+	// Repartition des objets de maniere aleatoire
 	public static void iniItems () {
-		int rand1 = 0; // Une variable aléatoire
-		int rand2 = 0; //Une autre variable aléatoire
-		for (int i = 0; i < 1000; i++) {
-			if (i < 100) {
-				do {
-					rand1 = (int) Math.random()*25; // Nombre aléatoire entre 0 et 24
-					rand2 = (int) Math.random()*25; // Nombre aléatoire entre 0 et 24
-				}while ((rand1 != 12)&&(rand2 != 12));
+		for (int i = 0; i < 100; i++) {
+			// Initialisation des variables aléatoires sur les différentes cases du jeu
+			int rand1 = r.nextInt(24);
+			int rand2 = r.nextInt(24);
+			System.out.println(i+"-rand1:"+rand1+"-rand2:"+rand2);
+			if ((rand1 != 12)&&(rand2 != 12)) {
 				// On vérifie que l'objet n'arrive pas dans la ville, si c'est le cas, on recommence la boucle do while
 				m[rand1][rand2].addHide_item("Boisson Energisante");
 			}
-			if (i < 500) {
-				do {
-					rand1 = (int) Math.random()*25; // Nombre aléatoire entre 0 et 24
-					rand2 = (int) Math.random()*25; // Nombre aléatoire entre 0 et 24
-				}while ((rand1 != 12)&&(rand2 != 12));
-				// On vérifie que l'objet n'arrive pas dans la ville, si c'est le cas, on recommence la boucle do while
-				m[rand1][rand2].addHide_item("Plaque de métal");
+			else {
+				i--;
 			}
-			do {
-				rand1 = (int) Math.random()*25; // Nombre aléatoire entre 0 et 24
-				rand2 = (int) Math.random()*25; // Nombre aléatoire entre 0 et 24
-			}while ((rand1 != 12)&&(rand2 != 12));
-			// On vérifie que l'objet n'arrive pas dans la ville, si c'est le cas, on recommence la boucle do while
-			m[rand1][rand2].addHide_item("Planche");
 		}
-		System.out.println ("Les objets ont été dispersés dans la carte");
+		for (int i = 0; i < 500; i++) {
+			// Initialisation des variables aléatoires sur les différentes cases du jeu
+			int rand1 = r.nextInt(24);
+			int rand2 = r.nextInt(24);
+			System.out.println(i+"-rand1:"+rand1+"-rand2:"+rand2);
+			if ((rand1 != 12)&&(rand2 != 12)) {
+				// On vérifie que l'objet n'arrive pas dans la ville, si c'est le cas, on recommence la boucle do while
+        m[rand1][rand2].addHide_item("Plaque de métal");
+			}
+			else {
+				i--;
+			}
+		}
+		for (int i = 0; i < 1000; i++) {
+			// Initialisation des variables aléatoires sur les différentes cases du jeu
+			int rand1 = r.nextInt(24);
+			int rand2 = r.nextInt(24);
+			System.out.println(i+"-rand1:"+rand1+"-rand2:"+rand2);
+			if ((rand1 != 12)&&(rand2 != 12)) {
+				// On vérifie que l'objet n'arrive pas dans la ville, si c'est le cas, on recommence la boucle do while
+        m[rand1][rand2].addHide_item("Planche");
+			}
+			else {
+				i--;
+			}
+		}
 	}
 
 	// Ajoute un joueur
-	public static void add_player (String pseudo) {
-		if (nb_p < 20) {
-				p[nb_p] = new Player(pseudo);
-				nb_p ++;
+	public static void addPlayer () {
+		System.out.println("rentrer le nombre de joueurs");
+		// On demande de rentrer le nombre de joueurs avec le scanner
+		int nb_p = scan.nextInt();
+		while (nb_p < 2 || nb_p > 20){
+			System.out.println("Le nombre entré n'est pas valide");
+			nb_p = scan.nextInt();
+			// Si on rentre moins de 2 joueurs on redéfinie le nombre de joueurs
 		}
-		else {
-			System.out.println("Le nombre maximal de joueur est atteint");
+    System.out.println("Le nombre entré est valide");
+		// Si le nombre de joueurs est compirs entre 2 et 20 joueurs on rentre leurs prénoms
+			for (int i = 0; i < nb_p; i++){
+			// Pour le nombre de joueurs qu'on a initialisé
+			System.out.println("rentrer le prénom du joueur "+ i);
+			String firstname = scan.next();
+			p[i] = new Player(firstname);
 		}
 	}
 
 	// Calcul zombies sur une case
-		public static void Z_map () {
+		public static void zMap () {
 			int k = 0;
 			int rand = 0;
 			for (int i = 0; i < 25; i++) { //Parcours case par case
 				for (int j = 0; j < 25; j++) {
-					rand = (int) Math.random()*10; //Calcul d'un nombre random entre 0 et 9
+					rand = r.nextInt(9); //Calcul d'un nombre random entre 0 et 9
 						// Si rand = 0, 1 ou 2 OU si case de la ville alors il n'y a pas de zombies.
 						if ((rand < 3) || (i == 12 && j == 12)) {
 							m[i][j].setZ(0); //0 zombie sur cette case
 						}
 						else {
-							rand = (int) Math.random()*7+1; //Calcul d'un nombre entre 1 et 7
+							rand = r.nextInt(7)+1; //Calcul d'un nombre entre 1 et 7
 							m[i][j].setZ(rand); //Il y aura entre 1 et 7 zombie(s) sur cette case
 						}
 						k ++; //Vérification
@@ -107,7 +140,7 @@ public class Hordes {
 		/* ----------------------------------------------------------------------- */
 
 		//Consultation de la bank
-		public static void consult_bank() {
+		public static void consultBank() {
 				for (int i = 0; i<5; i++) {
 				// 0 = Planche, 1 = Plaque de métal, 2 = Boisson énergisante, 3 = Ration, 4 = Gourde d'eau
 					switch (i){
@@ -174,7 +207,7 @@ public class Hordes {
 
 		// Ajoute un item à la banque
 		// Rappel : 0 = Planche, 1 = Plaque de métal, 2 = Boisson énergisante, 3 = Ration, 4 = Gourde d'eau
-		public static void add_bank (int n) { // n est le numéro du joueur enregistré dans le tableau
+		public static void addBank (int n) { // n est le numéro du joueur enregistré dans le tableau
 			if ((p[n].getPos_x() == 0) && (p[n].getPos_y() == 0)) {
 				p[n].bankInventory(); // On affiche l'inventaire
 				int temp = scan.nextInt() - 1; // On demande à l'utilisateur l'objet qu'il veut mettre à la bank, puis nous l'ajoutons à la banque.
@@ -205,7 +238,7 @@ public class Hordes {
 		}
 
 		// Retrait d'un objet de la banque
-		public static void remove_bank (int n) { // n est le numéro du joueur enregistré dans le tableau
+		public static void removeBank (int n) { // n est le numéro du joueur enregistré dans le tableau
 			System.out.println("Quel objet voulez-vous prendre ? \n1 = Planche \n2 = Plaque de métal \n3 = Boisson énergisante \n4 = Ration \n5 = Gourde d'eau");
 			int temp = scan.nextInt() - 1;
 			switch(temp){ //On vérifie si l'objet est en bank, puis on l'ajoute à l'inventaire et on réduit de 1 le nombre contenu dans la banque
@@ -268,12 +301,12 @@ public class Hordes {
 		/* --------------------------  ACTION EN VILLE  -------------------------- */
 		/* ----------------------------------------------------------------------- */
 
-		public static void take_water(int n) { // n est le numéro du joueur enregistré dans le tableau
+		public static void takeWater(int n) { // n est le numéro du joueur enregistré dans le tableau
 			p[n].addInventory("Gourde d'eau");
 		}
 
 		// Algo pour sortir de la ville
-		public static void exit_town (int n) {// n est le numéro du joueur enregistré dans le tableau
+		public static void exitTown (int n) {// n est le numéro du joueur enregistré dans le tableau
 			if (city.getDoor()) { // On vérifie que la prote est bien ouverte
 					p[n].setInCity(false);
 			}
@@ -283,7 +316,7 @@ public class Hordes {
 		}
 
 		// Algo pour entrer dans la ville
-		public static void enter_town (int n) {// n est le numéro du joueur enregistré dans le tableau
+		public static void enterTown (int n) {// n est le numéro du joueur enregistré dans le tableau
 			if (city.getDoor()) { // On vérifie que la prote est bien ouverte
 					p[n].setInCity(true);
 			}
@@ -483,7 +516,7 @@ public class Hordes {
 		}
 
 		//Permet de fouiller la zone
-		public static void search(int n) { // n est le numéro du joueur enregistré dans le tableau
+		public static void search (int n) { // n est le numéro du joueur enregistré dans le tableau
 			String temp;
 			if (p[n].getNb_pa() == 0) {
 				System.out.println("Vous êtes fatigué, vous ne pouvez plus fouiller");
@@ -516,12 +549,12 @@ public class Hordes {
 		//TODO: Ramasser un item
 
 		// Ramasser un item au sol
-		public static void take_item (int n) { // n est le numéro du joueur enregistré dans le tableau
+		public static void takeItem (int n) { // n est le numéro du joueur enregistré dans le tableau
 
 		}
 
 		// Déposer un item sur le sol
-		public static void drop_item (int n) { // n est le numéro du joueur enregistré dans le tableau
+		public static void dropItem (int n) { // n est le numéro du joueur enregistré dans le tableau
 			if ((p[n].getPos_x() != 0) && (p[n].getPos_y() != 0)) {
 				p[n].bankInventory(); // On affiche l'inventaire
 				int temp = scan.nextInt() - 1; // On demande à l'utilisateur l'objet qu'il veut mettre à la bank, puis nous l'ajoutons à la banque
@@ -537,7 +570,7 @@ public class Hordes {
 		/* ----------------------------------------------------------------------- */
 		/* ---------------------------  REGAIN DE PA  ---------------------------- */
 		/* ----------------------------------------------------------------------- */
-		public static void drink_water (int n) { // n est le numéro du joueur enregistré dans le tableau
+		public static void drinkWater (int n) { // n est le numéro du joueur enregistré dans le tableau
 			if ((p[n].containsInventory("Gourde d'eau")) && (p[n].getDrink() == false)) {
 				System.out.println("Vous vous désaltérez, vous regagnez 6 PA");
 				if (p[n].getNb_pa() < 5) {
@@ -556,7 +589,7 @@ public class Hordes {
 			}
 		}
 
-		public static void eat_ration (int n) { // n est le numéro du joueur enregistré dans le tableau
+		public static void eatRation (int n) { // n est le numéro du joueur enregistré dans le tableau
 			if ((p[n].containsInventory("Ration")) && (p[n].getEat() == false)) {
 				System.out.println("Vous mangez de la nourriture pas très bonne, mais ça rempli votre ventre, vous regagnez 6 PA");
 				if (p[n].getNb_pa() < 5) {
@@ -572,7 +605,7 @@ public class Hordes {
 			}
 		}
 
-		public static void drink_addict (int n) { //n est le numéro du joueur enregistré dans le tableau
+		public static void drinkAddict (int n) { //n est le numéro du joueur enregistré dans le tableau
 			if (p[n].containsInventory("Boisson énergisante")) {
 				System.out.println("Vous buvez une boisson énergisante, vous en devenez dépendant et vous regagnez 4 PA");
 				if (p[n].getNb_pa() < 7) {
@@ -589,7 +622,7 @@ public class Hordes {
 		/* ----------------------------------------------------------------------- */
 		/* ------------------------  CHANGEMENT JOUR TOUR  ----------------------- */
 		/* ----------------------------------------------------------------------- */
-		public static void changing_turn (){ //Algo de changement de tour (toutes les 2 heures)
+		public static void changingTurn (){ //Algo de changement de tour (toutes les 2 heures)
 			for (int i =0; i<nb_p; i++) { //On regarde chaque joueur
 				if (p[i].getPV() != 0) {
 					if (p[i].getNb_pa() < 7) { //Gain des pas
@@ -612,7 +645,7 @@ public class Hordes {
 			}
 		}
 
-		public static void changing_day(){ //Algo de changement de jour (uniquement à 00h)
+		public static void changingDay(){ //Algo de changement de jour (uniquement à 00h)
 			int temp = 0;
 			fiftyfifty.clear();
 			if (mort.isEmpty() == false) { // On vérifie que la liste n'est pas vide (pour éviter un plantage)
@@ -637,7 +670,7 @@ public class Hordes {
 				}
 			}
 			// Attaque des zombies sur la ville
-			nb_z = (int) (Math.random()*11 + 10*nb_j); // On choisit un nombre aléatoire entre 0 et 10 que l'on ajoute à 10* le nombre du jour
+			nb_z = r.nextInt(10) + 10*nb_j; // On choisit un nombre aléatoire entre 0 et 10 que l'on ajoute à 10* le nombre du jour
 			nb_j ++; // On ajout un au nombre de jour
 			if (city.getDefense() <= nb_z) {
 				System.out.println("Les zombies ont réussi à passer");
@@ -647,7 +680,7 @@ public class Hordes {
 					}
 				}
 				for (int i = 0; i < (fiftyfifty.size()/2 + fiftyfifty.size() % 2); i++) { // Nombre de joueur divisé par 2 + le reste de la division euclidienne
-					temp = fiftyfifty.get((int) Math.random()*fiftyfifty.size()); // On prend un nombre aléatoire dans la liste fiftyfifty
+					temp = fiftyfifty.get(r.nextInt(fiftyfifty.size())); // On prend un nombre aléatoire dans la liste fiftyfifty
 					System.out.print(p[temp].getPseudo() + " "); // On annonce que le joueur est mort
 					mort.add(p[temp].getPseudo()); // On l'ajoute à la liste
 					p[temp].setPV(0); // Le joueur est mort, il a donc 0 PV
@@ -663,7 +696,7 @@ public class Hordes {
 		/* ----------------------------------------------------------------------- */
 		// Affichage du journal reprenant les morts de la veille
 		// Hameau obscur est le nom de la ville -> J'ai pris le nom d'une de mes villes quand j'y jouais ;)
-		public static void consult_newspaper() {
+		public static void consultNewspaper() {
 			System.out.println ("Hameau Obscur - Jour " + nb_j);
 			if (nb_j == 1) {
 				System.out.println("Bienvenue au Hameau Obscur !!\nNous avons espéré que les zombies nous oublie, mais ce n'est pas le cas.\nNous allons donc devoir nous organiser et tenir, le Hameau Obscur ne doit pas tomber !");
