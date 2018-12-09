@@ -47,7 +47,7 @@ public class Hordes {
 			}
 			else {
 				i--;
-				System.out.println("Sur la ville");
+				// System.out.println("Sur la ville"); // Ligne pour vérifier ce qu'il se passe sur la ville
 			}
 		}
 		for (int i = 0; i < 500; i++) {
@@ -61,7 +61,7 @@ public class Hordes {
 			}
 			else {
 				i--;
-				System.out.println("Sur la ville");
+				// System.out.println("Sur la ville"); // Ligne pour vérifier ce qu'il se passe sur la ville
 			}
 		}
 		for (int i = 0; i < 1000; i++) {
@@ -75,7 +75,7 @@ public class Hordes {
 			}
 			else {
 				i--;
-				System.out.println("Sur la ville");
+				// System.out.println("Sur la ville"); // Ligne pour vérifier ce qu'il se passe sur la ville
 			}
 		}
 	}
