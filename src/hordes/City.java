@@ -43,7 +43,7 @@ public class City {
 				break;
 			}
 			for (int j = 0; j < bank.length; j++) {
-				this.bank[i] = 0; // On initialise bien à 0 toutes les cases de la bank
+				this.bank[j] = 0; // On initialise bien à 0 toutes les cases de la bank
 			}
 		}
 		bank[3] = 50; // La ville commence avec 50 rations
