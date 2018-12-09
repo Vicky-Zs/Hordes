@@ -20,7 +20,7 @@ public class Map {
 		this.hide_item = new ArrayList<>();
 	}
 
-	//Affiche la liste des items non caché sur la case en question
+	//Affiche la liste des items non-cachés sur la case en question
 	public void showItem() {
 		if (item.isEmpty()) { //On cherche à savoir si la liste est vide
 			System.out.println ("Il n'y a rien sur cette case");
@@ -42,6 +42,19 @@ public class Map {
 			System.out.println("Quel objet voulez vous rammasser ?");
 			for (byte i = 0; i < item.size(); i++) {
         System.out.println((i+1) + " : " + item.get(i) + " ");
+			}
+		}
+	}
+
+	//Affiche la liste des items cachés sur la case en question
+	public void showHideItem() {
+		if (hide_item.isEmpty()) { //On cherche à savoir si la liste est vide
+			System.out.println ("Il n'y a rien sur cette case");
+		}
+		else { //Si la liste n'est pas vide, on affiche la liste
+			System.out.println ("Sur la cas, il y a : ");
+			for (byte i = 0; i < hide_item.size(); i++) {
+				System.out.println(hide_item.get(i) + " ");
 			}
 		}
 	}

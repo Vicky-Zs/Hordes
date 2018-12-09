@@ -34,55 +34,58 @@ public class Hordes {
 		System.out.println ("La map a été initialisé");
 	}
 
-
-	public static void showMap() {
-		for (byte i = 0; i < 25; i++) {
-			for (byte j = 0; j < 25; j++) {
-				System.out.print(i + " " + j + " -- ");
-        m[i][j].showItem();
-			}
-		}
-	}
-
 	// Repartition des objets de maniere aleatoire
 	public static void iniItems () {
 		for (int i = 0; i < 100; i++) {
 			// Initialisation des variables aléatoires sur les différentes cases du jeu
-			int rand1 = r.nextInt(24);
-			int rand2 = r.nextInt(24);
-			System.out.println(i+"-rand1:"+rand1+"-rand2:"+rand2);
-			if ((rand1 != 12)&&(rand2 != 12)) {
+			int rand1 = r.nextInt(25); // On choisit un nombre aléatoire entre 0 et 24
+			int rand2 = r.nextInt(25); // On choisit un nombre aléatoire entre 0 et 24
+			 // System.out.println(i+" - rand1 : "+rand1+" - rand2 : "+rand2); // Ligne pour vérifier les randoms
+			if ((rand1 != 12)||(rand2 != 12)) {
 				// On vérifie que l'objet n'arrive pas dans la ville, si c'est le cas, on recommence la boucle do while
 				m[rand1][rand2].addHide_item("Boisson Energisante");
 			}
 			else {
 				i--;
+				System.out.println("Sur la ville");
 			}
 		}
 		for (int i = 0; i < 500; i++) {
 			// Initialisation des variables aléatoires sur les différentes cases du jeu
-			int rand1 = r.nextInt(24);
-			int rand2 = r.nextInt(24);
-			System.out.println(i+"-rand1:"+rand1+"-rand2:"+rand2);
-			if ((rand1 != 12)&&(rand2 != 12)) {
+			int rand1 = r.nextInt(25); // On choisit un nombre aléatoire entre 0 et 24
+			int rand2 = r.nextInt(25); // On choisit un nombre aléatoire entre 0 et 24
+			// System.out.println(i+" - rand1 : "+rand1+" - rand2 : "+rand2); // Ligne pour vérifier les randoms
+			if ((rand1 != 12)||(rand2 != 12)) {
 				// On vérifie que l'objet n'arrive pas dans la ville, si c'est le cas, on recommence la boucle do while
         m[rand1][rand2].addHide_item("Plaque de métal");
 			}
 			else {
 				i--;
+				System.out.println("Sur la ville");
 			}
 		}
 		for (int i = 0; i < 1000; i++) {
 			// Initialisation des variables aléatoires sur les différentes cases du jeu
-			int rand1 = r.nextInt(24);
-			int rand2 = r.nextInt(24);
-			System.out.println(i+"-rand1:"+rand1+"-rand2:"+rand2);
-			if ((rand1 != 12)&&(rand2 != 12)) {
+			int rand1 = r.nextInt(25); // On choisit un nombre aléatoire entre 0 et 24
+			int rand2 = r.nextInt(25); // On choisit un nombre aléatoire entre 0 et 24
+			// System.out.println(i+" -rand1 : "+rand1+" - rand2 : "+rand2); // Ligne pour vérifier les randoms
+			if ((rand1 != 12)||(rand2 != 12)) {
 				// On vérifie que l'objet n'arrive pas dans la ville, si c'est le cas, on recommence la boucle do while
         m[rand1][rand2].addHide_item("Planche");
 			}
 			else {
 				i--;
+				System.out.println("Sur la ville");
+			}
+		}
+	}
+
+	//Affiche ce qu'il y a sur la map
+	public static void showMap() {
+		for (byte i = 0; i < 25; i++) {
+			for (byte j = 0; j < 25; j++) {
+				System.out.print(i + " " + j + " -- ");
+				m[i][j].showHideItem();
 			}
 		}
 	}
@@ -113,7 +116,7 @@ public class Hordes {
 			int rand = 0;
 			for (int i = 0; i < 25; i++) { //Parcours case par case
 				for (int j = 0; j < 25; j++) {
-					rand = r.nextInt(9); //Calcul d'un nombre random entre 0 et 9
+					rand = r.nextInt(10); //Calcul d'un nombre random entre 0 et 9
 						// Si rand = 0, 1 ou 2 OU si case de la ville alors il n'y a pas de zombies.
 						if ((rand < 3) || (i == 12 && j == 12)) {
 							m[i][j].setZ(0); //0 zombie sur cette case
@@ -670,7 +673,7 @@ public class Hordes {
 				}
 			}
 			// Attaque des zombies sur la ville
-			nb_z = r.nextInt(10) + 10*nb_j; // On choisit un nombre aléatoire entre 0 et 10 que l'on ajoute à 10* le nombre du jour
+			nb_z = r.nextInt(11) + (10 * nb_j); // On choisit un nombre aléatoire entre 0 et 10 que l'on ajoute à 10* le nombre du jour
 			nb_j ++; // On ajout un au nombre de jour
 			if (city.getDefense() <= nb_z) {
 				System.out.println("Les zombies ont réussi à passer");
@@ -680,7 +683,7 @@ public class Hordes {
 					}
 				}
 				for (int i = 0; i < (fiftyfifty.size()/2 + fiftyfifty.size() % 2); i++) { // Nombre de joueur divisé par 2 + le reste de la division euclidienne
-					temp = fiftyfifty.get(r.nextInt(fiftyfifty.size())); // On prend un nombre aléatoire dans la liste fiftyfifty
+					temp = fiftyfifty.get(r.nextInt(fiftyfifty.size()+1)); // On prend un nombre aléatoire dans la liste fiftyfifty
 					System.out.print(p[temp].getPseudo() + " "); // On annonce que le joueur est mort
 					mort.add(p[temp].getPseudo()); // On l'ajoute à la liste
 					p[temp].setPV(0); // Le joueur est mort, il a donc 0 PV
