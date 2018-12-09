@@ -45,9 +45,9 @@ public class City {
 			for (int j = 0; j < bank.length; j++) {
 				this.bank[i] = 0; // On initialise bien à 0 toutes les cases de la bank
 			}
-			bank[3] = 50; // La ville commence avec 50 rations
-			System.out.println ("La banque a été initialisé");
 		}
+		bank[3] = 50; // La ville commence avec 50 rations
+		System.out.println ("La banque a été initialisé");
 	}
 
 	// Obtenir le nombre de défense de la ville

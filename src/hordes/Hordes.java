@@ -12,7 +12,7 @@ public class Hordes {
 	private static ArrayList<String> mort = new ArrayList<>(); // Liste des morts qui ont eu lieu les 24 dernières heures
 	private static ArrayList<String> old_mort = new ArrayList<>(); // Liste des morts qui ont eu lieu les 24 dernières heures
 	private static Scanner scan = new Scanner (System.in); // Permet d'avoir des entrées
-	private static Random r= new Random(); // Permet d'avoir des nombres aléatoires
+	private static Random r = new Random(); // Permet d'avoir des nombres aléatoires
 	private static City city = new City(); // Variable ville (unique)
 	private static int nb_j = 1; // Nombre de jour depuis le début (commence à 1)
 	private static int nb_z = 0; // Nombre de zombies qui attaquent la nuit
