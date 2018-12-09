@@ -133,9 +133,6 @@ public class Hordes {
 		}
 
 
-
-
-
 		/* ----------------------------------------------------------------------- */
 		/* -------------------------------  BANK  -------------------------------- */
 		/* ----------------------------------------------------------------------- */
@@ -325,6 +322,7 @@ public class Hordes {
 				System.out.println("La porte est fermée, vous ne pouvez pas entrer de la ville");
 			}
 		}
+
 		// TODO: Chantier
 		// Affiche la liste des chantiers
 		public void displayBuild () {
@@ -471,6 +469,174 @@ public class Hordes {
 					}
 					break;
 					}
+			}
+		}
+
+		public void participateBuild (int n) { // n est le numéro du joueur enregistré dans le tableau
+			System.out.println ("Sur quel chantier vous voulez travailler ?\n1 : Mur d'enceinte\n2 : Fils barbelés\n3 : Fosses à zombies\n4 : Mines autour de la ville\n5 : Portes blindées\n6 : Miradors avec mitrailleuses automatisés\n7 : Abris anti-atomique");
+			int i = scan.nextInt() - 1;
+			switch (i) {
+				case 0:
+					if ((city.getBank(0) < 20) && (city.getBank(1) < 5)){
+						System.out.println("Vous ne pouvez pas participer à ce chantier, il manque des objets");
+					}
+					else {
+						System.out.println("Combien de pa voulez-vous mettre ?");
+						i = scan.nextInt();
+						while (i > p[n].getNb_pa()) {
+							System.out.println("Vous n'avez pas assez de pa");
+							i = scan.nextInt();
+						}
+						if (i > city.getBuild(0)) {
+							i = city.getBuild(0);
+						}
+						System.out.println("Vous avez dépensé " + i + "pa dans le Mur d'enceinte");
+						city.setBuild(0, (city.getBuild(0) - i));
+						p[n].setNb_pa(p[n].getNb_pa() - i);
+						if (city.getBuild(0) == 0) {
+							System.out.println ("Le chantier est terminé");
+							city.setDefense(city.getDefense() + 20);
+						}
+					}
+				break;
+				case 1:
+					if ((city.getBank(0) < 20) && (city.getBank(1) < 30)){
+						System.out.println("Vous ne pouvez pas participer à ce chantier, il manque des objets");
+					}
+					else {
+						System.out.println("Combien de pa voulez-vous mettre ?");
+						i = scan.nextInt();
+						while (i > p[n].getNb_pa()) {
+							System.out.println("Vous n'avez pas assez de pa");
+							i = scan.nextInt();
+						}
+						if (i > city.getBuild(1)) {
+							i = city.getBuild(1);
+						}
+						System.out.println("Vous avez dépensé " + i + "pa dans les Fils barbelés");
+						city.setBuild(1, (city.getBuild(1) - i));
+						p[n].setNb_pa(p[n].getNb_pa() - i);
+						if (city.getBuild(1) == 0) {
+							System.out.println ("Le chantier est terminé");
+							city.setDefense(city.getDefense() + 30);
+						}
+					}
+				break;
+				case 2:
+					if ((city.getBank(0) < 50) && (city.getBank(1) < 25)){
+						System.out.println("Vous ne pouvez pas participer à ce chantier, il manque des objets");
+					}
+					else {
+						System.out.println("Combien de pa voulez-vous mettre ?");
+						i = scan.nextInt();
+						while (i > p[n].getNb_pa()) {
+							System.out.println("Vous n'avez pas assez de pa");
+							i = scan.nextInt();
+						}
+						if (i > city.getBuild(2)) {
+							i = city.getBuild(2);
+						}
+						System.out.println("Vous avez dépensé " + i + "pa dans les Fosses à zombies");
+						city.setBuild(2, (city.getBuild(2) - i));
+						p[n].setNb_pa(p[n].getNb_pa() - i);
+						if (city.getBuild(2) == 0) {
+							System.out.println ("Le chantier est terminé");
+							city.setDefense(city.getDefense() + 50);
+						}
+					}
+				break;
+				case 3:
+					if ((city.getBank(0) < 10) && (city.getBank(1) < 50)){
+						System.out.println("Vous ne pouvez pas participer à ce chantier, il manque des objets");
+					}
+					else {
+						System.out.println("Combien de pa voulez-vous mettre ?");
+						i = scan.nextInt();
+						while (i > p[n].getNb_pa()) {
+							System.out.println("Vous n'avez pas assez de pa");
+							i = scan.nextInt();
+						}
+						if (i > city.getBuild(3)) {
+							i = city.getBuild(3);
+						}
+						System.out.println("Vous avez dépensé " + i + "pa dans les Mines autour de la ville");
+						city.setBuild(3, (city.getBuild(3) - i));
+						p[n].setNb_pa(p[n].getNb_pa() - i);
+						if (city.getBuild(3) == 0) {
+							System.out.println ("Le chantier est terminé");
+							city.setDefense(city.getDefense() + 50);
+						}
+					}
+				break;
+				case 4:
+					if ((city.getBank(0) < 50) && (city.getBank(1) < 50)){
+						System.out.println("Vous ne pouvez pas participer à ce chantier, il manque des objets");
+					}
+					else {
+						System.out.println("Combien de pa voulez-vous mettre ?");
+						i = scan.nextInt();
+						while (i > p[n].getNb_pa()) {
+							System.out.println("Vous n'avez pas assez de pa");
+							i = scan.nextInt();
+						}
+						if (i > city.getBuild(4)) {
+							i = city.getBuild(4);
+						}
+						System.out.println("Vous avez dépensé " + i + "pa dans les Portes blindées");
+						city.setBuild(4, (city.getBuild(4) - i));
+						p[n].setNb_pa(p[n].getNb_pa() - i);
+						if (city.getBuild(4) == 0) {
+							System.out.println ("Le chantier est terminé");
+							city.setDefense(city.getDefense() + 100);
+						}
+					}
+				break;
+				case 5:
+					if ((city.getBank(0) < 75) && (city.getBank(1) < 75)){
+						System.out.println("Vous ne pouvez pas participer à ce chantier, il manque des objets");
+					}
+					else {
+						System.out.println("Combien de pa voulez-vous mettre ?");
+						i = scan.nextInt();
+						while (i > p[n].getNb_pa()) {
+							System.out.println("Vous n'avez pas assez de pa");
+							i = scan.nextInt();
+						}
+						if (i > city.getBuild(5)) {
+							i = city.getBuild(5);
+						}
+						System.out.println("Vous avez dépensé " + i + "pa dans les Miradors avec mitrailleuses automatisés");
+						city.setBuild(5, (city.getBuild(5) - i));
+						p[n].setNb_pa(p[n].getNb_pa() - i);
+						if (city.getBuild(5) == 0) {
+							System.out.println ("Le chantier est terminé");
+							city.setDefense(city.getDefense() + 200);
+						}
+					}
+				break;
+				case 6:
+					if ((city.getBank(0) < 100) && (city.getBank(1) < 200)){
+						System.out.println("Vous ne pouvez pas participer à ce chantier, il manque des objets");
+					}
+					else {
+						System.out.println("Combien de pa voulez-vous mettre ?");
+						i = scan.nextInt();
+						while (i > p[n].getNb_pa()) {
+							System.out.println("Vous n'avez pas assez de pa");
+							i = scan.nextInt();
+						}
+						if (i > city.getBuild(6)) {
+							i = city.getBuild(6);
+						}
+						System.out.println("Vous avez dépensé " + i + "pa dans les Abris anti-atomique");
+						city.setBuild(6, (city.getBuild(6) - i));
+						p[n].setNb_pa(p[n].getNb_pa() - i);
+						if (city.getBuild(6) == 0) {
+							System.out.println ("Le chantier est terminé");
+							city.setDefense(city.getDefense() + 500);
+						}
+					}
+				break;
 			}
 		}
 
