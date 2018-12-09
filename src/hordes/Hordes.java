@@ -95,7 +95,7 @@ public class Hordes {
 		System.out.println("rentrer le nombre de joueurs");
 		// On demande de rentrer le nombre de joueurs avec le scanner
 		int nb_p = scan.nextInt();
-		while (nb_p < 2 || nb_p > 20){
+		while ((nb_p < 2) || (nb_p > 20)){
 			System.out.println("Le nombre entré n'est pas valide");
 			nb_p = scan.nextInt();
 			// Si on rentre moins de 2 joueurs on redéfinie le nombre de joueurs
