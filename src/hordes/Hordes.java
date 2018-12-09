@@ -114,9 +114,9 @@ public class Hordes {
 		public static void zMap () {
 			int k = 0;
 			int rand = 0;
-			for (int i = 0; i < 25; i++) { //Parcours case par case
+			for (int i = 0; i < 25; i++) { // Parcours case par case
 				for (int j = 0; j < 25; j++) {
-					rand = r.nextInt(10); //Calcul d'un nombre random entre 0 et 9
+					rand = r.nextInt(10); // Calcul d'un nombre random entre 0 et 9
 						// Si rand = 0, 1 ou 2 OU si case de la ville alors il n'y a pas de zombies.
 						if ((rand < 3) || (i == 12 && j == 12)) {
 							m[i][j].setZ(0); //0 zombie sur cette case
@@ -126,12 +126,10 @@ public class Hordes {
 							m[i][j].setZ(rand); //Il y aura entre 1 et 7 zombie(s) sur cette case
 						}
 						k ++; //Vérification
-						System.out.println("Sur la case [" + m[i][j].getCoor_x() + ";" + m[i][j].getCoor_y() + "], il y a " + m[i][j].getZ() + " zombies"); //Pour voir le nombre de zombies sur une case
+						// System.out.println("Sur la case [" + m[i][j].getCoor_x() + ";" + m[i][j].getCoor_y() + "], il y a " + m[i][j].getZ() + " zombies"); // Pour voir le nombre de zombies sur une case
 				}
 			}
-			if (k == 625) {
-				System.out.println("Les zombies ont bougé");
-			}
+			System.out.println("Les zombies ont bougé");
 		}
 
 

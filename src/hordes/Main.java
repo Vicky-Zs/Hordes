@@ -11,5 +11,6 @@ public class Main {
     Hordes.iniMap();
     Hordes.iniItems();
     Hordes.showMap();
+    Hordes.zMap();
   }
 }
