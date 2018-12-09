@@ -101,7 +101,7 @@ public class Hordes {
 		// Si le nombre de joueurs est compirs entre 2 et 20 joueurs on rentre leurs prénoms
 			for (int i = 0; i < nb_p; i++){
 			// Pour le nombre de joueurs qu'on a initialisé
-			System.out.println("rentrer le prénom du joueur "+ i);
+			System.out.println("rentrer le prénom du joueur "+ (i+1));
 			String firstname = scan.next();
 			p[i] = new Player(firstname);
 		}
