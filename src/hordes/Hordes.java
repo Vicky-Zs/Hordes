@@ -649,8 +649,12 @@ public class Hordes {
 			if (p[n].getNb_pa() == 0) {
 				System.out.println("Vous êtes fatigué, vous ne pouvez plus vous déplacer");
 			}
+			else if (p[n].getPos_y() == 0) {
+				System.out.println("Vous êtes arrivé à la limite nord de la carte");
+			}
 			else {
 				p[n].setPos_y(p[n].getPos_y() - 1);
+				p[n].setNb_pa(p[n].getNb_pa() - 1);
 			}
 		}
 
@@ -659,8 +663,12 @@ public class Hordes {
 			if (p[n].getNb_pa() == 0) {
 				System.out.println("Vous êtes fatigué, vous ne pouvez plus vous déplacer");
 			}
+			else if (p[n].getPos_y() == 24) {
+				System.out.println("Vous êtes arrivé à la limite sud de la carte");
+			}
 			else {
 				p[n].setPos_y(p[n].getPos_y() + 1);
+				p[n].setNb_pa(p[n].getNb_pa() - 1);
 			}
 		}
 
@@ -669,8 +677,12 @@ public class Hordes {
 			if (p[n].getNb_pa() == 0) {
 				System.out.println("Vous êtes fatigué, vous ne pouvez plus vous déplacer");
 			}
+			else if (p[n].getPos_x() == 0) {
+				System.out.println("Vous êtes arrivé à la limite est de la carte");
+			}
 			else {
 				p[n].setPos_x(p[n].getPos_x() - 1);
+				p[n].setNb_pa(p[n].getNb_pa() - 1);
 			}
 		}
 
@@ -679,7 +691,13 @@ public class Hordes {
 			if (p[n].getNb_pa() == 0) {
 				System.out.println("Vous êtes fatigué, vous ne pouvez plus vous déplacer");
 			}
+			else if (p[n].getPos_y() == 0) {
+				System.out.println("Vous êtes arrivé à la limite ouest de la carte");
+			}
+			else {
 			p[n].setPos_x(p[n].getPos_x() + 1);
+			p[n].setNb_pa(p[n].getNb_pa() - 1);
+			}
 		}
 
 		//Permet de fouiller la zone
