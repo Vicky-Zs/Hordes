@@ -8,15 +8,18 @@ public class Hordes {
 	private static Player[] p = new Player [20]; // Création du tableau de joueur
 	private static int nb_p = 0; // Numero du joueur (pour la création de joueur)
 	private static Map[][] m = new Map [25][25]; // Création du tableau des cases
+	private static ArrayList<String> alive = new ArrayList<>(); // Liste des joueurs qui sont vivants
 	private static ArrayList<String> temp_mort = new ArrayList<>(); // Liste des morts qui ont lieu durant la journée en cours
 	private static ArrayList<String> mort = new ArrayList<>(); // Liste des morts qui ont eu lieu les 24 dernières heures
 	private static ArrayList<String> old_mort = new ArrayList<>(); // Liste des morts qui ont eu lieu les 24 dernières heures
 	private static Scanner scan = new Scanner (System.in); // Permet d'avoir des entrées
 	private static Random r = new Random(); // Permet d'avoir des nombres aléatoires
 	private static City city = new City(); // Variable ville (unique)
-	private static int nb_j = 1; // Nombre de jour depuis le début (commence à 1)
+	private static int nb_day = 1; // Nombre de jour depuis le début (commence à 1)
 	private static int nb_z = 0; // Nombre de zombies qui attaquent la nuit
 	private static ArrayList<Integer> fiftyfifty = new ArrayList<>(); // Permet de choisir la moité lors de l'attaque en ville
+	private static int nb_turn = 1; // Le numéro du tour, le tour 1 correspond de 0h à 2h, le tour de 2 de 2h à 4h, ..., le tour 12 correspon de 22h à 00h
+        // A minuit, c'est l'attaque des zombies.
 
 	/* ----------------------------------------------------------------------- */
 	/* --------------------------  INITIALISATION  --------------------------- */
@@ -92,9 +95,9 @@ public class Hordes {
 
 	// Ajoute un joueur
 	public static void addPlayer () {
-		System.out.println("rentrer le nombre de joueurs");
+		System.out.println("Entrer le nombre de joueurs : ");
 		// On demande de rentrer le nombre de joueurs avec le scanner
-		int nb_p = scan.nextInt();
+		nb_p = scan.nextInt();
 		while ((nb_p < 2) || (nb_p > 20)){
 			System.out.println("Le nombre entré n'est pas valide");
 			nb_p = scan.nextInt();
@@ -104,9 +107,10 @@ public class Hordes {
 		// Si le nombre de joueurs est compirs entre 2 et 20 joueurs on rentre leurs prénoms
 			for (int i = 0; i < nb_p; i++){
 			// Pour le nombre de joueurs qu'on a initialisé
-			System.out.println("rentrer le prénom du joueur "+ (i+1));
+			System.out.println("Entrer le prénom du joueur "+ (i+1));
 			String firstname = scan.next();
 			p[i] = new Player(firstname);
+			alive.add(firstname);
 		}
 	}
 
@@ -855,8 +859,8 @@ public class Hordes {
 				}
 			}
 			// Attaque des zombies sur la ville
-			nb_z = r.nextInt(11) + (10 * nb_j); // On choisit un nombre aléatoire entre 0 et 10 que l'on ajoute à 10* le nombre du jour
-			nb_j ++; // On ajout un au nombre de jour
+			nb_z = r.nextInt(11) + (10 * nb_day); // On choisit un nombre aléatoire entre 0 et 10 que l'on ajoute à 10* le nombre du jour
+			nb_day ++; // On ajout un au nombre de jour
 			if (city.getDefense() <= nb_z) {
 				System.out.println("Les zombies ont réussi à passer");
 				for (int i = 0; i < nb_p; i++) {
@@ -882,8 +886,8 @@ public class Hordes {
 		// Affichage du journal reprenant les morts de la veille
 		// Hameau obscur est le nom de la ville -> J'ai pris le nom d'une de mes villes quand j'y jouais ;)
 		public static void consultNewspaper() {
-			System.out.println ("Hameau Obscur - Jour " + nb_j);
-			if (nb_j == 1) {
+			System.out.println ("Hameau Obscur - Jour " + nb_day);
+			if (nb_day == 1) {
 				System.out.println("Bienvenue au Hameau Obscur !!\nNous avons espéré que les zombies nous oublie, mais ce n'est pas le cas.\nNous allons donc devoir nous organiser et tenir, le Hameau Obscur ne doit pas tomber !");
 			}
 			else if (mort.isEmpty()) {
@@ -895,5 +899,43 @@ public class Hordes {
 					System.out.println(mort.get(i) + " ");
 				}
 			}
+		}
+
+		/* ----------------------------------------------------------------------- */
+		/* --------------------------------  MENU  ------------------------------- */
+		/* ----------------------------------------------------------------------- */
+		public static void game() {
+			String ok;
+			int in;
+			while (alive.isEmpty() == false) {
+				for (nb_turn = 1; nb_turn < 13 ; nb_turn ++) {
+					for (int i = 0; i < nb_p; i ++) {
+						if (alive.contains(p[i].getPseudo())) {
+							System.out.println("C'est au tour de " + p[i].getPseudo() + "\nTapez ok");
+							ok = scan.next();
+							System.out.println("Vous avez " + p[i].getNb_pa() + " pa");
+							System.out.println("Voulez-vous lire le journal ?\n0 = Non\n1 = Oui");
+							in = scan.nextInt();
+							if (in == 1) {
+								consultNewspaper();
+							}
+							System.out.println("Menu :");
+							if (p[i].getInCity()) {
+								System.out.println("1 = Accéder à votre inventaire\n"
+                                                                        + "2 = Accéder à la baque\n"
+                                                                        + "3 = Prendre de l'eau\n"
+                                                                        + "4 = Sortir de la ville");
+							}
+						}
+						else {
+
+						}
+		      }
+					if (nb_turn == 12) {
+						changingDay();
+					}
+				}
+				nb_day ++;
+	    }
 		}
 }
