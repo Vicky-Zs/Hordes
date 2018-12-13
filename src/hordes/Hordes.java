@@ -332,9 +332,8 @@ public class Hordes {
 			}
 		}
 
-		// TODO: Chantier
 		// Affiche la liste des chantiers
-		public void displayBuild () {
+		public static void displayBuild () {
 			for (int i = 0; i < 7; i ++) {
 				switch (i) {
 					case 0: // Mur d'enceinte
@@ -384,7 +383,7 @@ public class Hordes {
 					else {
 						System.out.print ("La fosse à zombies nécessite 50 planches et 25 plaques de métal ");
 						if ((city.getBank(0) < 50) && (city.getBank(1) < 25)) {
-							System.out.println (", il manque " + (50 -city.getBank(0)) + " planche(s) et il manque " + (25 - city.getBank(1)) + " plaque(s) de métal");
+							System.out.println (", il manque " + (50 - city.getBank(0)) + " planche(s) et il manque " + (25 - city.getBank(1)) + " plaque(s) de métal");
 						}
 						else if (city.getBank(0) < 50) {
 							System.out.println (", il manque " + (50 - city.getBank(0)) + " planche(s)");
@@ -481,7 +480,7 @@ public class Hordes {
 			}
 		}
 
-		public void participateBuild (int n) { // n est le numéro du joueur enregistré dans le tableau
+		public static void participateBuild (int n) { // n est le numéro du joueur enregistré dans le tableau
 			System.out.println ("Sur quel chantier vous voulez travailler ?\n1 : Mur d'enceinte\n2 : Fils barbelés\n3 : Fosses à zombies\n4 : Mines autour de la ville\n5 : Portes blindées\n6 : Miradors avec mitrailleuses automatisés\n7 : Abris anti-atomique");
 			int i = scan.nextInt() - 1;
 			switch (i) {
@@ -939,12 +938,13 @@ public class Hordes {
 								}
 							}while (in != 0);
 							do {
-								System.out.println("Que voulez vous faire ?");
+								System.out.println("\n \nQue voulez vous faire ?");
 								if (p[i].getInCity()) {
 									System.out.println("1 = Accéder à votre inventaire\n"
         					+ "2 = Accéder à la baque\n"
         					+ "3 = Prendre de l'eau\n"
-        					+ "4 = Sortir de la ville\n"
+									+ "4 = Participer aux chantiers\n"
+        					+ "5 = Sortir de la ville\n"
         					+ "0 = Passer son tour");
         					in = scan.nextInt();
 									switch (in) {
@@ -1109,8 +1109,15 @@ public class Hordes {
 										case 3:
 										takeWater(i);
 										break;
+										// Niveau 1
 										case 4:
+										displayBuild();
+										participateBuild(i);
+										break;
+										// Niveau 1
+										case 5:
 										p[i].setInCity(false);
+										System.out.println("Vous êtes sorti de la ville");
 										break;
 										default:
 										System.out.println("La réponse n'est pas acceptée, "

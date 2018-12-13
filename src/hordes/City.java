@@ -18,35 +18,18 @@ public class City {
 	public City() { // On considère que la ville commence les portes ouvertes et avec 10 de défense de base
 		this.defense = 10;
 		this.door = true;
-		for (int i = 0; i < build.length; i++) {
-			switch (i) { //On enregiste le nombre de pa nécessaire pour terminier le chantier
-				case 0:
-					this.build[i] = 10;
-				break;
-				case 1:
-					this.build[i] = 20;
-				break;
-				case 2:
-					this.build[i] = 30;
-				break;
-				case 3:
-					this.build[i] = 30;
-				break;
-				case 4:
-					this.build[i] = 40;
-				break;
-				case 5:
-					this.build[i] = 50;
-				break;
-				case 6:
-					this.build[i] = 60;
-				break;
-			}
-			for (int j = 0; j < bank.length; j++) {
-				this.bank[j] = 0; // On initialise bien à 0 toutes les cases de la bank
-			}
-		}
-		bank[3] = 50; // La ville commence avec 50 rations
+		this.build[0] = 10;
+		this.build[1] = 20;
+		this.build[2] = 30;
+		this.build[3] = 30;
+		this.build[4] = 40;
+		this.build[5] = 50;
+		this.build[6] = 60;
+		this.bank[0] = 0;
+		this.bank[1] = 0;
+		this.bank[2] = 0;
+		this.bank[3] = 50; // La ville commence avec 50 rations
+		this.bank[4] = 0;
 		System.out.println ("La banque a été initialisé");
 	}
 
