@@ -113,12 +113,12 @@ public class Player {
     this.addict = +1;
   }
 
-	// Permet de savoir si un joueur a bu ou non
+	// Permet de savoir si un joueur est en ville ou non
 	public boolean getInCity () {
-		return drink;
+		return inCity;
 	}
 
-	// Modifie pour dire qu'il a bu
+	// Modifie si le joueur est en ville ou non
 	public void setInCity (boolean inCity) {
 		this.inCity = inCity;
 	}
@@ -131,7 +131,6 @@ public class Player {
 
 	// Permet de voir votre inventaire
 	public void getInventory() {
-
 		if (inventory.isEmpty()) {
 			System.out.println("Votre inventaire ne contient aucun objet");
 		}
@@ -143,6 +142,10 @@ public class Player {
 		}
 	}
 
+	// Permet de savoir si l'iventaire est vide
+	public boolean isEmpty(){
+		return inventory.isEmpty();
+	}
 	// Permet de retourner le n_ième objet de votre inventaire
 	public String getInventory(int n) {
 		return inventory.get(n);

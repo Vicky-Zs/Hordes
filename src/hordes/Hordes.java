@@ -95,6 +95,7 @@ public class Hordes {
 
 	// Ajoute un joueur
 	public static void addPlayer () {
+		String firstname;
 		System.out.println("Entrer le nombre de joueurs : ");
 		// On demande de rentrer le nombre de joueurs avec le scanner
 		nb_p = scan.nextInt();
@@ -107,8 +108,12 @@ public class Hordes {
 		// Si le nombre de joueurs est compirs entre 2 et 20 joueurs on rentre leurs prénoms
 			for (int i = 0; i < nb_p; i++){
 			// Pour le nombre de joueurs qu'on a initialisé
-			System.out.println("Entrer le prénom du joueur "+ (i+1));
-			String firstname = scan.next();
+			System.out.println("Entrer le pseudo du joueur "+ (i+1));
+			firstname = scan.next();
+			while (alive.contains(firstname)){
+				System.out.println("Veuillez choisir un autre pseudo, " + firstname + " est déjà pris");
+				firstname = scan.next();
+			}
 			p[i] = new Player(firstname);
 			alive.add(firstname);
 		}
@@ -826,10 +831,11 @@ public class Hordes {
 							p[i].setPV(p[i].getPV() - 5);
 						}
 					}
-					if (p[i].getPV() < 1) { // On vérifie s'il ne meurt pas à ce tour
-						temp_mort.add(p[i].getPseudo());
-						p[i].setPV(0); // Le joueur est mort, il a donc 0 PV
-					}
+				}
+				if (p[i].getPV() < 1) { // On vérifie s'il ne meurt pas à ce tour
+					temp_mort.add(p[i].getPseudo());
+					alive.remove(p[i].getPseudo());
+					p[i].setPV(0); // Le joueur est mort, il a donc 0 PV
 				}
 			}
 		}
@@ -899,6 +905,7 @@ public class Hordes {
 					System.out.println(mort.get(i) + " ");
 				}
 			}
+			System.out.println("\n \n");
 		}
 
 		/* ----------------------------------------------------------------------- */
@@ -906,36 +913,223 @@ public class Hordes {
 		/* ----------------------------------------------------------------------- */
 		public static void game() {
 			String ok;
-			int in;
+			int in = 0;
 			while (alive.isEmpty() == false) {
 				for (nb_turn = 1; nb_turn < 13 ; nb_turn ++) {
+					System.out.println("\n \n \nJour " + nb_day + " - Tour " + nb_turn);
 					for (int i = 0; i < nb_p; i ++) {
 						if (alive.contains(p[i].getPseudo())) {
-							System.out.println("C'est au tour de " + p[i].getPseudo() + "\nTapez ok");
-							ok = scan.next();
-							System.out.println("Vous avez " + p[i].getNb_pa() + " pa");
-							System.out.println("Voulez-vous lire le journal ?\n0 = Non\n1 = Oui");
-							in = scan.nextInt();
-							if (in == 1) {
-								consultNewspaper();
-							}
-							System.out.println("Menu :");
-							if (p[i].getInCity()) {
-								System.out.println("1 = Accéder à votre inventaire\n"
-                                                                        + "2 = Accéder à la baque\n"
-                                                                        + "3 = Prendre de l'eau\n"
-                                                                        + "4 = Sortir de la ville");
-							}
+							System.out.println("\n \nC'est au tour de " + p[i].getPseudo() + "\nTapez ok");
+					    ok = scan.next();
+					    System.out.println("Vous avez " + p[i].getNb_pa() + " pa");
+							do {
+								System.out.println("Voulez-vous lire le journal ?\n0 = Non\n1 = Oui");
+						    in = scan.nextInt();
+						    if (in == 1) {
+						      consultNewspaper();
+									in = 0;
+						    }
+						    else if (in == 1923) {
+						      p[i].setPV(0);
+						      System.out.println(p[i].getPseudo() + " va mourir au prochain tour (Commande admin)");
+									in = 0;
+						    }
+								else if (i != 0) {
+									System.out.println("La réponse n'est pas acceptez, veuillez de nouveau entrer votre réponse");
+								}
+							}while (in != 0);
+							do {
+								System.out.println("Que voulez vous faire ?");
+								if (p[i].getInCity()) {
+									System.out.println("1 = Accéder à votre inventaire\n"
+        					+ "2 = Accéder à la baque\n"
+        					+ "3 = Prendre de l'eau\n"
+        					+ "4 = Sortir de la ville\n"
+        					+ "0 = Passer son tour");
+        					in = scan.nextInt();
+									switch (in) {
+										case 0:
+										in = -1;
+										break;
+										// Niveau 1
+										case 1:
+										do {
+											if (p[i].containsInventory("Gourde d'eau") && (p[i].containsInventory("Ration"))) {
+												System.out.println("Inventaire :\n"
+												+"1 = Consulter votre inventaire\n"
+												+"2 = Boire\n"
+												+"3 = Manger\n"
+												+"0 = Revenir au menu principal");
+												do {
+													in = scan.nextInt();
+													switch(in){
+														case 0:
+														break;
+														// Niveau 2
+														case 1:
+														p[i].getInventory();
+														in = 0;
+														break;
+														// Niveau 2
+														case 2:
+														drinkWater(i);
+														in = 0;
+														break;
+														// Niveau 2
+														case 3:
+														eatRation(i);
+														in = 0;
+														break;
+														// Niveau 2
+														default:
+														System.out.println("La réponse n'est pas acceptée, "
+														+ "veuillez de nouveau entrer votre réponse");
+													}
+												}while(in != 0);
+											}
+											else if(p[i].containsInventory("Gourde d'eau")) {
+												System.out.println("Inventaire :\n"
+												+"1 = Consulter votre inventaire\n"
+												+"2 = Boire\n"
+												+"0 = Revenir au menu principal");
+												do {
+													in = scan.nextInt();
+													switch (in) {
+														case 0:
+														break;
+														// Niveau 2
+														case 1:
+														p[i].getInventory();
+														in = 0;
+														break;
+														// Niveau 2
+														case 2:
+														drinkWater(i);
+														in = 0;
+														break;
+														// Niveau 2
+														default:
+														System.out.println("La réponse n'est pas acceptée, "
+														+ "veuillez de nouveau entrer votre réponse");
+													}
+												}while(in != 0);
+											}
+											else if(p[i].containsInventory("Ration")){
+												System.out.println("Inventaire :\n"
+												+"1 = Consulter votre inventaire\n"
+												+"2 = Manger\n"
+												+"0 = Revenir au menu principal");
+												do {
+													in = scan.nextInt();
+													switch (in) {
+														case 0:
+														break;
+														// Niveau 2
+														case 1:
+														p[i].getInventory();
+														in = 0;
+														break;
+														// Niveau 2
+														default:
+														System.out.println("La réponse n'est pas acceptée, "
+														+ "veuillez de nouveau entrer votre réponse");
+													}
+												}while(in !=0);
+											}
+											else {
+												p[i].getInventory();
+												in = 0;
+											}
+										}while(in != 0);
+										break;
+										// Niveau 1
+										case 2:
+											if (p[i].isEmpty()) {
+												System.out.println ("Banque : \n"
+												+"1 = Consulter la banque\n"
+												+"2 = Prendre un objet à la banque\n"
+												+"0 = Revenir au menu principal");
+												do {
+													in = scan.nextInt();
+													switch (in) {
+														case 0:
+														break;
+														// Niveau 2
+														case 1:
+														consultBank();
+														in = 0;
+														break;
+														// Niveau 2
+														case 2:
+														removeBank(i);
+														in = 0;
+														break;
+														// Niveau 2
+														default:
+														System.out.println("La réponse n'est pas acceptée, "
+														+ "veuillez de nouveau entrer votre réponse");
+													}
+												}while (in !=0);
+											}
+											else {
+												System.out.println ("Banque : \n"
+												+"1 = Consulter la banque\n"
+												+"2 = Déposer un objet à la banque\n"
+												+"3 = Prendre un objet à la banque\n"
+												+"0 = Revenir au menu principal");
+												do {
+													in = scan.nextInt();
+													switch (in) {
+														case 0:
+														break;
+														// Niveau 2
+														case 1:
+														consultBank();
+														in = 0;
+														break;
+														// Niveau 2
+														case 2:
+														addBank(i);
+														in = 0;
+														break;
+														// Niveau 2
+														case 3:
+														removeBank(i);
+														in = 0;
+														break;
+														// Niveau 2
+														default:
+														System.out.println("La réponse n'est pas acceptée, "
+														+ "veuillez de nouveau entrer votre réponse");
+													}
+												}while (in !=0);
+											}
+										break;
+										// Niveau 1
+										case 3:
+										takeWater(i);
+										break;
+										case 4:
+										p[i].setInCity(false);
+										break;
+										default:
+										System.out.println("La réponse n'est pas acceptée, "
+										+ "veuillez de nouveau entrer votre réponse");
+									}
+								}
+								else {
+									in = -1;
+									System.out.println("Le citoyen n'est pas en ville");
+								}
+							}while(in != -1);
 						}
-						else {
-
-						}
-		      }
+					}
+					changingTurn();
 					if (nb_turn == 12) {
 						changingDay();
 					}
 				}
 				nb_day ++;
-	    }
+			}
 		}
-}
+	}
