@@ -657,7 +657,10 @@ public class Hordes {
 			if (p[n].getNb_pa() == 0) {
 				System.out.println("Vous êtes fatigué, vous ne pouvez plus vous déplacer");
 			}
-			else if (p[n].getPos_y() == 0) {
+			else if (m[p[n].getPos_x() + 12][p[n].getPos_y() + 12].getZ()>0) {
+				System.out.println("Il y a des zombies, vous devez tous les tuer avant de bouger");
+			}
+			else if (p[n].getPos_y() + 12 == 0) {
 				System.out.println("Vous êtes arrivé à la limite nord de la carte");
 			}
 			else {
@@ -671,8 +674,11 @@ public class Hordes {
 			if (p[n].getNb_pa() == 0) {
 				System.out.println("Vous êtes fatigué, vous ne pouvez plus vous déplacer");
 			}
-			else if (p[n].getPos_y() == 24) {
+			else if (p[n].getPos_y() + 12 == 24) {
 				System.out.println("Vous êtes arrivé à la limite sud de la carte");
+			}
+			else if (m[p[n].getPos_x() + 12][p[n].getPos_y() + 12].getZ()>0) {
+				System.out.println("Il y a des zombies, vous devez tous les tuer avant de bouger");
 			}
 			else {
 				p[n].setPos_y(p[n].getPos_y() + 1);
@@ -685,8 +691,11 @@ public class Hordes {
 			if (p[n].getNb_pa() == 0) {
 				System.out.println("Vous êtes fatigué, vous ne pouvez plus vous déplacer");
 			}
-			else if (p[n].getPos_x() == 0) {
+			else if (p[n].getPos_x() + 12 == 24) {
 				System.out.println("Vous êtes arrivé à la limite est de la carte");
+			}
+			else if (m[p[n].getPos_x() + 12][p[n].getPos_y() + 12].getZ()>0) {
+				System.out.println("Il y a des zombies, vous devez tous les tuer avant de bouger");
 			}
 			else {
 				p[n].setPos_x(p[n].getPos_x() - 1);
@@ -699,8 +708,11 @@ public class Hordes {
 			if (p[n].getNb_pa() == 0) {
 				System.out.println("Vous êtes fatigué, vous ne pouvez plus vous déplacer");
 			}
-			else if (p[n].getPos_y() == 0) {
+			else if (p[n].getPos_y() + 12 == 0) {
 				System.out.println("Vous êtes arrivé à la limite ouest de la carte");
+			}
+			else if (m[p[n].getPos_x() + 12][p[n].getPos_y() + 12].getZ()>0) {
+				System.out.println("Il y a des zombies, vous devez tous les tuer avant de bouger");
 			}
 			else {
 			p[n].setPos_x(p[n].getPos_x() + 1);
@@ -944,7 +956,8 @@ public class Hordes {
         					+ "2 = Accéder à la baque\n"
         					+ "3 = Prendre de l'eau\n"
 									+ "4 = Participer aux chantiers\n"
-        					+ "5 = Sortir de la ville\n"
+									+ "5 = Accéder à la porte\n"
+        					+ "6 = Sortir de la ville\n"
         					+ "0 = Passer son tour");
         					in = scan.nextInt();
 									switch (in) {
@@ -1112,10 +1125,66 @@ public class Hordes {
 										// Niveau 1
 										case 4:
 										displayBuild();
-										participateBuild(i);
+										if (p[i].getNb_pa()>0) {
+											participateBuild(i);
+										}
+										else {
+											System.out.println("Vous ne pouvez pas participer "
+											+ "aux chantiers, vous êtes fatigué");
+										}
 										break;
 										// Niveau 1
 										case 5:
+										if (city.getDoor()) {
+											System.out.print("La porte est ouverte");
+											if (p[i].getNb_pa() > 0) {
+												System.out.print(", souhaitez-vous la fermer ? "
+												+ "\n0 = Non \n1 = Oui");
+												do {
+													in = scan.nextInt();
+													switch (in) {
+														case 0:
+														break;
+														// Niveau 2
+														case 1:
+														p[i].setNb_pa(p[i].getNb_pa() - 1);
+														city.setDoor(false);
+														in = 0;
+														break;
+														// Niveau 2
+														default:
+														System.out.println("La réponse n'est pas acceptée, "
+														+ "veuillez de nouveau entrer votre réponse");
+													}
+												}while (in != 0);
+											}
+										}
+										else {
+											System.out.print("La porte est fermée");
+											if (p[i].getNb_pa() > 0) {
+												System.out.print(", souhaitez-vous l'ouvrir ? "
+												+ "\n0 = Non \n1 = Oui");
+												do {
+													in = scan.nextInt();
+													switch (in) {
+														case 0:
+														break;
+														// Niveau 2
+														case 1:
+														p[i].setNb_pa(p[i].getNb_pa() - 1);
+														city.setDoor(true);
+														in = 0;
+														break;
+														// Niveau 2
+														default:
+														System.out.println("La réponse n'est pas acceptée, "
+														+ "veuillez de nouveau entrer votre réponse");
+													}
+												}while (in != 0);
+											}
+										}
+										break;
+										case 6:
 										p[i].setInCity(false);
 										System.out.println("Vous êtes sorti de la ville");
 										break;
@@ -1125,6 +1194,7 @@ public class Hordes {
 									}
 								}
 								else {
+
 									in = -1;
 									System.out.println("Le citoyen n'est pas en ville");
 								}
