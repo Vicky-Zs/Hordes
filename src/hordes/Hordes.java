@@ -480,6 +480,7 @@ public class Hordes {
 			}
 		}
 
+		// Permet de participer au chantier
 		public static void participateBuild (int n) { // n est le numéro du joueur enregistré dans le tableau
 			System.out.println ("Sur quel chantier vous voulez travailler ?\n1 : Mur d'enceinte\n2 : Fils barbelés\n3 : Fosses à zombies\n4 : Mines autour de la ville\n5 : Portes blindées\n6 : Miradors avec mitrailleuses automatisés\n7 : Abris anti-atomique");
 			int i = scan.nextInt() - 1;
@@ -698,7 +699,7 @@ public class Hordes {
 				System.out.println("Il y a des zombies, vous devez tous les tuer avant de bouger");
 			}
 			else {
-				p[n].setPos_x(p[n].getPos_x() - 1);
+				p[n].setPos_x(p[n].getPos_x() + 1);
 				p[n].setNb_pa(p[n].getNb_pa() - 1);
 			}
 		}
@@ -715,7 +716,7 @@ public class Hordes {
 				System.out.println("Il y a des zombies, vous devez tous les tuer avant de bouger");
 			}
 			else {
-			p[n].setPos_x(p[n].getPos_x() + 1);
+			p[n].setPos_x(p[n].getPos_x() - 1);
 			p[n].setNb_pa(p[n].getNb_pa() - 1);
 			}
 		}
@@ -734,11 +735,14 @@ public class Hordes {
 			}
 			else {
 				if (m[p[n].getPos_x() + 12][p[n].getPos_x() + 12].isEmpty()) { // Permet de savoir si une case contient encore ou non des objets cachés
-					System.out.println("Cette zone ne contient plus d'objet, elle a été intégralement fouillé");
+					System.out.println("Cette zone ne contient plus d'objet, elle est considérée comme épuisée");
+					m[p[n].getPos_x() + 12][p[n].getPos_x() + 12].setSearch();
+					p[n].setNb_pa(p[n].getNb_pa() - 1);
 				}
 				else {
 					temp = m[p[n].getPos_x() + 12][p[n].getPos_x() + 12].removeHide_item();
 					System.out.print("Vous avez trouvé " + temp);
+					p[n].setNb_pa(p[n].getNb_pa() - 1);
 					if (p[n].sizeInventory()<10) {
 						p[n].addInventory(temp);
 						System.out.println(", il a été ajouté à votre inventaire");
@@ -971,11 +975,12 @@ public class Hordes {
 
 		public static void menuMain (int i) {
 			int in;
+			int exit = 0;
 			do {
 				System.out.println("\n \nQue voulez vous faire ?");
 				if (p[i].getInCity()) {
 					System.out.println("1 = Accéder à votre inventaire\n"
-					+ "2 = Accéder à la baque\n"
+					+ "2 = Accéder à la banque\n"
 					+ "3 = Prendre de l'eau\n"
 					+ "4 = Participer aux chantiers\n"
 					+ "5 = Accéder à la porte\n"
@@ -984,23 +989,21 @@ public class Hordes {
 					in = scan.nextInt();
 					switch (in) {
 						case 0:
-						in = -1;
+						exit = -1;
 						break;
-						// Niveau 1
 						case 1:
 						menuInventory(i);
 						break;
 						case 2:
 						menuBank(i);
 						break;
-						// Niveau 1
 						case 3:
 						takeWater(i);
+						System.out.println("Vous avez pris de l'eau");
 						break;
-						// Niveau 1
 						case 4:
 						displayBuild();
-						if (p[i].getNb_pa()>0) {
+						if (p[i].getNb_pa() > 0) {
 							participateBuild(i);
 						}
 						else {
@@ -1008,56 +1011,8 @@ public class Hordes {
 							+ "aux chantiers, vous êtes fatigué");
 						}
 						break;
-						// Niveau 1
 						case 5:
-						if (city.getDoor()) {
-							System.out.print("La porte est ouverte");
-							if (p[i].getNb_pa() > 0) {
-								System.out.print(", souhaitez-vous la fermer ? "
-								+ "\n0 = Non \n1 = Oui");
-								do {
-									in = scan.nextInt();
-									switch (in) {
-										case 0:
-										break;
-										// Niveau 2
-										case 1:
-										p[i].setNb_pa(p[i].getNb_pa() - 1);
-										city.setDoor(false);
-										in = 0;
-										break;
-										// Niveau 2
-										default:
-										System.out.println("La réponse n'est pas acceptée, "
-										+ "veuillez de nouveau entrer votre réponse");
-									}
-								}while (in != 0);
-							}
-						}
-						else {
-							System.out.print("La porte est fermée");
-							if (p[i].getNb_pa() > 0) {
-								System.out.print(", souhaitez-vous l'ouvrir ? "
-								+ "\n0 = Non \n1 = Oui");
-								do {
-									in = scan.nextInt();
-									switch (in) {
-										case 0:
-										break;
-										// Niveau 2
-										case 1:
-										p[i].setNb_pa(p[i].getNb_pa() - 1);
-										city.setDoor(true);
-										in = 0;
-										break;
-										// Niveau 2
-										default:
-										System.out.println("La réponse n'est pas acceptée, "
-										+ "veuillez de nouveau entrer votre réponse");
-									}
-								}while (in != 0);
-							}
-						}
+						menuDoor(i);
 						break;
 						case 6:
 						p[i].setInCity(false);
@@ -1069,11 +1024,91 @@ public class Hordes {
 					}
 				}
 				else {
-
-					in = -1;
-					System.out.println("Le citoyen n'est pas en ville");
+					System.out.println("Vous êtes en [" + p[i].getPos_x() + ";" +p[i].getPos_y() + "]\n"
+					+ "Il y a " + m[p[i].getPos_x() + 12][p[i].getPos_y() + 12].getZ() + " zombie(s)\n"
+					+ "Vous avez " + p[i].getNb_pa() + " pa");
+					if ((p[i].getPos_x() == 0) && p[i].getPos_y() == 0) {
+						System.out.println("1 = Accéder à votre inventaire\n"
+						+"2 = Entrer en ville");
+						if (p[i].getNb_pa() > 0){
+							System.out.println("3 = Se déplacer");
+						}
+						System.out.println("0 = Passer son tour");
+						do {
+							in = scan.nextInt();
+							switch (in) {
+								case 0:
+								exit = -1;
+								break;
+								case 1:
+								menuInventory(i);
+								in = 0;
+								break;
+								case 2:
+								p[i].setInCity(true);
+								break;
+								case 3:
+								menuMove(i);
+								in = 0;
+								break;
+							}
+						}while (in != 0);
+					}
+					else if ((m[p[i].getPos_x() + 12][p[i].getPos_y() + 12].getZ() == 0) && (p[i].getNb_pa() > 0)){
+						System.out.println("1 = Accéder à votre inventaire\n"
+						+ "2 = Fouiller \n"
+						+ "3 = Se déplacer \n"
+						+ "0 = Passer son tour");
+						do {
+							in = scan.nextInt();
+							switch (in) {
+								case 0:
+								exit = -1;
+								break;
+								case 1:
+								menuInventory(i);
+								in = 0;
+								break;
+								case 2:
+								search(i);
+								in = 0;
+								case 3:
+								menuMove(i);
+								in = 0;
+								break;
+								default:
+								System.out.println("La réponse n'est pas acceptée, "
+								+ "veuillez de nouveau entrer votre réponse");
+							}
+						}while (in !=0);
+					}
+					else if (p[i].getNb_pa() == 0) {
+						System.out.println("Vous êtes fatigué, voulez-vous accéder à votre inventaire ?"
+						+ "0 = Non\n 1 = Oui");
+						do {
+							in = scan.nextInt();
+							switch(in) {
+								case 0:
+								exit = -1;
+								break;
+								case 1:
+								menuInventory(i);
+								in = 0;
+								break;
+								default:
+								System.out.println("La réponse n'est pas acceptée, "
+								+ "veuillez de nouveau entrer votre réponse");
+							}
+						}while (in != 0);
+					}
+					else {
+						//TODO
+						System.out.println("Kill all zombies !!");
+						m[p[i].getPos_x() + 12][p[i].getPos_y() + 12].setZ(0);
+						in = 0;
+					}
 				}
-			}while(in != -1);
+			}while(exit != -1);
 		}
 
 		public static void menuInventory (int i) {
@@ -1090,22 +1125,18 @@ public class Hordes {
 						switch(in){
 							case 0:
 							break;
-							// Niveau 2
 							case 1:
 							p[i].getInventory();
 							in = 0;
 							break;
-							// Niveau 2
 							case 2:
 							drinkWater(i);
 							in = 0;
 							break;
-							// Niveau 2
 							case 3:
 							eatRation(i);
 							in = 0;
 							break;
-							// Niveau 2
 							default:
 							System.out.println("La réponse n'est pas acceptée, "
 							+ "veuillez de nouveau entrer votre réponse");
@@ -1223,5 +1254,93 @@ public class Hordes {
 					}
 				}while (in !=0);
 			}
+		}
+
+		public static void menuDoor (int i) {
+			int in;
+			if (city.getDoor()) {
+				System.out.print("La porte est ouverte");
+				if (p[i].getNb_pa() > 0) {
+					System.out.print(", souhaitez-vous la fermer ? "
+					+ "\n0 = Non \n1 = Oui");
+					do {
+						in = scan.nextInt();
+						switch (in) {
+							case 0:
+							break;
+							// Niveau 2
+							case 1:
+							p[i].setNb_pa(p[i].getNb_pa() - 1);
+							city.setDoor(false);
+							in = 0;
+							break;
+							// Niveau 2
+							default:
+							System.out.println("La réponse n'est pas acceptée, "
+							+ "veuillez de nouveau entrer votre réponse");
+						}
+					}while (in != 0);
+				}
+			}
+			else {
+				System.out.print("La porte est fermée");
+				if (p[i].getNb_pa() > 0) {
+					System.out.print(", souhaitez-vous l'ouvrir ? "
+					+ "\n0 = Non \n1 = Oui");
+					do {
+						in = scan.nextInt();
+						switch (in) {
+							case 0:
+							break;
+							// Niveau 2
+							case 1:
+							p[i].setNb_pa(p[i].getNb_pa() - 1);
+							city.setDoor(true);
+							in = 0;
+							break;
+							// Niveau 2
+							default:
+							System.out.println("La réponse n'est pas acceptée, "
+							+ "veuillez de nouveau entrer votre réponse");
+						}
+					}while (in != 0);
+				}
+			}
+		}
+
+		public static void menuMove (int i) {
+			int in;
+			System.out.println("Où voulez-vous allez ?\n"
+			+ "1 = Vers le Nord\n"
+			+ "2 = Vers l'Est\n"
+			+ "3 = Vers le Sud\n"
+			+ "4 = Vers l'Ouest\n"
+			+ "0 = Revenir au menu principal");
+			do {
+				in = scan.nextInt();
+				switch (in) {
+					case 0:
+					break;
+					case 1:
+					goNorth(i);
+					in = 0;
+					break;
+					case 2:
+					goEast(i);
+					in = 0;
+					break;
+					case 3:
+					goSouth(i);
+					in = 0;
+					break;
+					case 4:
+					goWest(i);
+					in = 0;
+					break;
+					default:
+					System.out.println("La réponse n'est pas acceptée, "
+					+ "veuillez de nouveau entrer votre réponse");
+				}
+			}while (in != 0);
 		}
 }

@@ -111,7 +111,8 @@ public class Map {
 	// Enlève un élément de la liste et retourne cette élément
 	public String removeHide_item() {
 		String i;
-		int rand = (int) Math.random()*hide_item.size();
+		int rand = (int) (Math.random() * hide_item.size());
+                System.out.println(rand);
 		i = item.get(rand);
 		item.remove(i);
 		return i;
@@ -120,6 +121,11 @@ public class Map {
 	// Permet de savoir si une case a été intégralement fouillé
 	public boolean getSearch() {
 		return search;
+	}
+        
+        // Permet de savoir si une case a été intégralement fouillé
+	public void setSearch() {
+		this.search = true;
 	}
 
 	// Permet de savoir si une case contient encore ou non des objets cachés

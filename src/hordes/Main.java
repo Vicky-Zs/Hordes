@@ -8,7 +8,7 @@ public class Main {
    System.out.println("Bonjour, et bienvenue sur le jeu Hordes");
     Hordes.iniMap();
     Hordes.iniItems();
-    //Hordes.showMap();
+    Hordes.showMap();
     Hordes.zMap();
     Hordes.addPlayer();
     Hordes.game();

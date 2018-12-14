@@ -65,7 +65,7 @@ public class Player {
 
 	// Modifie la position du joueur
 	public void setPos_y(int pos_y) {
-		this.pos_x = pos_y;
+		this.pos_y = pos_y;
 	}
 
 	// Obtient le nombre de PV d'un joueur
