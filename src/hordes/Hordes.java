@@ -97,6 +97,7 @@ public class Hordes {
 	public static void showMap(int i, int j) {
 		System.out.print("\n[" + (i) + ";" + (j) + "] -- ");
 		m[i+12][j+12].showHideItem();
+		System.out.println(" ");
 	}
 
 	// Ajoute un joueur
