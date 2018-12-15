@@ -5,25 +5,39 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Hordes {
-	private static Player[] p = new Player [20]; // Création du tableau de joueur
-	private static int nb_p = 0; // Numero du joueur (pour la création de joueur)
-	private static Map[][] m = new Map [25][25]; // Création du tableau des cases
-	private static ArrayList<String> alive = new ArrayList<>(); // Liste des joueurs qui sont vivants
-	private static ArrayList<String> temp_mort = new ArrayList<>(); // Liste des morts qui ont lieu durant la journée en cours
-	private static ArrayList<String> mort = new ArrayList<>(); // Liste des morts qui ont eu lieu les 24 dernières heures
-	private static ArrayList<String> old_mort = new ArrayList<>(); // Liste des morts qui ont eu lieu les 24 dernières heures
-	private static Scanner scan = new Scanner (System.in); // Permet d'avoir des entrées
-	private static Random r = new Random(); // Permet d'avoir des nombres aléatoires
-	private static City city = new City(); // Variable ville (unique)
-	private static int nb_day = 1; // Nombre de jour depuis le début (commence à 1)
-	private static int nb_z = 0; // Nombre de zombies qui attaquent la nuit
-	private static ArrayList<Integer> fiftyfifty = new ArrayList<>(); // Permet de choisir la moité lors de l'attaque en ville
-	private static int nb_turn = 1; // Le numéro du tour, le tour 1 correspond de 0h à 2h, le tour de 2 de 2h à 4h, ..., le tour 12 correspon de 22h à 00h
-        // A minuit, c'est l'attaque des zombies.
+	private static Player[] p = new Player [20];
+	// Création du tableau de joueur
+	private static int nb_p = 0;
+	// Numero du joueur (pour la création de joueur)
+	private static Map[][] m = new Map [25][25];
+	// Création du tableau des cases
+	private static ArrayList<String> alive = new ArrayList<>();
+	// Liste des joueurs qui sont vivants
+	private static ArrayList<String> temp_mort = new ArrayList<>();
+	// Liste des morts qui ont lieu durant la journée en cours
+	private static ArrayList<String> mort = new ArrayList<>();
+	// Liste des morts qui ont eu lieu les 24 dernières heures
+	private static ArrayList<String> old_mort = new ArrayList<>();
+	// Liste des morts qui ont eu lieu les 24 dernières heures
+	private static Scanner scan = new Scanner (System.in);
+	// Permet d'avoir des entrées
+	private static Random r = new Random();
+	// Permet d'avoir des nombres aléatoires
+	private static City city = new City();
+	// Variable ville (unique)
+	private static int nb_day = 1;
+	// Nombre de jour depuis le début (commence à 1)
+	private static int nb_z = 0;
+	// Nombre de zombies qui attaquent la nuit
+	private static ArrayList<Integer> fiftyfifty = new ArrayList<>();
+	// Permet de choisir la moité lors de l'attaque en ville
+	private static int nb_turn = 1;
+	// Le numéro du tour, le tour 1 correspond de 0h à 2h, le tour de 2 de 2h à 4h, ...,
+	// le tour 12 correspon de 22h à 00h. A minuit, c'est l'attaque des zombies.
 
-	/* ----------------------------------------------------------------------- */
-	/* --------------------------  INITIALISATION  --------------------------- */
-	/* ----------------------------------------------------------------------- */
+	/* ------------------------------------------------------------------------- */
+	/* ---------------------------  INITIALISATION  ---------------------------- */
+	/* ------------------------------------------------------------------------- */
 
 	// Initialisation de la Map
 	public static void iniMap() {
@@ -221,8 +235,10 @@ public class Hordes {
 		}
 
 		// Ajoute un item à la banque
-		// Rappel : 0 = Planche, 1 = Plaque de métal, 2 = Boisson énergisante, 3 = Ration, 4 = Gourde d'eau
-		public static void addBank (int n) { // n est le numéro du joueur enregistré dans le tableau
+		// Rappel : 0 = Planche, 1 = Plaque de métal, 2 = Boisson énergisante,
+		// 3 = Ration, 4 = Gourde d'eau
+		public static void addBank (int n) {
+			// n est le numéro du joueur enregistré dans le tableau
 			if ((p[n].getPos_x() == 0) && (p[n].getPos_y() == 0)) {
 				p[n].bankInventory(); // On affiche l'inventaire
 				int temp = scan.nextInt() - 1; // On demande à l'utilisateur l'objet qu'il veut mettre à la bank, puis nous l'ajoutons à la banque.
@@ -253,7 +269,8 @@ public class Hordes {
 		}
 
 		// Retrait d'un objet de la banque
-		public static void removeBank (int n) { // n est le numéro du joueur enregistré dans le tableau
+		public static void removeBank (int n) {
+			// n est le numéro du joueur enregistré dans le tableau
 			System.out.println("Quel objet voulez-vous prendre ? \n1 = Planche \n2 = Plaque de métal \n3 = Boisson énergisante \n4 = Ration \n5 = Gourde d'eau");
 			int temp = scan.nextInt() - 1;
 			switch(temp){ //On vérifie si l'objet est en bank, puis on l'ajoute à l'inventaire et on réduit de 1 le nombre contenu dans la banque
@@ -316,12 +333,15 @@ public class Hordes {
 		/* --------------------------  ACTION EN VILLE  -------------------------- */
 		/* ----------------------------------------------------------------------- */
 
-		public static void takeWater(int n) { // n est le numéro du joueur enregistré dans le tableau
+		// Algo pour prendre de l'eau au puit
+		public static void takeWater(int n) {
+			// n est le numéro du joueur enregistré dans le tableau
 			p[n].addInventory("Gourde d'eau");
 		}
 
 		// Algo pour sortir de la ville
-		public static void exitTown (int n) {// n est le numéro du joueur enregistré dans le tableau
+		public static void exitTown (int n) {
+			// n est le numéro du joueur enregistré dans le tableau
 			if (city.getDoor()) { // On vérifie que la prote est bien ouverte
 					p[n].setInCity(false);
 			}
@@ -331,7 +351,8 @@ public class Hordes {
 		}
 
 		// Algo pour entrer dans la ville
-		public static void enterTown (int n) {// n est le numéro du joueur enregistré dans le tableau
+		public static void enterTown (int n) {
+			// n est le numéro du joueur enregistré dans le tableau
 			if (city.getDoor()) { // On vérifie que la prote est bien ouverte
 					p[n].setInCity(true);
 			}
@@ -346,141 +367,184 @@ public class Hordes {
 				switch (i) {
 					case 0: // Mur d'enceinte
 					if (city.getBuild(i) == 0) {
-						System.out.println ("Le mur d'enceinte est déjà terminé");
+						System.out.println ("Le mur d'enceinte est déjà terminé\n \n");
 					}
 					else {
-						System.out.print ("Le mur d'enceinte nécessite 20 planches et 5 plaques de métal ");
+						System.out.println ("Mur d'enceinte :\n" +
+						"20 planches et 5 plaques de métal ");
 						if ((city.getBank(0) < 20) && (city.getBank(1) < 5)) {
-							System.out.println (", il manque " + (20 - city.getBank(0)) + " planche(s) et il manque " + (5 - city.getBank(1)) + " plaque(s) de métal");
+							System.out.println (", il manque " + (20 - city.getBank(0))
+							+ " planche(s) et " + (5 - city.getBank(1))
+							+ " plaque(s) de métal \n \n");
 						}
 						else if (city.getBank(0) < 20) {
-							System.out.println (", il manque " + (20 -city.getBank(0)) + " planche(s)");
+							System.out.println (", il manque " + (20 -city.getBank(0))
+							+ " planche(s) \n \n");
 						}
 						else if (city.getBank(1) < 5) {
-							System.out.println (", il manque " + (5 - city.getBank(1)) + " plaque(s) de métal");
+							System.out.println (", il manque " + (5 - city.getBank(1))
+							+ " plaque(s) de métal\n \n");
 						}
 						else {
-							System.out.println ("et vous devez investir " + city.getBuild(i) + " pa(s) pour finir ce chantier");
+							System.out.println ("et vous devez investir " + city.getBuild(i)
+							+ " pa(s) pour finir ce chantier\n \n");
 						}
 					}
 					break;
 					case 1: // Fils barbelés
 					if (city.getBuild(i) == 0) {
-						System.out.println ("Les fils barbelés sont déjà terminés");
+						System.out.println ("Les fils barbelés sont déjà terminés\n \n");
 					}
 					else {
-						System.out.print ("Les fils barbelés nécessitent 20 planches et 30 plaques de métal ");
+						System.out.println ("Fils barbelés : \n"
+						+"20 planches et 30 plaques de métal ");
 						if ((city.getBank(0) < 20) && (city.getBank(1) < 30)) {
-							System.out.println (", il manque " + (20 - city.getBank(0)) + " planche(s) et il manque " + (30 - city.getBank(1)) + " plaque(s) de métal");
+							System.out.println (", il manque " + (20 - city.getBank(0))
+							+ " planche(s) et il manque " + (30 - city.getBank(1))
+							+ " plaque(s) de métal\n \n");
 						}
 						else if (city.getBank(0) < 20) {
-							System.out.println (", il manque " + (20 - city.getBank(0)) + " planche(s)");
+							System.out.println (", il manque " + (20 - city.getBank(0))
+							+ " planche(s)\n \n");
 						}
 						else if (city.getBank(1) < 30) {
-							System.out.println (", il manque " + (30 - city.getBank(1)) + " plaque(s) de métal");
+							System.out.println (", il manque " + (30 - city.getBank(1))
+							+ " plaque(s) de métal\n \n");
 						}
 						else {
-							System.out.println ("et vous devez investir " + city.getBuild(i) + " pa(s) pour finir ce chantier");
+							System.out.println ("et vous devez investir " + city.getBuild(i)
+							+ " pa(s) pour finir ce chantier\n \n");
 						}
 					}
 					break;
 					case 2: // Fosses à zombies
 					if (city.getBuild(i) == 0) {
-						System.out.println ("La fosse à zombies est déjà terminée");
+						System.out.println ("La fosse à zombies est déjà terminée\n \n");
 					}
 					else {
-						System.out.print ("La fosse à zombies nécessite 50 planches et 25 plaques de métal ");
+						System.out.println ("Fosse à zombies : \n "+
+						"50 planches et 25 plaques de métal ");
 						if ((city.getBank(0) < 50) && (city.getBank(1) < 25)) {
-							System.out.println (", il manque " + (50 - city.getBank(0)) + " planche(s) et il manque " + (25 - city.getBank(1)) + " plaque(s) de métal");
+							System.out.println (", il manque " + (50 - city.getBank(0))
+							+ " planche(s) et il manque " + (25 - city.getBank(1))
+							+ " plaque(s) de métal\n \n");
 						}
 						else if (city.getBank(0) < 50) {
-							System.out.println (", il manque " + (50 - city.getBank(0)) + " planche(s)");
+							System.out.println (", il manque " + (50 - city.getBank(0))
+							+ " planche(s)\n \n");
 						}
 						else if (city.getBank(1) < 25) {
-							System.out.println (", il manque " + (25 - city.getBank(1)) + " plaque(s) de métal");
+							System.out.println (", il manque " + (25 - city.getBank(1))
+							+ " plaque(s) de métal\n \n");
 						}
 						else {
-							System.out.println ("et vous devez investir " + city.getBuild(i) + " pa(s) pour finir ce chantier");
+							System.out.println ("et vous devez investir " + city.getBuild(i)
+							+ " pa(s) pour finir ce chantier\n \n");
 						}
 					}
 					break;
 					case 3: // Mines autour de la ville
 					if (city.getBuild(i) == 0) {
-						System.out.println ("Les mines autour de la ville sont déjà placées");
+						System.out.println ("Les mines autour de la ville sont déjà placées\n \n");
 					}
 					else {
-						System.out.print ("Les mines nécessitent 10 planches et 50 plaques de métal ");
+						System.out.print ("Mines \n10 planches et 50 plaques de métal ");
 						if ((city.getBank(0) < 10) && (city.getBank(1) < 50)) {
-							System.out.println (", il manque " + (10 - city.getBank(0)) + " planche(s) et il manque " + (50 - city.getBank(1)) + " plaque(s) de métal");
+							System.out.println (", il manque " + (10 - city.getBank(0))
+							+ " planche(s) et il manque "
+							+ (50 - city.getBank(1)) + " plaque(s) de métal \n \n");
 						}
 						else if (city.getBank(0) < 10) {
-							System.out.println (", il manque " + (10 - city.getBank(0)) + " planche(s)");
+							System.out.println (", il manque " + (10 - city.getBank(0))
+							+ " planche(s)\n \n");
 						}
 						else if (city.getBank(1) < 50) {
-							System.out.println (", il manque " + (50 - city.getBank(1)) + " plaque(s) de métal");
+							System.out.println (", il manque " + (50 - city.getBank(1))
+							+ " plaque(s) de métal\n \n");
 						}
 						else {
-							System.out.println ("et vous devez investir " + city.getBuild(i) + " pa(s) pour finir ce chantier");
+							System.out.println ("et vous devez investir " + city.getBuild(i)
+							+ " pa(s) pour finir ce chantier\n \n");
 						}
 					}
 					break;
 					case 4: // Portes blindées
 					if (city.getBuild(i) == 0) {
-						System.out.println ("Les portes blindées sont déjà terminées");
+						System.out.println ("Les portes blindées sont déjà terminées\n \n");
 					}
 					else {
-						System.out.print ("Les portes blindées nécessitent 50 planches et 50 plaques de métal ");
+						System.out.println ("Les portes blindées :\n"
+						+"50 planches et 50 plaques de métal ");
 						if ((city.getBank(0) < 50) && (city.getBank(1) < 50)) {
-							System.out.println (", il manque " + (50 - city.getBank(0)) + " planche(s) et il manque " + (50 - city.getBank(1)) + " plaque(s) de métal");
+							System.out.println (", il manque " + (50 - city.getBank(0))
+							+ " planche(s) et il manque " + (50 - city.getBank(1))
+							+ " plaque(s) de métal\n \n");
 						}
 						else if (city.getBank(0) < 50) {
-							System.out.println (", il manque " + (50 - city.getBank(0)) + " planche(s)");
+							System.out.println (", il manque " + (50 - city.getBank(0))
+							+ " planche(s)\n \n");
 						}
 						else if (city.getBank(1) < 50) {
-							System.out.println (", il manque " + (50 - city.getBank(1)) + " plaque(s) de métal");
+							System.out.println (", il manque " + (50 - city.getBank(1))
+							+ " plaque(s) de métal\n \n");
 						}
 						else {
-							System.out.println ("et vous devez investir " + city.getBuild(i) + " pa(s) pour finir ce chantier");
+							System.out.println ("et vous devez investir " + city.getBuild(i)
+							+ " pa(s) pour finir ce chantier\n \n");
 						}
 					}
 					break;
 					case 5: // Miradors avec mitrailleuses automatisés
 					if (city.getBuild(i) == 0) {
-						System.out.println ("Les miradors avec mitrailleuses automatisés sont déjà terminées");
+						System.out.println ("Les miradors avec mitrailleuses "
+						+ "automatisés sont déjà terminées\n \n");
 					}
 					else {
-						System.out.print ("Les miradors avec mitrailleuses automatisés nécessitent 50 planches et 50 plaques de métal ");
+						System.out.println ("Miradors avec mitrailleuses automatisés: \n"
+						+ "nécessitent 50 planches et 50 plaques de métal ");
 						if ((city.getBank(0) < 75) && (city.getBank(1) < 75)) {
-							System.out.println (", il manque " + (75 - city.getBank(0)) + " planche(s) et il manque " + (75 - city.getBank(1)) + " plaque(s) de métal");
+							System.out.println (", il manque " + (75 - city.getBank(0))
+							+ " planche(s) et il manque " + (75 - city.getBank(1))
+							+ " plaque(s) de métal\n \n");
 						}
 						else if (city.getBank(0) < 75) {
-							System.out.println (", il manque " + (75 - city.getBank(0)) + " planche(s)");
+							System.out.println (", il manque " + (75 - city.getBank(0))
+							+ " planche(s)\n \n");
 						}
 						else if (city.getBank(1) < 75) {
-							System.out.println (", il manque " + (75 - city.getBank(1)) + " plaque(s) de métal");
+							System.out.println (", il manque " + (75 - city.getBank(1))
+							+ " plaque(s) de métal\n \n");
 						}
 						else {
-							System.out.println ("et vous devez investir " + city.getBuild(i) + " pa(s) pour finir ce chantier");
+							System.out.println ("et vous devez investir " + city.getBuild(i)
+							+ " pa(s) pour finir ce chantier\n \n");
 						}
 					}
 					break;
 					case 6: // Abris anti-atomique
 					if (city.getBuild(i) == 0) {
-						System.out.println ("Les miradors avec mitrailleuses automatisés sont déjà terminées");
+						System.out.println ("Les abris anti-atomique sont déjà construits"
+						+ " \n \n");
 					}
 					else {
-						System.out.print ("Les miradors avec mitrailleuses automatisés nécessitent 50 planches et 50 plaques de métal ");
+						System.out.println ("Miradors avec mitrailleuses automatisés : \n"
+						+ "50 planches et 50 plaques de métal ");
 						if ((city.getBank(0) < 100) && (city.getBank(1) < 200)) {
-							System.out.println (", il manque " + (100 - city.getBank(0)) + " planche(s) et il manque " + (200 - city.getBank(1)) + " plaque(s) de métal");
+							System.out.println (", il manque " + (100 - city.getBank(0))
+							+ " planche(s) et il manque " + (200 - city.getBank(1))
+							+ " plaque(s) de métal\n \n");
 						}
 						else if (city.getBank(0) < 100) {
-							System.out.println (", il manque " + (100 - city.getBank(0)) + " planche(s)");
+							System.out.println (", il manque " + (100 - city.getBank(0))
+							+ " planche(s)\n \n");
 						}
 						else if (city.getBank(1) < 100) {
-							System.out.println (", il manque " + (75 - city.getBank(1)) + " plaque(s) de métal");
+							System.out.println (", il manque " + (75 - city.getBank(1))
+							+ " plaque(s) de métal\n \n");
 						}
 						else {
-							System.out.println ("et vous devez investir " + city.getBuild(i) + " pa(s) pour finir ce chantier");
+							System.out.println ("et vous devez investir " + city.getBuild(i)
+							+ " pa(s) pour finir ce chantier\n \n");
 						}
 					}
 					break;
@@ -490,10 +554,41 @@ public class Hordes {
 
 		// Permet de participer au chantier
 		public static void participateBuild (int n) { // n est le numéro du joueur enregistré dans le tableau
-			System.out.println ("Sur quel chantier vous voulez travailler ?\n1 : Mur d'enceinte\n2 : Fils barbelés\n3 : Fosses à zombies\n4 : Mines autour de la ville\n5 : Portes blindées\n6 : Miradors avec mitrailleuses automatisés\n7 : Abris anti-atomique");
-			int i = scan.nextInt() - 1;
-			switch (i) {
-				case 0:
+			int i = 0;
+			int j = 1;
+			int in;
+			System.out.println ("Sur quel chantier vous voulez travailler ?");
+			if ((city.getBank(0) > 19) && (city.getBank(1) > 4)) {
+				System.out.println ("1 : Mur d'enceinte");
+			}
+			if ((city.getBank(0) > 19) && city.getBank(1) > 29) {
+				System.out.println ("2 : Fils barbelés");
+			}
+			if ((city.getBank(0) > 49) && city.getBank(1) > 24) {
+				System.out.println ("3 : Fosses à zombies");
+			}
+			if ((city.getBank(0) > 9) && city.getBank(1) > 49) {
+				System.out.println ("4 : Mines autour de la ville");
+			}
+			if ((city.getBank(0) > 49) && city.getBank(1) > 49) {
+				System.out.println ("5 : Portes blindées");
+			}
+			if ((city.getBank(0) > 74) && city.getBank(1) > 74) {
+				System.out.println ("6 : Miradors avec mitrailleuses automatisés");
+			}
+			if ((city.getBank(0) > 74) && city.getBank(1) > 74) {
+				System.out.println ("7 : Abris anti-atomique");
+			}
+			System.out.println("0 = Revenir au Menu principal\n"
+			+"Les chantiers non-affichés sont des chantiers sur lesquels "
+			+ "vous ne pouvez pas participer par manque de ressource");
+
+			do {
+				in = scan.nextInt();
+				switch (in) {
+					case 0:
+					break;
+					case 1:
 					if ((city.getBank(0) < 20) && (city.getBank(1) < 5)){
 						System.out.println("Vous ne pouvez pas participer à ce chantier, il manque des objets");
 					}
@@ -515,8 +610,9 @@ public class Hordes {
 							city.setDefense(city.getDefense() + 20);
 						}
 					}
-				break;
-				case 1:
+					in = 0;
+					break;
+					case 2:
 					if ((city.getBank(0) < 20) && (city.getBank(1) < 30)){
 						System.out.println("Vous ne pouvez pas participer à ce chantier, il manque des objets");
 					}
@@ -538,8 +634,9 @@ public class Hordes {
 							city.setDefense(city.getDefense() + 30);
 						}
 					}
-				break;
-				case 2:
+					in = 0;
+					break;
+					case 3:
 					if ((city.getBank(0) < 50) && (city.getBank(1) < 25)){
 						System.out.println("Vous ne pouvez pas participer à ce chantier, il manque des objets");
 					}
@@ -561,8 +658,9 @@ public class Hordes {
 							city.setDefense(city.getDefense() + 50);
 						}
 					}
-				break;
-				case 3:
+					in = 0;
+					break;
+					case 4:
 					if ((city.getBank(0) < 10) && (city.getBank(1) < 50)){
 						System.out.println("Vous ne pouvez pas participer à ce chantier, il manque des objets");
 					}
@@ -584,8 +682,9 @@ public class Hordes {
 							city.setDefense(city.getDefense() + 50);
 						}
 					}
-				break;
-				case 4:
+					in = 0;
+					break;
+					case 5:
 					if ((city.getBank(0) < 50) && (city.getBank(1) < 50)){
 						System.out.println("Vous ne pouvez pas participer à ce chantier, il manque des objets");
 					}
@@ -607,8 +706,9 @@ public class Hordes {
 							city.setDefense(city.getDefense() + 100);
 						}
 					}
-				break;
-				case 5:
+					in = 0;
+					break;
+					case 6:
 					if ((city.getBank(0) < 75) && (city.getBank(1) < 75)){
 						System.out.println("Vous ne pouvez pas participer à ce chantier, il manque des objets");
 					}
@@ -630,8 +730,9 @@ public class Hordes {
 							city.setDefense(city.getDefense() + 200);
 						}
 					}
-				break;
-				case 6:
+					in = 0;
+					break;
+					case 7:
 					if ((city.getBank(0) < 100) && (city.getBank(1) < 200)){
 						System.out.println("Vous ne pouvez pas participer à ce chantier, il manque des objets");
 					}
@@ -653,8 +754,13 @@ public class Hordes {
 							city.setDefense(city.getDefense() + 500);
 						}
 					}
-				break;
-			}
+					in = 0;
+					break;
+					default:
+					System.out.println("La réponse n'est pas acceptée, "
+					+ "veuillez de nouveau entrer votre réponse");
+				}
+			} while (in !=0);
 		}
 
 		/* ----------------------------------------------------------------------- */
@@ -840,9 +946,10 @@ public class Hordes {
 		/* ----------------------------------------------------------------------- */
 		/* ------------------------  CHANGEMENT JOUR TOUR  ----------------------- */
 		/* ----------------------------------------------------------------------- */
-		public static void changingTurn (){ //Algo de changement de tour (toutes les 2 heures)
-			for (int i =0; i<nb_p; i++) { //On regarde chaque joueur
-				if (p[i].getPV() != 0) {
+		// Algo de changement de tour (toutes les 2 heures)
+		public static void changingTurn (){
+			for (int i = 0; i < nb_p; i++) { //On regarde chaque joueur
+				if (alive.contains(p[i].getPseudo())) { // On vérifie que le joueur est en vie
 					if (p[i].getNb_pa() < 7) { //Gain des pas
 						p[i].setNb_pa(p[i].getNb_pa() + 4);
 					}
@@ -855,37 +962,37 @@ public class Hordes {
 							p[i].setPV(p[i].getPV() - 5);
 						}
 					}
+					if (p[i].getPV() < 1) {
+						temp_mort.add(p[i].getPseudo());
+						alive.remove(p[i].getPseudo());
+					}
 				}
-				if (p[i].getPV() < 1) { // On vérifie s'il ne meurt pas à ce tour
-					temp_mort.add(p[i].getPseudo());
-					alive.remove(p[i].getPseudo());
-					p[i].setPV(0); // Le joueur est mort, il a donc 0 PV
-				}
+			}
+			nb_turn ++;
+			if (nb_turn == 13) {
+				nb_turn = 1;
+				changingDay();
 			}
 		}
 
 		public static void changingDay(){ //Algo de changement de jour (uniquement à 00h)
 			int temp = 0;
-			fiftyfifty.clear();
-			if (mort.isEmpty() == false) { // On vérifie que la liste n'est pas vide (pour éviter un plantage)
-				for (int i = 0; i < mort.size(); i++) {
-					old_mort.add(mort.get(i)); // On archive les noms des morts
-					mort.remove(i); // Et on les retire de la liste des morts les dernières 24h
-				}
+			fiftyfifty.clear(); // On réinitialise notre liste pour l'aléatoire
+			while (mort.isEmpty() == false) {
+				old_mort.add(mort.get(0)); // On archive les noms des morts
+				mort.remove(0); // Et on les retire de la liste des morts les dernières 24h
 			}
-			if (temp_mort.isEmpty() == false) { // On vérifie que la liste n'est pas vide (pour éviter un plantage)
-				for (int i = 0; i < temp_mort.size(); i++) {
-					mort.add(temp_mort.get(i)); // On met les morts de la journée dans la liste des morts les 24 dernières heures
-					temp_mort.remove(i); // Et on les retire de la liste des morts de la journée
-				}
+			while (temp_mort.isEmpty() == false) {
+				mort.add(temp_mort.get(0)); // On met les morts de la journée dans la liste des morts les 24 dernières heures
+				temp_mort.remove(0); // Et on les retire de la liste des morts de la journée
 			}
 			for (int i = 0; i < nb_p; i++){ //On vérifie si chaque joueur est en ville
 				if (p[i].getInCity()) {
 					p[i].resetDay(); // Enlève le statut "a bu" et "a mangé"
 				}
 				else {
-					mort.add(p[i].getPseudo()); //Si ce n'est pas le cas, on l'ajoute à la liste des morts
-					p[i].setPV(0); // Le joueur est mort, il a donc 0 PV
+					mort.add(p[i].getPseudo()); // Si ce n'est pas le cas, on l'ajoute à la liste des morts
+					alive.remove(p[i].getPseudo()); // On le retire de la liste des vivants
 				}
 			}
 			// Attaque des zombies sur la ville
@@ -899,10 +1006,10 @@ public class Hordes {
 					}
 				}
 				for (int i = 0; i < (fiftyfifty.size()/2 + fiftyfifty.size() % 2); i++) { // Nombre de joueur divisé par 2 + le reste de la division euclidienne
-					temp = fiftyfifty.get(r.nextInt(fiftyfifty.size()+1)); // On prend un nombre aléatoire dans la liste fiftyfifty
+					temp = fiftyfifty.get(r.nextInt(fiftyfifty.size())); // On prend un nombre aléatoire dans la liste fiftyfifty
 					System.out.print(p[temp].getPseudo() + " "); // On annonce que le joueur est mort
 					mort.add(p[temp].getPseudo()); // On l'ajoute à la liste
-					p[temp].setPV(0); // Le joueur est mort, il a donc 0 PV
+					alive.remove(p[temp].getPseudo()); // On le retire de la liste des vivants
 				}
 				System.out.println("sont morts durant l'attaque de cette nuit");
 			}
@@ -939,23 +1046,17 @@ public class Hordes {
 			String ok;
 			int in = 0;
 			while (alive.isEmpty() == false) {
-				for (nb_turn = 1; nb_turn < 13 ; nb_turn ++) {
-					System.out.println("\n \n \nJour " + nb_day + " - Tour " + nb_turn);
-					for (int i = 0; i < nb_p; i ++) {
-						if (alive.contains(p[i].getPseudo())) {
-							System.out.println("\n \nC'est au tour de " + p[i].getPseudo() + "\nTapez ok");
-					    ok = scan.next();
-					    System.out.println("Vous avez " + p[i].getNb_pa() + " pa");
-							menuNews(i);
-							menuMain(i);
-						}
-					}
-					changingTurn();
-					if (nb_turn == 12) {
-						changingDay();
+				System.out.println("\n \n \nJour " + nb_day + " - Tour " + nb_turn);
+				for (int i = 0; i < nb_p; i ++) {
+					if (alive.contains(p[i].getPseudo())) {
+						System.out.println("\n \nC'est au tour de " + p[i].getPseudo() + "\nTapez ok");
+						ok = scan.next();
+						System.out.println("Vous avez " + p[i].getNb_pa() + " pa");
+						menuNews(i);
+						menuMain(i);
 					}
 				}
-				nb_day ++;
+				changingTurn();
 			}
 		}
 
@@ -1011,14 +1112,7 @@ public class Hordes {
 						System.out.println("Vous avez pris de l'eau");
 						break;
 						case 4:
-						displayBuild();
-						if (p[i].getNb_pa() > 0) {
-							participateBuild(i);
-						}
-						else {
-							System.out.println("Vous ne pouvez pas participer "
-							+ "aux chantiers, vous êtes fatigué");
-						}
+						menuBuild(i);
 						break;
 						case 5:
 						menuDoor(i);
@@ -1342,5 +1436,49 @@ public class Hordes {
 					+ "veuillez de nouveau entrer votre réponse");
 				}
 			}while (in != 0);
+		}
+
+		public static void menuBuild(int i) {
+			int in;
+			if (p[i].getNb_pa() > 0) {
+				System.out.println("1 = Consulter l'avancement du chantier\n"
+				+"2 = Participer au chantier"
+				+"0 = Revenir au menu principal");
+				do {
+					in = scan.nextInt();
+					switch (in) {
+						case 0:
+						break;
+						case 1:
+						displayBuild();
+						break;
+						case 2:
+						participateBuild(i);
+						break;
+						default:
+						System.out.println("La réponse n'est pas acceptée, "
+						+ "veuillez de nouveau entrer votre réponse");
+					}
+				} while (in != 0);
+			}
+			else {
+				System.out.println("Vous ne pouvez pas participer "
+				+ "aux chantiers, vous êtes fatigué.\n"
+				+ "Souhaitez-vous consulter l'avancement des chantiers ?"
+				+ "1 = Oui \n 0 = Non");
+				do {
+					in = scan.nextInt();
+					switch (in) {
+						case 0:
+						break;
+						case 1:
+						displayBuild();
+						break;
+						default:
+						System.out.println("La réponse n'est pas acceptée, "
+						+ "veuillez de nouveau entrer votre réponse");
+					}
+				} while (in != 0);
+			}
 		}
 }
