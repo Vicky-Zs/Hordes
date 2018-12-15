@@ -873,7 +873,19 @@ public class Hordes {
 
 		// Ramasser un item au sol
 		public static void takeItem (int n) { // n est le numéro du joueur enregistré dans le tableau
-
+			if ((p[n].getPos_x() == 0) && (p[n].getPos_y() == 0)) {
+				System.out.println("Vous êtes en ville ou au porte, il n'y a aucun objet"
+				+" à rammasser ici");
+			}
+			else {
+				if (p[n].sizeInventory() < 11) {
+					m[p[n].getPos_x()+12][p[n].getPos_y()+12].bankItem();
+				}
+				else {
+					System.out.println("Votre inventaire est plein, vous ne pouvez pas "
+					+"prendre d'objets");
+				}
+			}
 		}
 
 		// Déposer un item sur le sol

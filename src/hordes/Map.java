@@ -9,6 +9,7 @@ public class Map {
 	private boolean search; // Permet de savoir si la zone a été entièrement fouillé
 	private ArrayList<String> item; // Liste des objets étant sur cette case
 	private ArrayList<String> hide_item; // Liste des objets cachés sur cette case
+	private ArrayList<String> talkie; // Liste des objets mis à jour
 
 	//Contructeur
 	public Map(int Coor_x, int Coor_y) {
@@ -18,6 +19,7 @@ public class Map {
 		this.search = false;
 		this.item = new ArrayList<>();
 		this.hide_item = new ArrayList<>();
+		this.talkie = new ArrayList<>();
 	}
 
 	//Affiche la liste des items non-cachés sur la case en question
@@ -135,5 +137,21 @@ public class Map {
 		else {
 			return false;
 		}
+	}
+
+	public void talkie(){
+		this.talkie = this.item;
+	}
+
+	public void getTalkie(){
+		if (talkie.isEmpty()) { //On cherche à savoir si la liste est vide
+			System.out.println ("Il n'y a rien sur cette case");
+		}
+		else { //Si la liste n'est pas vide, on affiche la liste
+			for (byte i = 0; i < talkie.size(); i++) {
+				System.out.print(talkie.get(i) + " ");
+			}
+		}
+		System.out.println("");
 	}
 }
