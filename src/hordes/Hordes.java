@@ -838,24 +838,24 @@ public class Hordes {
 		//Permet de fouiller la zone
 		public static void search (int n) { // n est le numéro du joueur enregistré dans le tableau
 			String temp;
-			m[p[n].getPos_x() + 12][p[n].getPos_x() + 12].showHideItem();
+			m[p[n].getPos_x() + 12][p[n].getPos_y() + 12].showHideItem();
 			if (p[n].getNb_pa() == 0) {
 				System.out.println("Vous êtes fatigué, vous ne pouvez plus fouiller");
 			}
 			else if ((p[n].getPos_x() == 0) && (p[n].getPos_y() == 0)) {
 				System.out.println("Vous êtes en ville, vous ne pouvez pas fouiller");
 			}
-			else if (m[p[n].getPos_x() + 12][p[n].getPos_x() + 12].getSearch()) { // Conversion de la coordonée réel en coordonée du tableau m
+			else if (m[p[n].getPos_x() + 12][p[n].getPos_y() + 12].getSearch()) { // Conversion de la coordonée réel en coordonée du tableau m
 				System.out.println("Cette zone est épuisée, il est inutile de la fouiller de nouveau");
 			}
 			else {
-				if (m[p[n].getPos_x() + 12][p[n].getPos_x() + 12].isEmpty()) { // Permet de savoir si une case contient encore ou non des objets cachés
+				if (m[p[n].getPos_x() + 12][p[n].getPos_y() + 12].isEmpty()) { // Permet de savoir si une case contient encore ou non des objets cachés
 					System.out.println("Cette zone ne contient plus d'objet, elle est considérée comme épuisée");
-					m[p[n].getPos_x() + 12][p[n].getPos_x() + 12].setSearch();
+					m[p[n].getPos_x() + 12][p[n].getPos_y() + 12].setSearch();
 					p[n].setNb_pa(p[n].getNb_pa() - 1);
 				}
 				else {
-					temp = m[p[n].getPos_x() + 12][p[n].getPos_x() + 12].removeHide_item();
+					temp = m[p[n].getPos_x() + 12][p[n].getPos_y() + 12].removeHide_item();
 					System.out.print("Vous avez trouvé " + temp);
 					p[n].setNb_pa(p[n].getNb_pa() - 1);
 					if (p[n].sizeInventory()<10) {
@@ -863,7 +863,7 @@ public class Hordes {
 						System.out.println(", il a été ajouté à votre inventaire");
 					}
 					else {
-						m[p[n].getPos_x() + 12][p[n].getPos_x() + 12].addItem(temp);
+						m[p[n].getPos_x() + 12][p[n].getPos_y() + 12].addItem(temp);
 						System.out.println(", votre inventaire est plein, vous avez posé " + temp + " au sol");
 					}
 				}
@@ -883,7 +883,7 @@ public class Hordes {
 				p[n].bankInventory(); // On affiche l'inventaire
 				int temp = scan.nextInt() - 1; // On demande à l'utilisateur l'objet qu'il veut mettre à la bank, puis nous l'ajoutons à la banque
 				//On oublie pas qu'on commence à afficher à 1 et que la liste commence à 0 d'où le -1
-				 m[p[n].getPos_x() + 12][p[n].getPos_x() + 12].addItem((p[n].getInventory(temp))); // On ajout à la case
+				 m[p[n].getPos_x() + 12][p[n].getPos_y() + 12].addItem((p[n].getInventory(temp))); // On ajout à la case
 				p[n].removeInventory(p[n].getInventory(temp)); // Suppression des items de l'inventaire
 			}
 			else {
