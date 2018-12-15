@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Player {
   private String pseudo; //Pseudo du joueur
-  private int nb_pa; //Nombre de pa allant de 0 à 6
+  private int nb_ap; //Nombre de pa allant de 0 à 6
 	private int pos_x; // Position du joueur allant de -12 à 12
 	private int pos_y; //Position du joueur allant de -12 à 12
 	private int pv; //Point de vie du joueur (Si 0 ou moins, le joueur est mort)
@@ -17,7 +17,7 @@ public class Player {
 	//Constructeur
 	public Player(String pseudo) {
 		this.pseudo = pseudo;
-		this.nb_pa = 6;
+		this.nb_ap = 6;
 		this.pos_x = 0;
 		this.pos_y = 0;
 		this.pv = 100;
@@ -39,13 +39,13 @@ public class Player {
 	}
 
 	// Obtient le nombre de pa du joueur
-	public int getNb_pa() {
-		return nb_pa;
+	public int getNb_ap() {
+		return nb_ap;
 	}
 
 	// Modifie le nombre de pa du joueur
-	public void setNb_pa(int nb_pa) {
-		this.nb_pa = nb_pa;
+	public void setNb_ap(int nb_ap) {
+		this.nb_ap = nb_ap;
 	}
 
 	// Obtient la position du joueur
