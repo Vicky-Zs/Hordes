@@ -838,7 +838,6 @@ public class Hordes {
 		//Permet de fouiller la zone
 		public static void search (int n) { // n est le numéro du joueur enregistré dans le tableau
 			String temp;
-			m[p[n].getPos_x() + 12][p[n].getPos_y() + 12].showHideItem();
 			if (p[n].getNb_pa() == 0) {
 				System.out.println("Vous êtes fatigué, vous ne pouvez plus fouiller");
 			}
