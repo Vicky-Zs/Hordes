@@ -56,6 +56,7 @@ public class Map {
 				System.out.print(hide_item.get(i) + " ");
 			}
 		}
+		System.out.println("");
 	}
 
 	// Obtient la coordonée x de la case
@@ -110,10 +111,13 @@ public class Map {
 	// Enlève un élément de la liste et retourne cette élément
 	public String removeHide_item() {
 		String i;
-		int rand = (int) (Math.random() * hide_item.size());
-		System.out.println(rand);
-		i = item.get(rand);
-		item.remove(i);
+		int rand = 0;
+		for (int j = 0; j < 20; j++) {
+			rand = (int) (Math.random() * hide_item.size());
+			System.out.println(rand);
+		}
+		i = hide_item.get(rand);
+		hide_item.remove(i);
 		return i;
 	}
 
