@@ -83,14 +83,20 @@ public class Hordes {
 		}
 	}
 
-	//Affiche ce qu'il y a sur la map
+	//Affiche les objets cachés sur toutes les cases
 	public static void showMap() {
 		for (byte i = 0; i < 25; i++) {
 			for (byte j = 0; j < 25; j++) {
-				System.out.print(i + " " + j + " -- ");
+				System.out.print("\n[" + (i-12) + ";" + (j-12) + "] -- ");
 				m[i][j].showHideItem();
 			}
 		}
+	}
+
+	//Affiche les objets cachés sur une seule case
+	public static void showMap(int i, int j) {
+		System.out.print("\n[" + (i) + ";" + (j) + "] -- ");
+		m[i+12][j+12].showHideItem();
 	}
 
 	// Ajoute un joueur
@@ -145,6 +151,7 @@ public class Hordes {
 		/* ----------------------------------------------------------------------- */
 		/* -------------------------------  BANK  -------------------------------- */
 		/* ----------------------------------------------------------------------- */
+
 
 		//Consultation de la bank
 		public static void consultBank() {
@@ -724,6 +731,7 @@ public class Hordes {
 		//Permet de fouiller la zone
 		public static void search (int n) { // n est le numéro du joueur enregistré dans le tableau
 			String temp;
+			m[p[n].getPos_x() + 12][p[n].getPos_x() + 12].showHideItem();
 			if (p[n].getNb_pa() == 0) {
 				System.out.println("Vous êtes fatigué, vous ne pouvez plus fouiller");
 			}
@@ -731,7 +739,7 @@ public class Hordes {
 				System.out.println("Vous êtes en ville, vous ne pouvez pas fouiller");
 			}
 			else if (m[p[n].getPos_x() + 12][p[n].getPos_x() + 12].getSearch()) { // Conversion de la coordonée réel en coordonée du tableau m
-				System.out.println("Cette zone a déjà été intégralement fouillé, il serait inutil de la fouiller de nouveau");
+				System.out.println("Cette zone est épuisée, il est inutile de la fouiller de nouveau");
 			}
 			else {
 				if (m[p[n].getPos_x() + 12][p[n].getPos_x() + 12].isEmpty()) { // Permet de savoir si une case contient encore ou non des objets cachés
@@ -1153,17 +1161,14 @@ public class Hordes {
 						switch (in) {
 							case 0:
 							break;
-							// Niveau 2
 							case 1:
 							p[i].getInventory();
 							in = 0;
 							break;
-							// Niveau 2
 							case 2:
 							drinkWater(i);
 							in = 0;
 							break;
-							// Niveau 2
 							default:
 							System.out.println("La réponse n'est pas acceptée, "
 							+ "veuillez de nouveau entrer votre réponse");
@@ -1180,12 +1185,10 @@ public class Hordes {
 						switch (in) {
 							case 0:
 							break;
-							// Niveau 2
 							case 1:
 							p[i].getInventory();
 							in = 0;
 							break;
-							// Niveau 2
 							default:
 							System.out.println("La réponse n'est pas acceptée, "
 							+ "veuillez de nouveau entrer votre réponse");
@@ -1268,13 +1271,11 @@ public class Hordes {
 						switch (in) {
 							case 0:
 							break;
-							// Niveau 2
 							case 1:
 							p[i].setNb_pa(p[i].getNb_pa() - 1);
 							city.setDoor(false);
 							in = 0;
 							break;
-							// Niveau 2
 							default:
 							System.out.println("La réponse n'est pas acceptée, "
 							+ "veuillez de nouveau entrer votre réponse");
@@ -1292,13 +1293,11 @@ public class Hordes {
 						switch (in) {
 							case 0:
 							break;
-							// Niveau 2
 							case 1:
 							p[i].setNb_pa(p[i].getNb_pa() - 1);
 							city.setDoor(true);
 							in = 0;
 							break;
-							// Niveau 2
 							default:
 							System.out.println("La réponse n'est pas acceptée, "
 							+ "veuillez de nouveau entrer votre réponse");

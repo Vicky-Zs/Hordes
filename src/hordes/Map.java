@@ -52,9 +52,8 @@ public class Map {
 			System.out.println ("Il n'y a rien sur cette case");
 		}
 		else { //Si la liste n'est pas vide, on affiche la liste
-			System.out.println ("Sur la cas, il y a : ");
 			for (byte i = 0; i < hide_item.size(); i++) {
-				System.out.println(hide_item.get(i) + " ");
+				System.out.print(hide_item.get(i) + " ");
 			}
 		}
 	}
@@ -112,7 +111,7 @@ public class Map {
 	public String removeHide_item() {
 		String i;
 		int rand = (int) (Math.random() * hide_item.size());
-                System.out.println(rand);
+		System.out.println(rand);
 		i = item.get(rand);
 		item.remove(i);
 		return i;
@@ -122,7 +121,7 @@ public class Map {
 	public boolean getSearch() {
 		return search;
 	}
-        
+
         // Permet de savoir si une case a été intégralement fouillé
 	public void setSearch() {
 		this.search = true;
