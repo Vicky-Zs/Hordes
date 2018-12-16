@@ -48,6 +48,31 @@ public class Player {
 		this.nb_ap = nb_ap;
 	}
 
+  // Perte de 1 pa
+  public void action(){
+    this.nb_ap --;
+  }
+
+	// Gain de 6 pa
+	public void gain6ap(){
+		if (this.nb_ap < 5) {
+			this.nb_ap = this.nb_ap + 6;
+		}
+		else {
+			this.nb_ap = 10;
+		}
+	}
+
+	// Gain de 4 pa
+	public void gain4ap(){
+		if (this.nb_ap < 7) {
+			this.nb_ap = this.nb_ap + 4;
+		}
+		else {
+			this.nb_ap = 10;
+		}
+	}
+
 	// Obtient la position du joueur
 	public int getPos_x() {
 		return pos_x;
@@ -74,8 +99,13 @@ public class Player {
 	}
 
 	// Modifie le nombre de PV d'un joueur
-	public void setPV (int pv) {
+	/*public void setPV (int pv) {
 		this.pv = pv;
+	}*/
+
+	// Pert de x PV
+	public void lostPv (int x) {
+		this.pv = this.pv - x;
 	}
 
 	// Permet de savoir si un joueur a bu ou non

@@ -91,6 +91,11 @@ public class Map {
 		this.z = z;
 	}
 
+	// Tue un zombie
+	public void killZ(){
+		this.z --;
+	}
+
 	// Modifie la liste des objets visibles de la case
 	public void addItem(String item) {
 		this.item.add(item);

@@ -60,17 +60,12 @@ public class Hordes {
 		public static void changingTurn (){
 			for (int i = 0; i < nb_p; i++) { //On regarde chaque joueur
 				if (alive.contains(p[i].getPseudo())) { // On vérifie que le joueur est en vie
-					if (p[i].getNb_ap() < 7) { //Gain des pas
-						p[i].setNb_ap(p[i].getNb_ap() + 4);
-					}
-					else {
-						p[i].setNb_ap(10);
-					}
+					p[i].gain4ap();
 					if (p[i].getAddict() != -1) { // On vérifie sa dépendance aux boissons énergisante
 						p[i].addAddict();
-						if (p[i].getAddict() > 2) {
-							p[i].setPV(p[i].getPV() - 5);
-						}
+					}
+					if (p[i].getAddict() > 2) {
+						p[i].lostPv(5);
 					}
 					if (p[i].getPV() < 1) {
 						temp_mort.add(p[i].getPseudo());
@@ -86,7 +81,7 @@ public class Hordes {
 		}
 
 		public static void changingDay(){ //Algo de changement de jour (uniquement à 00h)
-                        int temp;
+      int temp;
 			fiftyfifty.clear(); // On réinitialise notre liste pour l'aléatoire
 			while (mort.isEmpty() == false) {
 				old_mort.add(mort.get(0)); // On archive les noms des morts

@@ -14,7 +14,7 @@ class Outside extends Hordes {
     }
     else {
       p[n].setPos_y(p[n].getPos_y() - 1);
-      p[n].setNb_ap(p[n].getNb_ap() - 1);
+      p[n].action();
     }
   }
 
@@ -31,7 +31,7 @@ class Outside extends Hordes {
     }
     else {
       p[n].setPos_y(p[n].getPos_y() + 1);
-      p[n].setNb_ap(p[n].getNb_ap() - 1);
+      p[n].action();
     }
   }
 
@@ -48,7 +48,7 @@ class Outside extends Hordes {
     }
     else {
       p[n].setPos_x(p[n].getPos_x() + 1);
-      p[n].setNb_ap(p[n].getNb_ap() - 1);
+      p[n].action();
     }
   }
 
@@ -65,7 +65,7 @@ class Outside extends Hordes {
     }
     else {
     p[n].setPos_x(p[n].getPos_x() - 1);
-    p[n].setNb_ap(p[n].getNb_ap() - 1);
+    p[n].action();
     }
   }
 
@@ -85,12 +85,12 @@ class Outside extends Hordes {
       if (map[p[n].getPos_x() + 12][p[n].getPos_y() + 12].isEmpty()) { // Permet de savoir si une case contient encore ou non des objets cachés
         System.out.println("Cette zone ne contient plus d'objet, elle est considérée comme épuisée");
         map[p[n].getPos_x() + 12][p[n].getPos_y() + 12].setSearch();
-        p[n].setNb_ap(p[n].getNb_ap() - 1);
+        p[n].action();
       }
       else {
         temp = map[p[n].getPos_x() + 12][p[n].getPos_y() + 12].removeHide_item();
         System.out.print("Vous avez trouvé " + temp);
-        p[n].setNb_ap(p[n].getNb_ap() - 1);
+        p[n].action();
         if (p[n].sizeInventory()<10) {
           p[n].addInventory(temp);
           System.out.println(", il a été ajouté à votre inventaire");

@@ -342,7 +342,7 @@ class Menu extends Hordes {
             case 0:
             break;
             case 1:
-            p[i].setNb_ap(p[i].getNb_ap() - 1);
+            p[i].action();
             city.setDoor(false);
             in = 0;
             break;
@@ -364,7 +364,7 @@ class Menu extends Hordes {
             case 0:
             break;
             case 1:
-            p[i].setNb_ap(p[i].getNb_ap() - 1);
+            p[i].action();
             city.setDoor(true);
             in = 0;
             break;
