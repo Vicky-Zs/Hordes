@@ -2,7 +2,7 @@ package hordes;
 
 class Menu extends Hordes {
   // Menu principal
-  public static void main (int i) {
+  public static void mainMenu (int i) {
     int in;
     int exit = 0;
     do {
@@ -11,10 +11,11 @@ class Menu extends Hordes {
         System.out.println("1 = Accéder à votre inventaire\n"
         + "2 = Accéder à la banque\n"
         + "3 = Prendre de l'eau\n"
-        + "4 = Participer aux chantiers\n"
+        + "4 = Accéder aux chantiers\n"
         + "5 = Accéder à la porte\n"
         + "6 = Sortir de la ville\n"
-        + "7 = Consulter le journal\n"
+        + "7 = Consulter le talkie\n"
+        + "8 = Consulter le journal\n"
         + "0 = Passer son tour");
         in = scan.nextInt();
         switch (in) {
@@ -38,10 +39,34 @@ class Menu extends Hordes {
           menuDoor(i);
           break;
           case 6:
-          p[i].setInCity(false);
-          System.out.println("Vous êtes sorti de la ville");
+          if (p[i].getNb_ap() == 0) {
+            System.out.println("Vous êtes fatigué, voulez-vous vraiment sorir "
+            + "de la ville ?\n1 = Oui\n0 = Non");
+            do {
+              in = scan.nextInt();
+              switch (in) {
+                case 0:
+                break;
+                case 1:
+                p[i].setInCity(false);
+                System.out.println("Vous êtes sorti de la ville");
+                in = 0;
+                break;
+                default:
+                System.out.println("La réponse n'est pas acceptée, "
+                + "veuillez de nouveau entrer votre réponse");
+              }
+            }while (in != 0);
+          }
+          else {
+            p[i].setInCity(false);
+            System.out.println("Vous êtes sorti de la ville");
+          }
           break;
           case 7:
+          menuTalkie();
+          break;
+          case 8:
           consultNewspaper();
           break;
           default:
@@ -84,6 +109,10 @@ class Menu extends Hordes {
           System.out.println("1 = Accéder à votre inventaire\n"
           + "2 = Fouiller \n"
           + "3 = Se déplacer \n"
+          + "4 = Prendre un item \n"
+          + "5 = Déposer un item \n"
+          + "6 = Mettre à jour le trackie \n"
+          + "7 = Consulter le talkie\n"
           + "0 = Passer son tour");
           do {
             in = scan.nextInt();
@@ -98,9 +127,25 @@ class Menu extends Hordes {
               case 2:
               Outside.search(i);
               in = 0;
+              break;
               case 3:
               menuMove(i);
               in = 0;
+              break;
+              case 4:
+              Outside.takeItem(i);
+              in = 0;
+              break;
+              case 5:
+              Outside.dropItem(i);
+              in = 0;
+              break;
+              case 6:
+              map[p[i].getPos_x() + 12][p[i].getPos_y() + 12].talkie();
+              in = 0;
+              break;
+              case 7:
+              menuTalkie();
               break;
               default:
               System.out.println("La réponse n'est pas acceptée, "
@@ -111,6 +156,10 @@ class Menu extends Hordes {
         else if (p[i].getNb_ap() == 0) {
           System.out.println("Vous êtes fatigué, voulez-vous accéder à votre inventaire ?"
           + "0 = Non\n 1 = Oui");
+          System.out.println("Vous êtes fatigué\n"
+          + "1 = Accéder à votre inventaire\n"
+          + "2 = Consulter le talkie\n"
+          + "0 = Passer son tour");
           do {
             in = scan.nextInt();
             switch(in) {
@@ -120,6 +169,9 @@ class Menu extends Hordes {
               case 1:
               menuInventory(i);
               in = 0;
+              break;
+              case 2:
+              menuTalkie();
               break;
               default:
               System.out.println("La réponse n'est pas acceptée, "
@@ -403,5 +455,46 @@ class Menu extends Hordes {
         }
       } while (in != 0);
     }
+  }
+
+  public static void menuTalkie() {
+    int in, i, j;
+    System.out.println("1 = Consulter toute la carte\n"
+    + "2 = Consulter seulement une case\n"
+    + "0 = Revenir au menu principal");
+    do {
+      in = scan.nextInt();
+      switch (in) {
+        case 0:
+        break;
+        case 1:
+        Talkie.consult();
+        in = 0;
+        break;
+        case 2:
+        System.out.println("Choisissez la coordonée x (entre -12 et +12)");
+        do {
+          i = scan.nextInt() + 12;
+          if ((i < 0) || (i > 24)) {
+            System.out.println("La réponse n'est pas acceptée, "
+            + "veuillez de nouveau entrer votre réponse");
+          }
+        } while ((i < 0) || (i > 24));
+        System.out.println("Choisissez la coordonée y (entre -12 et +12)");
+        do {
+          j = scan.nextInt() + 12;
+          if ((i < 0) || (i > 24)) {
+            System.out.println("La réponse n'est pas acceptée, "
+            + "veuillez de nouveau entrer votre réponse");
+          }
+        } while ((j < 0) || (j > 24));
+        Talkie.consult(i, j);
+        in = 0;
+        break;
+        default:
+        System.out.println("La réponse n'est pas acceptée, "
+        + "veuillez de nouveau entrer votre réponse");
+      }
+    } while (in != 0);
   }
 }

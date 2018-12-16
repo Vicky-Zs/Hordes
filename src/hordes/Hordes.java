@@ -2,7 +2,6 @@ package hordes;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class Hordes {
 	protected static Player[] p = new Player [20];
@@ -87,7 +86,7 @@ public class Hordes {
 		}
 
 		public static void changingDay(){ //Algo de changement de jour (uniquement à 00h)
-			int temp = 0;
+                        int temp;
 			fiftyfifty.clear(); // On réinitialise notre liste pour l'aléatoire
 			while (mort.isEmpty() == false) {
 				old_mort.add(mort.get(0)); // On archive les noms des morts
@@ -164,7 +163,7 @@ public class Hordes {
 						System.out.println("\n \nC'est au tour de " + p[i].getPseudo() + "\nTapez ok");
 						ok = scan.next();
 						System.out.println("Vous avez " + p[i].getNb_ap() + " pa");
-						Menu.main(i);
+						Menu.mainMenu(i);
 					}
 				}
 				changingTurn();

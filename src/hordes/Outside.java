@@ -124,12 +124,18 @@ class Outside extends Hordes {
 
   // Déposer un item sur le sol
   public static void dropItem (int n) { // n est le numéro du joueur enregistré dans le tableau
-    if ((p[n].getPos_x() != 0) && (p[n].getPos_y() != 0)) {
+    int in;
+    if ((p[n].getPos_x() != 0) || (p[n].getPos_y() != 0)) {
       p[n].bankInventory(); // On affiche l'inventaire
-      int temp = scan.nextInt() - 1; // On demande à l'utilisateur l'objet qu'il veut mettre à la bank, puis nous l'ajoutons à la banque
-      //On oublie pas qu'on commence à afficher à 1 et que la liste commence à 0 d'où le -1
-       map[p[n].getPos_x() + 12][p[n].getPos_y() + 12].addItem((p[n].getInventory(temp))); // On ajout à la case
-      p[n].removeInventory(p[n].getInventory(temp)); // Suppression des items de l'inventaire
+      do {
+        in = scan.nextInt() - 1; // On demande à l'utilisateur l'objet qu'il veut mettre à la bank, puis nous l'ajoutons à la banque
+        //On oublie pas qu'on commence à afficher à 1 et que la liste commence à 0 d'où le -1
+      }while ((in > (p[n].sizeInventory() + 1)) || (in < 0));
+      System.out.println("Vous avez déposé " + p[n].getInventory(in) + " au sol");
+      map[p[n].getPos_x() + 12][p[n].getPos_y() + 12].addItem((p[n].getInventory(in)));
+      // On ajout à la case
+      p[n].removeInventory(p[n].getInventory(in));
+      // Suppression des items de l'inventaire
     }
     else {
       System.out.println("Vous ne pouvez pas déposer un item ici, vous êtes en ville");

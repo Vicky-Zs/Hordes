@@ -145,13 +145,13 @@ public class Map {
 
 	public void getTalkie(){
 		if (talkie.isEmpty()) { //On cherche à savoir si la liste est vide
-			System.out.println ("Il n'y a rien sur cette case");
+			System.out.println ("Case vide");
 		}
 		else { //Si la liste n'est pas vide, on affiche la liste
 			for (byte i = 0; i < talkie.size(); i++) {
 				System.out.print(talkie.get(i) + " ");
 			}
 		}
-		System.out.println("");
+		System.out.println("\n");
 	}
 }
