@@ -182,11 +182,13 @@ class Menu extends Hordes {
         else {
           //TODO
           System.out.println("1 = Accéder à votre inventaire\n"
-          + "2 = Tuer un zombie \n");
+          + "2 = Tuer un zombie \n"
+          + "0 = Passer son tour \n");
           do {
             in = scan.nextInt();
             switch (in) {
               case 0:
+              exit = -1;
               break;
               case 1:
               menuInventory(i);
