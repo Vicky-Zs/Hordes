@@ -157,7 +157,7 @@ public class Hordes {
 		public static void game() {
 			String ok;
 			int in = 0;
-			while (alive.isEmpty() == false) {
+			while (alive.size() > 1) {
 				System.out.println("\n \n \nJour " + nb_day + " - Tour " + nb_turn);
 				for (int i = 0; i < nb_p; i ++) {
 					if (alive.contains(p[i].getPseudo())) {
@@ -168,6 +168,28 @@ public class Hordes {
 					}
 				}
 				changingTurn();
+			}
+			while (mort.isEmpty() == false) {
+				// On met tous les morts dans la liste des old_morts (pour le classement)
+				old_mort.add(mort.get(0));
+				mort.remove(0);
+			}
+			while (temp_mort.isEmpty() == false) {
+				// On met tous les morts dans la liste des old_morts (pour le classement)
+				old_mort.add(temp_mort.get(0));
+				temp_mort.remove(0);
+			}
+			if (alive.isEmpty()) {
+				System.out.println("Tout le monde est mort, personne n'a gagné");
+			}
+			else {
+				System.out.println(alive.get(0) + " a gagné la partie ! Bravo !");
+				// On met tous les morts dans la liste des old_morts (pour le classement)
+				old_mort.add(alive.get(0));
+			}
+			System.out.println("Classement : ");
+			for (int i = 0; i < old_mort.size(); i++){
+				System.out.println ((i+1) + " : " + old_mort.get(i));
 			}
 		}
 }
