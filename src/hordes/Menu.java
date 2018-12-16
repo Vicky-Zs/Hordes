@@ -180,7 +180,6 @@ class Menu extends Hordes {
           }while (in != 0);
         }
         else {
-          //TODO
           System.out.println("1 = Accéder à votre inventaire\n"
           + "2 = Tuer un zombie \n"
           + "0 = Passer son tour \n");

@@ -10,7 +10,7 @@ class Inside extends Hordes {
   // Algo pour sortir de la ville
   public static void exitTown (int n) {
     // n est le numéro du joueur enregistré dans le tableau
-    if (city.getDoor()) { // On vérifie que la prote est bien ouverte
+    if (city.getDoor() == true) { // On vérifie que la prote est bien ouverte
         p[n].setInCity(false);
     }
     else {
@@ -21,7 +21,7 @@ class Inside extends Hordes {
   // Algo pour entrer dans la ville
   public static void enterTown (int n) {
     // n est le numéro du joueur enregistré dans le tableau
-    if (city.getDoor()) { // On vérifie que la prote est bien ouverte
+    if (city.getDoor() == true) { // On vérifie que la prote est bien ouverte
         p[n].setInCity(true);
     }
     else {
