@@ -181,9 +181,25 @@ class Menu extends Hordes {
         }
         else {
           //TODO
-          System.out.println("Kill all zombies !!");
-          map[p[i].getPos_x() + 12][p[i].getPos_y() + 12].setZ(0);
-          in = 0;
+          System.out.println("1 = Accéder à votre inventaire\n"
+          + "2 = Tuer un zombie \n");
+          do {
+            in = scan.nextInt();
+            switch (in) {
+              case 0:
+              break;
+              case 1:
+              menuInventory(i);
+              break;
+              case 2:
+              exit = Outside.killZombie(i);
+              in = 0;
+              break;
+              default:
+              System.out.println("La réponse n'est pas acceptée, "
+              + "veuillez de nouveau entrer votre réponse");
+            }
+          } while (in != 0);
         }
       }
     }while(exit != -1);
