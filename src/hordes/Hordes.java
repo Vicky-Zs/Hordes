@@ -101,8 +101,10 @@ public class Hordes {
 				}
 			}
 			// Attaque des zombies sur la ville
-			nb_z = r.nextInt(11) + (10 * nb_day); // On choisit un nombre aléatoire entre 0 et 10 que l'on ajoute à 10* le nombre du jour
+			nb_z = r.nextInt(11) + (10 * nb_day);
+			// On choisit un nombre aléatoire entre 0 et 10 que l'on ajoute à 10* le nombre du jour
 			nb_day ++; // On ajout un au nombre de jour
+			System.out.println("Attaque de " + nb_z + " zombies");
 			if (city.getDefense() <= nb_z) {
 				System.out.println("Les zombies ont réussi à passer");
 				for (int i = 0; i < nb_p; i++) {
@@ -183,7 +185,8 @@ public class Hordes {
 			}
 			System.out.println("Classement : ");
 			for (int i = 0; i < old_mort.size(); i++){
-				System.out.println ((i+1) + " : " + old_mort.get(i));
+				System.out.println ((i+1) + "e : " + old_mort.get(0));
+				old_mort.remove(0);
 			}
 		}
 }

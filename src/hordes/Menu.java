@@ -97,6 +97,7 @@ class Menu extends Hordes {
               break;
               case 2:
               p[i].setInCity(true);
+              in = 0;
               break;
               case 3:
               menuMove(i);
@@ -142,7 +143,6 @@ class Menu extends Hordes {
               break;
               case 6:
               map[p[i].getPos_x() + 12][p[i].getPos_y() + 12].talkie();
-              in = 0;
               break;
               case 7:
               menuTalkie();
@@ -276,6 +276,10 @@ class Menu extends Hordes {
             p[i].getInventory();
             in = 0;
             break;
+            case 2:
+            AP.eatRation(i);
+            in = 0;
+            break;
             default:
             System.out.println("La réponse n'est pas acceptée, "
             + "veuillez de nouveau entrer votre réponse");
@@ -351,7 +355,7 @@ class Menu extends Hordes {
     if (city.getDoor()) {
       System.out.print("La porte est ouverte");
       if (p[i].getNb_ap() > 0) {
-        System.out.print(", souhaitez-vous la fermer ? "
+        System.out.println(", souhaitez-vous la fermer ? "
         + "\n0 = Non \n1 = Oui");
         do {
           in = scan.nextInt();
@@ -361,6 +365,7 @@ class Menu extends Hordes {
             case 1:
             p[i].action();
             city.setDoor(false);
+            System.out.println("Vous avez fermé la porte");
             in = 0;
             break;
             default:
@@ -371,9 +376,9 @@ class Menu extends Hordes {
       }
     }
     else {
-      System.out.print("La porte est fermée");
+      System.out.print("La porte est fermée,");
       if (p[i].getNb_ap() > 0) {
-        System.out.print(", souhaitez-vous l'ouvrir ? "
+        System.out.print(" souhaitez-vous l'ouvrir ? "
         + "\n0 = Non \n1 = Oui");
         do {
           in = scan.nextInt();
@@ -383,6 +388,7 @@ class Menu extends Hordes {
             case 1:
             p[i].action();
             city.setDoor(true);
+            System.out.println("Vous avez ouvert la porte");
             in = 0;
             break;
             default:
@@ -434,7 +440,7 @@ class Menu extends Hordes {
     int in;
     if (p[i].getNb_ap() > 0) {
       System.out.println("1 = Consulter l'avancement du chantier\n"
-      +"2 = Participer au chantier"
+      +"2 = Participer au chantier \n"
       +"0 = Revenir au menu principal");
       do {
         in = scan.nextInt();
@@ -443,9 +449,11 @@ class Menu extends Hordes {
           break;
           case 1:
           Inside.displayBuild();
+          in = 0;
           break;
           case 2:
           Inside.participateBuild(i);
+          in = 0;
           break;
           default:
           System.out.println("La réponse n'est pas acceptée, "
@@ -465,6 +473,7 @@ class Menu extends Hordes {
           break;
           case 1:
           Inside.displayBuild();
+          in = 0;
           break;
           default:
           System.out.println("La réponse n'est pas acceptée, "

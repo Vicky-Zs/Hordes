@@ -145,15 +145,20 @@ class Outside extends Hordes {
   // Tuer un zombie
   public static int killZombie(int i){
     int rand, end = 0;
-    p[i].action();
-    map[p[i].getPos_x() + 12][p[i].getPos_y() + 12].killZ();
-    rand = r.nextInt(10); //On choisit un nombre random entre 0 et 9
-    if (rand == 0){
-      System.out.println("Durant l'attaque, vous avez été blessé. "
-      + "Vous perdez 10 points de vie");
-      p[i].lostPv(10);
-      if (p[i].getPV() < 1){
-        end = -1;
+    if (map[p[i].getPos_x() + 12][p[i].getPos_y() + 12].getZ() == 0){
+      System.out.println("Il n'y a pas de zombies à tuer ici");
+    }
+    else {
+      p[i].action();
+      map[p[i].getPos_x() + 12][p[i].getPos_y() + 12].killZ();
+      rand = r.nextInt(10); //On choisit un nombre random entre 0 et 9
+      if (rand == 0){
+        System.out.println("Durant l'attaque, vous avez été blessé. "
+        + "Vous perdez 10 points de vie");
+        p[i].lostPv(10);
+        if (p[i].getPV() < 1){
+          end = -1;
+        }
       }
     }
     return end;

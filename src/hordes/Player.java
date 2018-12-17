@@ -116,6 +116,7 @@ public class Player {
 	// Modifie pour dire qu'il a bu
 	public void drink () {
 		this.drink = true;
+    this.inventory.remove("Gourde d'eau");
 	}
 
 	// Permet de savoir si un joueur a mangé ou non
@@ -126,6 +127,7 @@ public class Player {
 	// Modifie pour dire qu'il a mangé
 	public void eat () {
 		this.eat = true;
+    this.inventory.remove("Ration");
 	}
 
 	// Permet de savoir si un joueur est addict
