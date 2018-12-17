@@ -24,19 +24,24 @@ class Menu extends Hordes {
           break;
           case 1:
           menuInventory(i);
+          in = 0;
           break;
           case 2:
           menuBank(i);
+          in = 0;
           break;
           case 3:
           Inside.takeWater(i);
           System.out.println("Vous avez pris de l'eau");
+          in = 0;
           break;
           case 4:
           menuBuild(i);
+          in = 0;
           break;
           case 5:
           menuDoor(i);
+          in = 0;
           break;
           case 6:
           if (p[i].getNb_ap() == 0) {
@@ -62,12 +67,15 @@ class Menu extends Hordes {
             p[i].setInCity(false);
             System.out.println("Vous êtes sorti de la ville");
           }
+          in = 0;
           break;
           case 7:
           menuTalkie();
+          in = 0;
           break;
           case 8:
           consultNewspaper();
+          in = 0;
           break;
           default:
           System.out.println("La réponse n'est pas acceptée, "
@@ -143,9 +151,11 @@ class Menu extends Hordes {
               break;
               case 6:
               map[p[i].getPos_x() + 12][p[i].getPos_y() + 12].talkie();
+              in = 0;
               break;
               case 7:
               menuTalkie();
+              in = 0;
               break;
               default:
               System.out.println("La réponse n'est pas acceptée, "
@@ -172,6 +182,7 @@ class Menu extends Hordes {
               break;
               case 2:
               menuTalkie();
+              in = 0;
               break;
               default:
               System.out.println("La réponse n'est pas acceptée, "
@@ -191,6 +202,7 @@ class Menu extends Hordes {
               break;
               case 1:
               menuInventory(i);
+              in = 0;
               break;
               case 2:
               exit = Outside.killZombie(i);
