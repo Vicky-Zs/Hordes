@@ -92,7 +92,7 @@ class Initialization extends Hordes {
 			for (int i = 0; i < nb_p; i++){
 			// Pour le nombre de joueurs qu'on a initialisé
 			System.out.println("Entrer le pseudo du joueur "+ (i+1));
-			firstname = scan.next();
+			firstname = scan.nextLine();
 			while (alive.contains(firstname)){
 				System.out.println("Veuillez choisir un autre pseudo, " + firstname + " est déjà pris");
 				firstname = scan.next();

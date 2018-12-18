@@ -45,6 +45,7 @@ public class Map {
 			for (byte i = 0; i < item.size(); i++) {
         System.out.println((i+1) + " : " + item.get(i) + " ");
 			}
+			System.out.println("0 = Revenir au menu principal");
 		}
 	}
 
@@ -101,13 +102,26 @@ public class Map {
 		this.item.add(item);
 	}
 
+	// Enlève un élément de la Liste
+	public String removeItem(int i) {
+		String temp;
+		temp = item.get(i);
+		item.remove(i);
+		return temp;
+	}
+
 	// Enlève un élément de la liste et retourne cette élément
-	public String removeItem() {
+	/*public String removeItem() {
 		String i;
 		int rand = (int) Math.random()*item.size();
 		i = item.get(rand);
 		item.remove(i);
 		return i;
+	}*/
+
+	// Permet de connaître la taille de la liste
+	public int sizeItem() {
+		return item.size();
 	}
 
 	// Modifie la liste des objets cachés sur la case

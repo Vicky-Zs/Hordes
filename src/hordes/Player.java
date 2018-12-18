@@ -186,10 +186,10 @@ public class Player {
   // Permet d'afficher l'inventaire pour l'ajout d'un item à la banque ou sur le sol
 	public void bankInventory() {
 		if (inventory.isEmpty()) {
-			System.out.println("Votre inventaire ne contient aucun objet, vous ne pouvez pas ajouter un item à la banque");
+			System.out.println("Votre inventaire ne contient aucun objet, vous ne pouvez pas déposer un item");
 		}
 		else {
-			System.out.println("Quel objet voulez vous ajoutez à la banque ?");
+			System.out.println("Quel objet voulez vous déposer ?");
 			for (byte i = 0; i < inventory.size(); i++) {
         System.out.println((i+1) + " : " + inventory.get(i) + " ");
 			}

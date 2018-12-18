@@ -14,12 +14,21 @@ class Menu extends Hordes {
         + "4 = Accéder aux chantiers\n"
         + "5 = Accéder à la porte");
         if (city.getDoor()) {
-          System.out.println("6 = Sortir de la ville");
+          System.out.println("6 = Sortir de la ville\n"
+          + "7 = Consulter le talkie\n"
+          + "8 = Consulter le journal\n"
+          + "0 = Passer son tour");
         }
-        System.out.println("7 = Consulter le talkie\n"
-        + "8 = Consulter le journal\n"
-        + "0 = Passer son tour");
+        else {
+          System.out.println("6 = Consulter le talkie\n"
+          + "7 = Consulter le journal\n"
+          + "0 = Passer son tour");
+        }
         in = scan.nextInt();
+        if ((city.getDoor() == false) && (in>5)) {
+          // On change la valeur pour que la valeur corresponde au menu
+          in ++;
+        }
         switch (in) {
           case 0:
           exit = -1;
@@ -94,14 +103,24 @@ class Menu extends Hordes {
         + "Il y a " + map[p[i].getPos_x() + 12][p[i].getPos_y() + 12].getZ() + " zombie(s)\n"
         + "Vous avez " + p[i].getNb_ap() + " pa");
         if ((p[i].getPos_x() == 0) && p[i].getPos_y() == 0) {
-          System.out.println("1 = Accéder à votre inventaire\n"
-          +"2 = Entrer en ville");
-          if (p[i].getNb_ap() > 0){
-            System.out.println("3 = Se déplacer");
+          System.out.println("1 = Accéder à votre inventaire");
+          if (city.getDoor()) {
+            System.out.println("2 = Entrer en ville");
+            if (p[i].getNb_ap() > 0){
+              System.out.println("3 = Se déplacer");
+            }
+          }
+          else {
+            if (p[i].getNb_ap() > 0){
+              System.out.println("2 = Se déplacer");
+            }
           }
           System.out.println("0 = Passer son tour");
           do {
             in = scan.nextInt();
+            if ((city.getDoor() == false) && (p[i].getNb_ap() > 0)) {
+              in ++;
+            }
             switch (in) {
               case 0:
               exit = -1;
@@ -111,7 +130,12 @@ class Menu extends Hordes {
               in = 0;
               break;
               case 2:
-              p[i].setInCity(true);
+              if (city.getDoor()) {
+                p[i].setInCity(true);
+              }
+              else {
+                System.out.println("La porte est fermée, vous ne pouvez pas entrer");
+              }
               in = 0;
               break;
               case 3:

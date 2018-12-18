@@ -107,6 +107,8 @@ class Outside extends Hordes {
 
   // Ramasser un item au sol
   public static void takeItem (int n) { // n est le numéro du joueur enregistré dans le tableau
+    int in;
+    String temp;
     if ((p[n].getPos_x() == 0) && (p[n].getPos_y() == 0)) {
       System.out.println("Vous êtes en ville ou au porte, il n'y a aucun objet"
       +" à rammasser ici");
@@ -114,6 +116,17 @@ class Outside extends Hordes {
     else {
       if (p[n].sizeInventory() < 11) {
         map[p[n].getPos_x()+12][p[n].getPos_y()+12].bankItem();
+        do {
+          in = scan.nextInt();
+          if ((in < map[p[n].getPos_x()+12][p[n].getPos_y()+12].sizeItem() + 1) && (in < 0)) {
+            temp = map[p[n].getPos_x()+12][p[n].getPos_y()+12].removeItem(in - 1);
+            p[n].addInventory(temp);
+          }
+          else if (in != 0) {
+            System.out.println("La valeur que vous avez entré n'es");
+          }
+
+        } while (in != 0);
       }
       else {
         System.out.println("Votre inventaire est plein, vous ne pouvez pas "
