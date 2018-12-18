@@ -82,7 +82,8 @@ class Outside extends Hordes {
       System.out.println("Cette zone est épuisée, il est inutile de la fouiller de nouveau");
     }
     else {
-      if (map[p[n].getPos_x() + 12][p[n].getPos_y() + 12].isEmpty()) { // Permet de savoir si une case contient encore ou non des objets cachés
+      if (map[p[n].getPos_x() + 12][p[n].getPos_y() + 12].hideItemIsEmpty()) { 
+        // Permet de savoir si une case contient encore ou non des objets cachés
         System.out.println("Cette zone ne contient plus d'objet, elle est considérée comme épuisée");
         map[p[n].getPos_x() + 12][p[n].getPos_y() + 12].setSearch();
         p[n].action();
@@ -103,8 +104,6 @@ class Outside extends Hordes {
     }
   }
 
-  //TODO: Ramasser un item
-
   // Ramasser un item au sol
   public static void takeItem (int n) { // n est le numéro du joueur enregistré dans le tableau
     int in;
@@ -116,17 +115,18 @@ class Outside extends Hordes {
     else {
       if (p[n].sizeInventory() < 11) {
         map[p[n].getPos_x()+12][p[n].getPos_y()+12].bankItem();
-        do {
-          in = scan.nextInt();
-          if ((in < map[p[n].getPos_x()+12][p[n].getPos_y()+12].sizeItem() + 1) && (in < 0)) {
-            temp = map[p[n].getPos_x()+12][p[n].getPos_y()+12].removeItem(in - 1);
-            p[n].addInventory(temp);
-          }
-          else if (in != 0) {
-            System.out.println("La valeur que vous avez entré n'es");
-          }
-
-        } while (in != 0);
+        if (map[p[n].getPos_x()+12][p[n].getPos_y()+12].itemIsEmpty()) {
+          do {
+            in = scan.nextInt();
+            if ((in < map[p[n].getPos_x()+12][p[n].getPos_y()+12].sizeItem() + 1) && (in < 0)) {
+              temp = map[p[n].getPos_x()+12][p[n].getPos_y()+12].removeItem(in - 1);
+              p[n].addInventory(temp);
+            }
+            else if (in != 0) {
+              System.out.println("La valeur que vous avez entré n'est pas valide.");
+            }
+          } while (in != 0);
+        }
       }
       else {
         System.out.println("Votre inventaire est plein, vous ne pouvez pas "

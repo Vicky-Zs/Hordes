@@ -8,7 +8,7 @@ public class Map {
 	private int z; //Nombre de zombies sur la case
 	private boolean search; // Permet de savoir si la zone a été entièrement fouillé
 	private ArrayList<String> item; // Liste des objets étant sur cette case
-	private ArrayList<String> hide_item; // Liste des objets cachés sur cette case
+	private ArrayList<String> hideItem; // Liste des objets cachés sur cette case
 	private ArrayList<String> talkie; // Liste des objets mis à jour
 
 	//Contructeur
@@ -18,7 +18,7 @@ public class Map {
 		this.z = 0;
 		this.search = false;
 		this.item = new ArrayList<>();
-		this.hide_item = new ArrayList<>();
+		this.hideItem = new ArrayList<>();
 		this.talkie = new ArrayList<>();
 	}
 
@@ -51,12 +51,12 @@ public class Map {
 
 	//Affiche la liste des items cachés sur la case en question
 	public void showHideItem() {
-		if (hide_item.isEmpty()) { //On cherche à savoir si la liste est vide
+		if (hideItem.isEmpty()) { //On cherche à savoir si la liste est vide
 			System.out.println ("Il n'y a rien sur cette case");
 		}
 		else { //Si la liste n'est pas vide, on affiche la liste
-			for (byte i = 0; i < hide_item.size(); i++) {
-				System.out.print(hide_item.get(i) + " ");
+			for (byte i = 0; i < hideItem.size(); i++) {
+				System.out.print(hideItem.get(i) + " ");
 			}
 		}
 		System.out.println("");
@@ -126,15 +126,15 @@ public class Map {
 
 	// Modifie la liste des objets cachés sur la case
 	public void addHide_item(String hide_item) {
-		this.hide_item.add(hide_item);
+		this.hideItem.add(hide_item);
 	}
 
 	// Enlève un élément de la liste et retourne cette élément
 	public String removeHide_item() {
 		String i;
-		int rand = (int) (Math.random() * hide_item.size());
-		i = hide_item.get(rand);
-		hide_item.remove(i);
+		int rand = (int) (Math.random() * hideItem.size());
+		i = hideItem.get(rand);
+		hideItem.remove(i);
 		return i;
 	}
 
@@ -149,8 +149,18 @@ public class Map {
 	}
 
 	// Permet de savoir si une case contient encore ou non des objets cachés
-	public boolean isEmpty(){
-		if (hide_item.isEmpty()) {
+	public boolean hideItemIsEmpty(){
+		if (hideItem.isEmpty()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	// Permet de savoir si une case contient encore ou non des objets cachés
+	public boolean itemIsEmpty(){
+		if (item.isEmpty()) {
 			return true;
 		}
 		else {
