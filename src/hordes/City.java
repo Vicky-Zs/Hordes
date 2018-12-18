@@ -27,7 +27,7 @@ public class City {
 		this.build[6] = 60;
 		this.bank[0] = 0;
 		this.bank[1] = 0;
-		this.bank[2] = 0;
+		this.bank[2] = 10;
 		this.bank[3] = 50; // La ville commence avec 50 rations
 		this.bank[4] = 0;
 		System.out.println ("La banque a été initialisé");

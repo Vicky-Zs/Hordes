@@ -93,6 +93,10 @@ class Menu extends Hordes {
           consultNewspaper();
           in = 0;
           break;
+          case 1111:
+          System.out.println(p[i].getPV());
+          in = 0;
+          break;
           default:
           System.out.println("La réponse n'est pas acceptée, "
           + "veuillez de nouveau entrer votre réponse");
@@ -258,7 +262,62 @@ class Menu extends Hordes {
   public static void menuInventory (int i) {
     int in;
     do {
-      if (p[i].containsInventory("Gourde d'eau") && (p[i].containsInventory("Ration"))) {
+      System.out.println("Inventaire :\n"
+      +"1 = Consulter votre inventaire");
+      if (p[i].containsInventory("Gourde d'eau")) {
+        System.out.println("2 = Boire");
+        if (p[i].containsInventory("Ration")) {
+          System.out.println("3 = Manger");
+          if (p[i].containsInventory("Boisson Energisante")) {
+            System.out.println("4 = Prendre une boisson énergisante");
+          }
+        }
+
+      }
+
+
+
+      System.out.println("0 = Revenir au menu principal");
+      do {
+        in = scan.nextInt();
+      } while (in != 0);
+      if ((p[i].containsInventory("Gourde d'eau"))
+      && (p[i].containsInventory("Ration"))
+      && p[i].containsInventory("Boisson Energisante")) {
+        System.out.println("Inventaire :\n"
+        +"1 = Consulter votre inventaire\n"
+        +"2 = Boire\n"
+        +"3 = Manger\n"
+        +"4 = Prendre une boisson énergisante\n"
+        +"0 = Revenir au menu principal");
+        do {
+          in = scan.nextInt();
+          switch(in){
+            case 0:
+            break;
+            case 1:
+            p[i].getInventory();
+            in = 0;
+            break;
+            case 2:
+            AP.drinkWater(i);
+            in = 0;
+            break;
+            case 3:
+            AP.eatRation(i);
+            in = 0;
+            break;
+            case 4:
+            AP.drinkAddict(i);
+            break;
+            default:
+            System.out.println("La réponse n'est pas acceptée, "
+            + "veuillez de nouveau entrer votre réponse");
+          }
+        }while(in != 0);
+      }
+      else if ((p[i].containsInventory("Gourde d'eau"))
+      && (p[i].containsInventory("Ration"))) {
         System.out.println("Inventaire :\n"
         +"1 = Consulter votre inventaire\n"
         +"2 = Boire\n"
@@ -280,6 +339,64 @@ class Menu extends Hordes {
             case 3:
             AP.eatRation(i);
             in = 0;
+            break;
+            default:
+            System.out.println("La réponse n'est pas acceptée, "
+            + "veuillez de nouveau entrer votre réponse");
+          }
+        }while(in != 0);
+      }
+      else if ((p[i].containsInventory("Ration"))
+      && p[i].containsInventory("Boisson Energisante")) {
+        System.out.println("Inventaire :\n"
+        +"1 = Consulter votre inventaire\n"
+        +"2 = Manger\n"
+        +"3 = Prendre une boisson énergisante\n"
+        +"0 = Revenir au menu principal");
+        do {
+          in = scan.nextInt();
+          switch(in){
+            case 0:
+            break;
+            case 1:
+            p[i].getInventory();
+            in = 0;
+            break;
+            case 2:
+            AP.eatRation(i);
+            in = 0;
+            break;
+            case 3:
+            AP.drinkAddict(i);
+            break;
+            default:
+            System.out.println("La réponse n'est pas acceptée, "
+            + "veuillez de nouveau entrer votre réponse");
+          }
+        }while(in != 0);
+      }
+      else if ((p[i].containsInventory("Ration"))
+      && p[i].containsInventory("Boisson Energisante")) {
+        System.out.println("Inventaire :\n"
+        +"1 = Consulter votre inventaire\n"
+        +"2 = Boire\n"
+        +"3 = Prendre une boisson énergisante\n"
+        +"0 = Revenir au menu principal");
+        do {
+          in = scan.nextInt();
+          switch(in){
+            case 0:
+            break;
+            case 1:
+            p[i].getInventory();
+            in = 0;
+            break;
+            case 2:
+            AP.drinkWater(i);
+            in = 0;
+            break;
+            case 3:
+            AP.drinkAddict(i);
             break;
             default:
             System.out.println("La réponse n'est pas acceptée, "
@@ -334,6 +451,30 @@ class Menu extends Hordes {
             + "veuillez de nouveau entrer votre réponse");
           }
         }while(in !=0);
+      }
+      else if(p[i].containsInventory("Gourde d'eau")) {
+        System.out.println("Inventaire :\n"
+        +"1 = Consulter votre inventaire\n"
+        +"2 = Prendre une Boisson Energisante\n"
+        +"0 = Revenir au menu principal");
+        do {
+          in = scan.nextInt();
+          switch (in) {
+            case 0:
+            break;
+            case 1:
+            p[i].getInventory();
+            in = 0;
+            break;
+            case 2:
+            AP.drinkAddict(i);
+            in = 0;
+            break;
+            default:
+            System.out.println("La réponse n'est pas acceptée, "
+            + "veuillez de nouveau entrer votre réponse");
+          }
+        }while(in != 0);
       }
       else {
         p[i].getInventory();
