@@ -112,6 +112,7 @@ public class Hordes {
 				for (int i = 0; i < nb_p; i++) {
 					if ((alive.contains(p[i].getPseudo())) && (p[i].getInCity())){
 						fiftyfifty.add(i); // On ajoute le numéro de chaque joueur qui est encore en vie
+						System.out.println(p[i].getPseudo());
 					}
 				}
 				for (int i = 0; i < (fiftyfifty.size()/2 + fiftyfifty.size() % 2); i++) { // Nombre de joueur divisé par 2 + le reste de la division euclidienne
@@ -144,7 +145,7 @@ public class Hordes {
 			else {
 				System.out.print("Voici les morts de la veille : ");
 				for (int i = 0; i < mort.size(); i++) {
-					System.out.println(mort.get(i) + " ");
+					System.out.print(mort.get(i) + " ");
 				}
 			}
 			System.out.println("\n \n");
@@ -157,9 +158,9 @@ public class Hordes {
 			String ok;
 			int in = 0;
 			while (alive.size() > 1) {
-				System.out.println("\n \n \nJour " + nb_day + " - Tour " + nb_turn);
 				for (int i = 0; i < nb_p; i ++) {
 					if (alive.contains(p[i].getPseudo())) {
+						System.out.println("\n \n \nJour " + nb_day + " - Tour " + nb_turn);
 						System.out.println("\n \nC'est au tour de " + p[i].getPseudo() + "\nTapez ok");
 						ok = scan.next();
 						System.out.println("Vous avez " + p[i].getNb_ap() + " pa");
@@ -183,13 +184,6 @@ public class Hordes {
 			}
 			else {
 				System.out.println(alive.get(0) + " a gagné la partie ! Bravo !");
-				// On met tous les morts dans la liste des old_morts (pour le classement)
-				old_mort.add(alive.get(0));
-			}
-			System.out.println("Classement : ");
-			for (int i = 0; i < old_mort.size(); i++){
-				System.out.println ((i+1) + "e : " + old_mort.get(0));
-				old_mort.remove(0);
 			}
 		}
 }

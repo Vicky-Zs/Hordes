@@ -142,7 +142,7 @@ public class Player {
 
   // Ajoute 1 à addict
   public void addAddict() {
-    this.addict = +1;
+    this.addict ++;
   }
 
 	// Permet de savoir si un joueur est en ville ou non
