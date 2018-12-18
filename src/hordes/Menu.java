@@ -12,9 +12,11 @@ class Menu extends Hordes {
         + "2 = Accéder à la banque\n"
         + "3 = Prendre de l'eau\n"
         + "4 = Accéder aux chantiers\n"
-        + "5 = Accéder à la porte\n"
-        + "6 = Sortir de la ville\n"
-        + "7 = Consulter le talkie\n"
+        + "5 = Accéder à la porte");
+        if (city.getDoor()) {
+          System.out.println("6 = Sortir de la ville");
+        }
+        System.out.println("7 = Consulter le talkie\n"
         + "8 = Consulter le journal\n"
         + "0 = Passer son tour");
         in = scan.nextInt();
@@ -44,30 +46,35 @@ class Menu extends Hordes {
           in = 0;
           break;
           case 6:
-          if (p[i].getNb_ap() == 0) {
-            System.out.println("Vous êtes fatigué, voulez-vous vraiment sorir "
-            + "de la ville ?\n1 = Oui\n0 = Non");
-            do {
-              in = scan.nextInt();
-              switch (in) {
-                case 0:
-                break;
-                case 1:
-                p[i].setInCity(false);
-                System.out.println("Vous êtes sorti de la ville");
-                in = 0;
-                break;
-                default:
-                System.out.println("La réponse n'est pas acceptée, "
-                + "veuillez de nouveau entrer votre réponse");
-              }
-            }while (in != 0);
+          if (city.getDoor()) {
+            if (p[i].getNb_ap() == 0) {
+              System.out.println("Vous êtes fatigué, voulez-vous vraiment sorir "
+              + "de la ville ?\n1 = Oui\n0 = Non");
+              do {
+                in = scan.nextInt();
+                switch (in) {
+                  case 0:
+                  break;
+                  case 1:
+                  p[i].setInCity(false);
+                  System.out.println("Vous êtes sorti de la ville");
+                  in = 0;
+                  break;
+                  default:
+                  System.out.println("La réponse n'est pas acceptée, "
+                  + "veuillez de nouveau entrer votre réponse");
+                }
+              }while (in != 0);
+            }
+            else {
+              p[i].setInCity(false);
+              System.out.println("Vous êtes sorti de la ville");
+            }
+            in = 0;
           }
           else {
-            p[i].setInCity(false);
-            System.out.println("Vous êtes sorti de la ville");
+            System.out.println("La porte est fermée, vous ne pouvez pas sortir");
           }
-          in = 0;
           break;
           case 7:
           menuTalkie();
