@@ -108,7 +108,7 @@ public class Hordes {
 			if (city.getDefense() <= nb_z) {
 				System.out.println("Les zombies ont réussi à passer");
 				for (int i = 0; i < nb_p; i++) {
-					if (p[i].getPV() != 0){
+					if ((alive.contains(p[i].getPseudo())) && (p[i].getInCity())){
 						fiftyfifty.add(i); // On ajoute le numéro de chaque joueur qui est encore en vie
 					}
 				}
@@ -117,6 +117,7 @@ public class Hordes {
 					System.out.print(p[temp].getPseudo() + " "); // On annonce que le joueur est mort
 					mort.add(p[temp].getPseudo()); // On l'ajoute à la liste
 					alive.remove(p[temp].getPseudo()); // On le retire de la liste des vivants
+					fiftyfifty.remove(p[temp].getPseudo());
 				}
 				System.out.println("sont morts durant l'attaque de cette nuit");
 			}
