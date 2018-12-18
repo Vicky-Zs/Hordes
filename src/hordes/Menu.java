@@ -263,7 +263,7 @@ class Menu extends Hordes {
     int in;
     if ((p[i].containsInventory("Gourde d'eau"))
     && (p[i].containsInventory("Ration"))
-    && p[i].containsInventory("Boisson Energisante")) {
+    && p[i].containsInventory("Boisson énergisante")) {
       System.out.println("Inventaire :\n"
       +"1 = Consulter votre inventaire\n"
       +"2 = Boire\n"
@@ -327,7 +327,7 @@ class Menu extends Hordes {
       }while(in != 0);
     }
     else if ((p[i].containsInventory("Ration"))
-    && p[i].containsInventory("Boisson Energisante")) {
+    && p[i].containsInventory("Boisson énergisante")) {
       System.out.println("Inventaire :\n"
       +"1 = Consulter votre inventaire\n"
       +"2 = Manger\n"
@@ -356,7 +356,7 @@ class Menu extends Hordes {
       }while(in != 0);
     }
     else if ((p[i].containsInventory("Ration"))
-    && p[i].containsInventory("Boisson Energisante")) {
+    && p[i].containsInventory("Boisson énergisante")) {
       System.out.println("Inventaire :\n"
       +"1 = Consulter votre inventaire\n"
       +"2 = Boire\n"
@@ -432,10 +432,10 @@ class Menu extends Hordes {
         }
       }while(in !=0);
     }
-    else if(p[i].containsInventory("Boisson Energisante")) {
+    else if(p[i].containsInventory("Boisson énergisante")) {
       System.out.println("Inventaire :\n"
       +"1 = Consulter votre inventaire\n"
-      +"2 = Prendre une Boisson Energisante\n"
+      +"2 = Prendre une Boisson énergisante\n"
       +"0 = Revenir au menu principal");
       do {
         in = scan.nextInt();
