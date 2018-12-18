@@ -195,11 +195,11 @@ class Menu extends Hordes {
           }while (in !=0);
         }
         else if (p[i].getNb_ap() == 0) {
-          System.out.println("Vous êtes fatigué, voulez-vous accéder à votre inventaire ?"
-          + "0 = Non\n 1 = Oui");
           System.out.println("Vous êtes fatigué\n"
           + "1 = Accéder à votre inventaire\n"
           + "2 = Consulter le talkie\n"
+          + "3 = Prendre un item \n"
+          + "4 = Déposer un item \n"
           + "0 = Passer son tour");
           do {
             in = scan.nextInt();
@@ -214,6 +214,12 @@ class Menu extends Hordes {
               case 2:
               menuTalkie();
               in = 0;
+              break;
+              case 3:
+              Outside.takeItem(i);
+              break;
+              case 4:
+              Outside.dropItem(i);
               break;
               default:
               System.out.println("La réponse n'est pas acceptée, "
