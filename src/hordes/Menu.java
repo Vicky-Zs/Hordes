@@ -93,10 +93,6 @@ class Menu extends Hordes {
           consultNewspaper();
           in = 0;
           break;
-          case 1111:
-          System.out.println(p[i].getPV());
-          in = 0;
-          break;
           default:
           System.out.println("La réponse n'est pas acceptée, "
           + "veuillez de nouveau entrer votre réponse");

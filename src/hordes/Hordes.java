@@ -66,6 +66,8 @@ public class Hordes {
 					}
 					if (p[i].getAddict() > 2) {
 						p[i].lostPv(5);
+						System.out.println("Vous commencez à trembler, "
+						+ "il faudrait que vous preniez une boisson énergisante et vite");
 					}
 					if (p[i].getPV() < 1) {
 						temp_mort.add(p[i].getPseudo());

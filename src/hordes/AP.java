@@ -30,7 +30,7 @@ class AP extends Hordes {
     if (p[n].containsInventory("Boisson énergisante")) {
       System.out.println("Vous buvez une boisson énergisante, vous en devenez dépendant et vous regagnez 4 PA");
       p[n].gain4ap();
-      p[n].addict();
+      p[n].addAddict();
     }
   }
 }
