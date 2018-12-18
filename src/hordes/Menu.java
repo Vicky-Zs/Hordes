@@ -452,7 +452,7 @@ class Menu extends Hordes {
           }
         }while(in !=0);
       }
-      else if(p[i].containsInventory("Gourde d'eau")) {
+      else if(p[i].containsInventory("Boisson Energisante")) {
         System.out.println("Inventaire :\n"
         +"1 = Consulter votre inventaire\n"
         +"2 = Prendre une Boisson Energisante\n"
