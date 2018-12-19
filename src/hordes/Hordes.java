@@ -122,7 +122,12 @@ public class Hordes {
 					alive.remove(p[temp].getPseudo()); // On le retire de la liste des vivants
 					fiftyfifty.remove(p[temp].getPseudo());
 				}
-				System.out.println("sont morts durant l'attaque de cette nuit");
+				if ((fiftyfifty.size()/2 + fiftyfifty.size() % 2) == 1){
+					System.out.println("est mort durant l'attaque de cette nuit\n \n");
+				}
+				else {
+					System.out.println("sont morts durant l'attaque de cette nuit\n \n");
+				}
 			}
 		}
 
