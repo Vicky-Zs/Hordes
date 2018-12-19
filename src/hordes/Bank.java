@@ -62,7 +62,7 @@ class Bank extends Hordes {
             }
           break;
           default:
-            System.out.println("Erreur");
+            System.out.println("Erreur"); // Message d'erreur
         }
       }
   }
@@ -74,27 +74,27 @@ class Bank extends Hordes {
     // n est le numéro du joueur enregistré dans le tableau
     if ((p[n].getPos_x() == 0) && (p[n].getPos_y() == 0)) {
       p[n].bankInventory(); // On affiche l'inventaire
-      int temp = scan.nextInt() - 1; // On demande à l'utilisateur l'objet qu'il veut mettre à la bank, puis nous l'ajoutons à la banque.
-      //On oublie pas qu'on commence à afficher à 1 et que la liste commence à 0 d'où le -1
-      if (p[n].getInventory(temp) == "Planche") {
+      int in = scan.nextInt() - 1; // On demande à l'utilisateur l'objet qu'il veut mettre à la bank, puis nous l'ajoutons à la banque.
+      // On n'oublie pas qu'on commence à afficher à 1 et que la liste commence à 0 d'où le -1
+      if (p[n].getInventory(in) == "Planche") {
         city.setBank(0, city.getBank(0) + 1);
       }
-      else if (p[n].getInventory(temp) == "Plaque de métal") {
+      else if (p[n].getInventory(in) == "Plaque de métal") {
         city.setBank(1, city.getBank(1) + 1);
       }
-      else if (p[n].getInventory(temp) == "Boisson énergisante") {
+      else if (p[n].getInventory(in) == "Boisson énergisante") {
         city.setBank(2, city.getBank(2) + 1);
       }
-      else if (p[n].getInventory(temp) == "Ration") {
+      else if (p[n].getInventory(in) == "Ration") {
         city.setBank(3, city.getBank(3) + 1);
       }
-      else if (p[n].getInventory(temp) == "Gourde d'eau") {
+      else if (p[n].getInventory(in) == "Gourde d'eau") {
         city.setBank(4, city.getBank(4) + 1);
       }
       else {
         System.out.println ("Erreur dans l'ajout dans la banque");
       }
-      p[n].removeInventory(p[n].getInventory(temp)); // Suppression des items de l'inventaire
+      p[n].removeInventory(p[n].getInventory(in)); // Suppression des items de l'inventaire
     }
     else {
       System.out.println("Vous ne pouvez pas ajouter un item à la banque, vous n'êtes pas en ville");
@@ -158,7 +158,7 @@ class Bank extends Hordes {
         }
       break;
       default:
-        System.out.println("Erreur");
+        System.out.println("Erreur"); // Message d'erreur 
     }
   }
 }
