@@ -7,7 +7,7 @@ public class Player {
   private int nb_ap; //Nombre de pa allant de 0 à 6
 	private int pos_x; // Position du joueur allant de -12 à 12
 	private int pos_y; //Position du joueur allant de -12 à 12
-	private int pv; //Point de vie du joueur (Si 0 ou moins, le joueur est mort)
+	private int hp; //Point de vie du joueur (Si tombe à 0 ou moins, le joueur est mort)
 	private boolean drink; //Si vrai, il a déjà bu et ne peut plus boire
 	private boolean eat; //Si vrai, le joueur a déjà mangé et ne peut plus mangé
 	private int addict; // -1 le joueur n'est pas dépendant, si 0 ou plus, permet de savoir le nombre de tour sans la prise de boisson énergisante
@@ -17,10 +17,10 @@ public class Player {
 	//Constructeur
 	public Player(String pseudo) {
 		this.pseudo = pseudo;
-		this.nb_ap = 6;
-		this.pos_x = 0;
-		this.pos_y = 0;
-		this.pv = 100;
+		this.nb_ap = 6; // On commence avec 6 pa
+		this.pos_x = 0; // On commence en ville
+		this.pos_y = 0; // On commence en ville
+		this.hp = 100; // On commence avec 100 points de vie
 		this.drink = false;
 		this.eat = false;
 		this.addict = -1;
@@ -94,8 +94,8 @@ public class Player {
 	}
 
 	// Obtient le nombre de PV d'un joueur
-	public int getPV () {
-		return pv;
+	public int getHP () {
+		return hp;
 	}
 
 	// Modifie le nombre de PV d'un joueur
@@ -104,8 +104,8 @@ public class Player {
 	}*/
 
 	// Pert de x PV
-	public void lostPv (int x) {
-		this.pv = this.pv - x;
+	public void lostHP (int x) {
+		this.hp = this.hp - x;
 	}
 
 	// Permet de savoir si un joueur a bu ou non

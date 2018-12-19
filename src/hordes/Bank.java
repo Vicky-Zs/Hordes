@@ -1,6 +1,6 @@
 package hordes;
 
-class Bank extends Hordes {
+public class Bank extends Hordes {
   //Consultation de la bank
   public static void consultBank() {
       for (int i = 0; i<5; i++) {
@@ -158,7 +158,7 @@ class Bank extends Hordes {
         }
       break;
       default:
-        System.out.println("Erreur"); // Message d'erreur 
+        System.out.println("Erreur"); // Message d'erreur
     }
   }
 }

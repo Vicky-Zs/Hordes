@@ -4,7 +4,6 @@ public class City {
 	private int defense;
 	private Boolean door; //True = Open, False = Fermer
 	private int[] bank = new int [5]; // Création du tableau d'objets en banque
-	// 0 = Planche, 1 = Plaque de métal, 2 = Boisson énergisante, 3 = Ration, 4 = Gourde d'eau
 	private int[] build = new int [7]; // Création du tableau de pa pour le chantier
 	// Tableau de chantier:
 	// 0 = Mur d'enceinte
@@ -18,18 +17,18 @@ public class City {
 	public City() { // On considère que la ville commence les portes ouvertes et avec 10 de défense de base
 		this.defense = 10;
 		this.door = true;
-		this.build[0] = 10;
-		this.build[1] = 20;
-		this.build[2] = 30;
-		this.build[3] = 30;
-		this.build[4] = 40;
-		this.build[5] = 50;
-		this.build[6] = 60;
-		this.bank[0] = 0;
-		this.bank[1] = 0;
-		this.bank[2] = 10;
+		this.build[0] = 10; // Nb de pa nécessaire pour finir ce chantier
+		this.build[1] = 20; // Nb de pa nécessaire pour finir ce chantier
+		this.build[2] = 30; // Nb de pa nécessaire pour finir ce chantier
+		this.build[3] = 30; // Nb de pa nécessaire pour finir ce chantier
+		this.build[4] = 40; // Nb de pa nécessaire pour finir ce chantier
+		this.build[5] = 50; // Nb de pa nécessaire pour finir ce chantier
+		this.build[6] = 60; // Nb de pa nécessaire pour finir ce chantier
+		this.bank[0] = 0; // Nb de Planche en banque
+		this.bank[1] = 0; // Nb de Plaque de métal en banque
+		this.bank[2] = 0; // Nb de Boisson énergisante en banque
 		this.bank[3] = 50; // La ville commence avec 50 rations
-		this.bank[4] = 0;
+		this.bank[4] = 0; // Nb de d'objets en banque
 		System.out.println ("La banque a été initialisé");
 	}
 

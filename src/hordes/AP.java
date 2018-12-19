@@ -1,6 +1,6 @@
 package hordes;
 
-class AP extends Hordes {
+public class AP extends Hordes {
   public static void drinkWater (int n) { // n est le numéro du joueur enregistré dans le tableau
     if ((p[n].containsInventory("Gourde d'eau")) && (!p[n].getDrink())) {
       // On vérifié qu'il y a une gourde d'eau et qu'il n'a pas bu cette journée
@@ -35,7 +35,7 @@ class AP extends Hordes {
     if (p[n].containsInventory("Boisson énergisante")) {
       System.out.println("Vous buvez une boisson énergisante, vous en devenez dépendant et vous regagnez 4 PA");
       p[n].gain4ap(); // Gain de 4 pa
-      p[n].addict(); // On met à 0 au compteur d'addiction, et on retire une
+      p[n].addict(); // On met à 0 au compteur d'addiction, et on retire une boisson énergisante
     }
     else {
       System.out.println("Vous ne pouvez pas prendre une boisson énergisante, vous n'en avez pas sur vous");

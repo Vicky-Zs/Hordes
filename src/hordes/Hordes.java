@@ -36,7 +36,6 @@ public class Hordes {
 
 	// Calcul zombies sur une case
 		public static void zMap () {
-			int k = 0;
 			int rand = 0;
 			for (int i = 0; i < 25; i++) { // Parcours case par case
 				for (int j = 0; j < 25; j++) {
@@ -49,7 +48,7 @@ public class Hordes {
 							rand = r.nextInt(7)+1; //Calcul d'un nombre entre 1 et 7
 							map[i][j].setZ(rand); //Il y aura entre 1 et 7 zombie(s) sur cette case
 						}
-						k ++; //Vérification
+						// La prochaine ligne permet vérifier que tout ce passe bien
 						// System.out.println("Sur la case [" + map[i][j].getCoor_x() + ";" + map[i][j].getCoor_y() + "], il y a " + map[i][j].getZ() + " zombies"); // Pour voir le nombre de zombies sur une case
 				}
 			}
@@ -62,23 +61,23 @@ public class Hordes {
 				if (alive.contains(p[i].getPseudo())) { // On vérifie que le joueur est en vie
 					p[i].gain4ap();
 					if (p[i].getAddict() != -1) { // On vérifie sa dépendance aux boissons énergisante
-						p[i].addAddict();
+						p[i].addAddict(); // On ajoute un au compteur d'addiction
 					}
-					if (p[i].getAddict() > 2) {
-						p[i].lostPv(5);
+					if (p[i].getAddict() > 2) { // Si le joueur est à 3 tours sans prise de boisson énergisante
+						p[i].lostHP(5); // Perte de 5 points de vie
 						System.out.println("Vous commencez à trembler, "
 						+ "il faudrait que vous preniez une boisson énergisante et vite");
 					}
-					if (p[i].getPV() < 1) {
-						temp_mort.add(p[i].getPseudo());
-						alive.remove(p[i].getPseudo());
+					if (p[i].getHP() < 1) { // Si les PV sont nuls ou négatifs
+						temp_mort.add(p[i].getPseudo()); // On ajout le joueur dans la liste des morts temporaire (durant la journée en cours)
+						alive.remove(p[i].getPseudo()); // On retire le joueur de la liste des vivants
 					}
 				}
 			}
-			nb_turn ++;
-			if (nb_turn == 13) {
-				nb_turn = 1;
-				changingDay();
+			nb_turn ++; // On ajoute un au compteur de tour
+			if (nb_turn == 13) { // Si c'est le 13e tour
+				nb_turn = 1; // On recommence une journée
+				changingDay(); // Algo de passage de nuit
 			}
 		}
 
@@ -93,8 +92,8 @@ public class Hordes {
 				mort.add(temp_mort.get(0)); // On met les morts de la journée dans la liste des morts les 24 dernières heures
 				temp_mort.remove(0); // Et on les retire de la liste des morts de la journée
 			}
-			for (int i = 0; i < nb_p; i++){ //On vérifie si chaque joueur est en ville
-				if (p[i].getInCity()) {
+			for (int i = 0; i < nb_p; i++){
+				if (p[i].getInCity()) { //On vérifie si chaque joueur est en ville
 					p[i].resetDay(); // Enlève le statut "a bu" et "a mangé"
 				}
 				else {
@@ -120,7 +119,7 @@ public class Hordes {
 					System.out.print(p[temp].getPseudo() + " "); // On annonce que le joueur est mort
 					mort.add(p[temp].getPseudo()); // On l'ajoute à la liste
 					alive.remove(p[temp].getPseudo()); // On le retire de la liste des vivants
-					fiftyfifty.remove(p[temp].getPseudo());
+					fiftyfifty.remove(p[temp].getPseudo()); // On retire le joueur pour éviter de le reprendre plus tard
 				}
 				if ((fiftyfifty.size()/2 + fiftyfifty.size() % 2) == 1){
 					System.out.println("est mort durant l'attaque de cette nuit\n \n");
@@ -138,14 +137,17 @@ public class Hordes {
 		/* ----------------------------------------------------------------------- */
 		// Affichage du journal reprenant les morts de la veille
 		// Hameau obscur est le nom de la ville
-		// J'ai pris le nom d'une de mes villes quand j'y jouais ;)
+		// J'ai pris le nom d'une ville aléatoire
 		public static void consultNewspaper() {
 			System.out.println ("Hameau Obscur - Jour " + nb_day);
 			if (nb_day == 1) {
-				System.out.println("Bienvenue au Hameau Obscur !!\nNous avons espéré que les zombies nous oublie, mais ce n'est pas le cas.\nNous allons donc devoir nous organiser et tenir, le Hameau Obscur ne doit pas tomber !");
+				System.out.println("Bienvenue au Hameau Obscur !!\n"
+				+"Nous avons espéré que les zombies nous oublie, mais ce n'est pas le cas."
+				+"\nNous allons donc devoir nous organiser et tenir, le Hameau Obscur ne doit pas tomber !");
 			}
 			else if (mort.isEmpty()) {
-				System.out.println("Il n'y a pas eu de mort, malgré l'attaque des " + nb_z + " zombies sur le Hameau Obscur");
+				System.out.println("Il n'y a pas eu de mort, malgré l'attaque des "
+				+ nb_z + " zombies sur le Hameau Obscur a tenu");
 			}
 			else {
 				System.out.print("Voici les morts de la veille : ");
@@ -190,5 +192,9 @@ public class Hordes {
 			else {
 				System.out.println(alive.get(0) + " a gagné la partie ! Bravo !");
 			}
+		}
+
+		public static void closeScan() {
+			scan.close();
 		}
 }

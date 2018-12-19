@@ -1,6 +1,6 @@
 package hordes;
 
-class Menu extends Hordes {
+public class Menu extends Hordes {
   // Menu principal
   public static void mainMenu (int i) {
     int in;
@@ -230,6 +230,7 @@ class Menu extends Hordes {
         else {
           System.out.println("1 = Accéder à votre inventaire\n"
           + "2 = Tuer un zombie \n"
+          + "3 = Fouiller \n"
           + "0 = Passer son tour \n");
           do {
             in = scan.nextInt();
@@ -244,6 +245,9 @@ class Menu extends Hordes {
               case 2:
               exit = Outside.killZombie(i);
               in = 0;
+              break;
+              case 3:
+              Outside.search(i);
               break;
               default:
               System.out.println("La réponse n'est pas acceptée, "

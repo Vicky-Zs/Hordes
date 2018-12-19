@@ -1,6 +1,6 @@
 package hordes;
 
-class Inside extends Hordes {
+public class Inside extends Hordes {
   // Algo pour prendre de l'eau au puit
   public static void takeWater(int n) {
     // n est le numéro du joueur enregistré dans le tableau
@@ -11,7 +11,7 @@ class Inside extends Hordes {
   public static void exitTown (int n) {
     // n est le numéro du joueur enregistré dans le tableau
     if (!city.getDoor()) { // On vérifie que la prote est bien ouverte
-        p[n].setInCity(false);
+        p[n].setInCity(false); // On met le joueur en dehors de la ville
     }
     else {
       System.out.println("La porte est fermée, vous ne pouvez pas sortir de la ville");

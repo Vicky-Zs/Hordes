@@ -1,11 +1,11 @@
 package hordes;
 
-class Initialization extends Hordes {
+public class Initialization extends Hordes {
   // Initialisation de la Map
 	public static void iniMap() {
 		for (int i = 0; i < 25; i++) {
 			for (int j = 0; j < 25; j++) {
-				map[i][j] = new Map(i-12, j-12);
+				map[i][j] = new Map();
 				// On ne peut pas mettre de nombre négatif dans un tableau et on souhaite que la ville soit en [0;0]
 				// Nous décallons donc de -12
 			}
@@ -60,21 +60,21 @@ class Initialization extends Hordes {
 	}
 
 	//Affiche les objets cachés sur toutes les cases
-	public static void showMap() {
+	/*public static void showMap() {
 		for (byte i = 0; i < 25; i++) {
 			for (byte j = 0; j < 25; j++) {
 				System.out.print("\n[" + (i-12) + ";" + (j-12) + "] -- ");
 				map[i][j].showHideItem();
 			}
 		}
-	}
+	}*/
 
 	//Affiche les objets cachés sur une seule case
-	public static void showMap(int i, int j) {
+	/*public static void showMap(int i, int j) {
 		System.out.print("\n[" + (i) + ";" + (j) + "] -- ");
 		map[i+12][j+12].showHideItem();
 		System.out.println(" ");
-	}
+	}*/
 
 	// Ajoute un joueur
 	public static void addPlayer () {
@@ -93,7 +93,7 @@ class Initialization extends Hordes {
 			// Pour le nombre de joueurs qu'on a initialisé
 			System.out.println("Entrer le pseudo du joueur "+ (i+1));
 			firstname = scan.next();
-			while (alive.contains(firstname)){
+			while (alive.contains(firstname)){ // On veut éviter les doublons
 				System.out.println("Veuillez choisir un autre pseudo, " + firstname + " est déjà pris");
 				firstname = scan.next();
 			}

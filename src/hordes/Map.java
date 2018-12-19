@@ -3,8 +3,6 @@ package hordes;
 import java.util.ArrayList;
 
 public class Map {
-	private int Coor_x; //Coordonée x de la case
-	private int Coor_y; //Coordonée y de la case
 	private int z; //Nombre de zombies sur la case
 	private boolean search; // Permet de savoir si la zone a été entièrement fouillé
 	private ArrayList<String> item; // Liste des objets étant sur cette case
@@ -12,9 +10,7 @@ public class Map {
 	private ArrayList<String> talkie; // Liste des objets mis à jour
 
 	//Contructeur
-	public Map(int Coor_x, int Coor_y) {
-		this.Coor_x = Coor_x;
-		this.Coor_y = Coor_y;
+	public Map() {
 		this.z = 0;
 		this.search = false;
 		this.item = new ArrayList<>();
@@ -60,26 +56,6 @@ public class Map {
 			}
 		}
 		System.out.println("");
-	}
-
-	// Obtient la coordonée x de la case
-	public int getCoor_x() {
-		return Coor_x;
-	}
-
-	// Modifie la coordonée x de la case
-	public void setCoor_x(int Coor_x) {
-		this.Coor_x = Coor_x;
-	}
-
-	// Obtient la coordonée y de la case
-	public int getCoor_y() {
-		return Coor_y;
-	}
-
-	// Modifie la coordonée y de la case
-	public void setCoor_y(int Coor_y) {
-		this.Coor_y = Coor_y;
 	}
 
 	// Obtient le nombre de zombies sur la case
