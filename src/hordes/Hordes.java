@@ -194,7 +194,7 @@ public class Hordes {
 			}
 		}
 
-		public static void closeScan() {
+		public static void closeScan() { // Fermeture du scanner
 			scan.close();
 		}
 }

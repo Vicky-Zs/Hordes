@@ -9,6 +9,6 @@ public class Main {
     Initialization.addPlayer();
     Hordes.zMap();
     Hordes.game();
-    Hordes.closeScan();
+    Hordes.closeScan(); // Fermeture du scanner
   }
 }
