@@ -25,7 +25,7 @@ class Menu extends Hordes {
           + "0 = Passer son tour");
         }
         in = scan.nextInt();
-        if ((city.getDoor() == false) && (in>5)) {
+        if ((!city.getDoor()) && (in>5)) {
           // On change la valeur pour que la valeur corresponde au menu
           in ++;
         }
@@ -118,7 +118,7 @@ class Menu extends Hordes {
           System.out.println("0 = Passer son tour");
           do {
             in = scan.nextInt();
-            if ((city.getDoor() == false) && (p[i].getNb_ap() > 0)) {
+            if ((!city.getDoor()) && (p[i].getNb_ap() > 0)) {
               in ++;
             }
             switch (in) {

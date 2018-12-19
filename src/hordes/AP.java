@@ -2,7 +2,7 @@ package hordes;
 
 class AP extends Hordes {
   public static void drinkWater (int n) { // n est le numéro du joueur enregistré dans le tableau
-    if ((p[n].containsInventory("Gourde d'eau")) && (p[n].getDrink() == false)) {
+    if ((p[n].containsInventory("Gourde d'eau")) && (!p[n].getDrink())) {
       System.out.println("Vous vous désaltérez, vous regagnez 6 PA");
       p[n].gain6ap();
       p[n].drink();
@@ -16,7 +16,7 @@ class AP extends Hordes {
   }
 
   public static void eatRation (int n) { // n est le numéro du joueur enregistré dans le tableau
-    if ((p[n].containsInventory("Ration")) && (p[n].getEat() == false)) {
+    if ((p[n].containsInventory("Ration")) && (!p[n].getEat())) {
       System.out.println("Vous mangez de la nourriture pas très bonne, mais ça rempli votre ventre, vous regagnez 6 PA");
       p[n].gain6ap();
       p[n].eat();
